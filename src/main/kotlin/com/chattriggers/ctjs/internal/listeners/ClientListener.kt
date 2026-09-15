@@ -151,10 +151,13 @@ object ClientListener : Initializer {
         AttackBlockCallback.EVENT.register { player, _, _, pos, direction ->
             if (!player.level().isClientSide) return@register InteractionResult.PASS
             val event = CancellableEvent()
+            val block = World.getBlockAt(BlockPos(pos)).withFace(BlockFace.fromMC(direction))
+
+            TriggerType.HIT_BLOCK.triggerAll(block, event)
 
             TriggerType.PLAYER_INTERACT.triggerAll(
                 PlayerInteraction.AttackBlock,
-                World.getBlockAt(BlockPos(pos)).withFace(BlockFace.fromMC(direction)),
+                block,
                 event,
             )
 
@@ -164,10 +167,13 @@ object ClientListener : Initializer {
         AttackEntityCallback.EVENT.register { player, _, _, entity, _ ->
             if (!player.level().isClientSide) return@register InteractionResult.PASS
             val event = CancellableEvent()
+            val wrappedEntity = Entity.fromMC(entity)
+
+            TriggerType.ATTACK_ENTITY.triggerAll(wrappedEntity, event)
 
             TriggerType.PLAYER_INTERACT.triggerAll(
                 PlayerInteraction.AttackEntity,
-                Entity.fromMC(entity),
+                wrappedEntity,
                 event,
             )
 
@@ -176,7 +182,9 @@ object ClientListener : Initializer {
 
         CTEvents.BREAK_BLOCK.register { pos ->
             val event = CancellableEvent()
-            TriggerType.PLAYER_INTERACT.triggerAll(PlayerInteraction.BreakBlock, World.getBlockAt(BlockPos(pos)), event)
+            val block = World.getBlockAt(BlockPos(pos))
+            TriggerType.BLOCK_BREAK.triggerAll(block)
+            TriggerType.PLAYER_INTERACT.triggerAll(PlayerInteraction.BreakBlock, block, event)
 
             check(!event.isCancelled()) {
                 "PlayerInteraction event of type BreakBlock is not cancellable"

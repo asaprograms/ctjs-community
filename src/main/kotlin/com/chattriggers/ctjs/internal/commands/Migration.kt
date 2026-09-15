@@ -68,9 +68,6 @@ internal object Migration {
             "renderSlotHighlight",
             "postRenderEntity",
             "postRenderTileEntity",
-            "attackEntity",
-            "hitBlock",
-            "blockBreak",
         )
 
         """
