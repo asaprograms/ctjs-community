@@ -87,6 +87,13 @@
       "coverage": ["source-entity-identity", "partial-ticks", "render-cancellation"],
       "status": "implemented",
       "test": "Minecraft 26.2 render pipeline mixin validation"
+    },
+    {
+      "id": "legacy-post-entity-render-triggers",
+      "source": "ChatTriggers 2.2.0 postRenderEntity and postRenderTileEntity contracts",
+      "coverage": ["wrapped-source-entity", "camera-relative-position", "partial-ticks", "class-filtering"],
+      "status": "implemented",
+      "test": "Render submission tail mixins and legacy registration smoke"
     }
   ]
 }

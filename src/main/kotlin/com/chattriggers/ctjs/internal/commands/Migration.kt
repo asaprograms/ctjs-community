@@ -65,8 +65,6 @@ internal object Migration {
             "noteBlockChange",
             "renderItemOverlayIntoGui",
             "renderSlotHighlight",
-            "postRenderEntity",
-            "postRenderTileEntity",
         )
 
         """

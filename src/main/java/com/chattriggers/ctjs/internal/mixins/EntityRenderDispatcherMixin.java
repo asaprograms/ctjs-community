@@ -55,5 +55,22 @@ public abstract class EntityRenderDispatcherMixin {
         }
     }
 
+    @Inject(method = "submit", at = @At("RETURN"))
+    private <S extends EntityRenderState> void ctjs$postRenderEntity(
+        S renderState,
+        net.minecraft.client.renderer.state.level.CameraRenderState cameraRenderState,
+        double x,
+        double y,
+        double z,
+        PoseStack matrixStack,
+        SubmitNodeCollector queue,
+        CallbackInfo ci
+    ) {
+        ExtractedEntity extracted = ctjs$extractedEntities.get(renderState);
+        if (extracted != null) {
+            CTEvents.POST_RENDER_ENTITY.invoker().render(matrixStack, extracted.entity(), x, y, z, extracted.partialTicks());
+        }
+    }
+
     private record ExtractedEntity(Entity entity, float partialTicks) {}
 }

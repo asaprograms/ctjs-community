@@ -36,6 +36,14 @@ internal object CTEvents {
         fun render(matrixStack: PoseStack, entity: MCBlockEntity, partialTicks: Float, ci: CallbackInfo)
     }
 
+    fun interface PostRenderEntityCallback {
+        fun render(matrixStack: PoseStack, entity: MCEntity, x: Double, y: Double, z: Double, partialTicks: Float)
+    }
+
+    fun interface PostRenderBlockEntityCallback {
+        fun render(matrixStack: PoseStack, entity: MCBlockEntity, x: Double, y: Double, z: Double, partialTicks: Float)
+    }
+
     fun interface RenderOverlayCallback {
         fun render(context: GuiGraphicsExtractor, matrixStack: PoseStack, partialTicks: Float)
     }
@@ -116,6 +124,20 @@ internal object CTEvents {
     val RENDER_BLOCK_ENTITY = make<RenderBlockEntityCallback> { listeners ->
         RenderBlockEntityCallback { stack, blockEntity, partialTicks, ci ->
             listeners.forEach { it.render(stack, blockEntity, partialTicks, ci) }
+        }
+    }
+
+    @JvmField
+    val POST_RENDER_ENTITY = make<PostRenderEntityCallback> { listeners ->
+        PostRenderEntityCallback { stack, entity, x, y, z, partialTicks ->
+            listeners.forEach { it.render(stack, entity, x, y, z, partialTicks) }
+        }
+    }
+
+    @JvmField
+    val POST_RENDER_BLOCK_ENTITY = make<PostRenderBlockEntityCallback> { listeners ->
+        PostRenderBlockEntityCallback { stack, entity, x, y, z, partialTicks ->
+            listeners.forEach { it.render(stack, entity, x, y, z, partialTicks) }
         }
     }
 

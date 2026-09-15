@@ -55,17 +55,17 @@ sealed class ClassFilterTrigger<Wrapped, Unwrapped>(
     protected abstract fun unwrap(wrapped: Wrapped): Unwrapped
 }
 
-class RenderEntityTrigger(method: Any) : ClassFilterTrigger<Entity, MCEntity>(
+class RenderEntityTrigger(method: Any, triggerType: ITriggerType = TriggerType.RENDER_ENTITY) : ClassFilterTrigger<Entity, MCEntity>(
     method,
-    TriggerType.RENDER_ENTITY,
+    triggerType,
     Entity::class.java,
 ) {
     override fun unwrap(wrapped: Entity): MCEntity = wrapped.toMC()
 }
 
-class RenderBlockEntityTrigger(method: Any) : ClassFilterTrigger<BlockEntity, MCBlockEntity>(
+class RenderBlockEntityTrigger(method: Any, triggerType: ITriggerType = TriggerType.RENDER_BLOCK_ENTITY) : ClassFilterTrigger<BlockEntity, MCBlockEntity>(
     method,
-    TriggerType.RENDER_BLOCK_ENTITY,
+    triggerType,
     BlockEntity::class.java
 ) {
     override fun unwrap(wrapped: BlockEntity): MCBlockEntity = wrapped.toMC()
