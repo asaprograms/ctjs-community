@@ -77,7 +77,7 @@ object Client {
         scheduleTask {
             World.toMC()?.disconnect(Component.empty())
 
-            getMinecraft().gui.setScreen(
+            getMinecraft().setScreen(
                 when {
                     getMinecraft().isLocalServer -> TitleScreen()
                     getMinecraft().currentServer?.isRealm == true -> RealmsMainScreen(TitleScreen())
@@ -112,13 +112,13 @@ object Client {
      * @return The GuiNewChat object for the chat gui
      */
     @JvmStatic
-    fun getChatGui(): ChatComponent = getMinecraft().gui.hud.chat
+    fun getChatGui(): ChatComponent = getMinecraft().gui.chat
 
     @JvmStatic
-    fun isInChat(): Boolean = getMinecraft().gui.screen() is ChatScreen
+    fun isInChat(): Boolean = getMinecraft().screen is ChatScreen
 
     @JvmStatic
-    fun getTabGui(): PlayerTabOverlay = getMinecraft().gui.hud.tabList
+    fun getTabGui(): PlayerTabOverlay = getMinecraft().gui.tabList
 
     @JvmStatic
     fun isInTab(): Boolean = getMinecraft().options.keyPlayerList.isDown
@@ -179,7 +179,7 @@ object Client {
     @JvmStatic
     fun getCurrentChatMessage(): String {
         return if (isInChat()) {
-            val chatGui = getMinecraft().gui.screen() as ChatScreen
+            val chatGui = getMinecraft().screen as ChatScreen
             chatGui.asMixin<ChatScreenAccessor>().input.value
         } else ""
     }
@@ -192,7 +192,7 @@ object Client {
     @JvmStatic
     fun setCurrentChatMessage(message: String) {
         if (isInChat()) {
-            val chatGui = getMinecraft().gui.screen() as ChatScreen
+            val chatGui = getMinecraft().screen as ChatScreen
             chatGui.asMixin<ChatScreenAccessor>().input.value = message
         } else currentGui.set(ChatScreen(message, false))
     }
@@ -213,7 +213,7 @@ object Client {
      */
     @JvmStatic
     fun showTitle(title: String?, subtitle: String?, fadeIn: Int, time: Int, fadeOut: Int) {
-        getMinecraft().gui.hud.apply {
+        getMinecraft().gui.apply {
             setTimes(fadeIn, time, fadeOut)
             if (title != null)
                 setTitle(TextComponent(title))
@@ -298,11 +298,11 @@ object Client {
          *
          * @return the Minecraft gui
          */
-        fun get(): Screen? = getMinecraft().gui.screen()
+        fun get(): Screen? = getMinecraft().screen
 
         fun set(screen: Screen?) {
             scheduleTask {
-                getMinecraft().gui.setScreen(screen)
+                getMinecraft().setScreen(screen)
             }
         }
 
@@ -327,10 +327,10 @@ object Client {
     }
 
     class CameraWrapper {
-        fun getX(): Double = getMinecraft().gameRenderer.mainCamera().position().x
+        fun getX(): Double = getMinecraft().gameRenderer.mainCamera.position().x
 
-        fun getY(): Double = getMinecraft().gameRenderer.mainCamera().position().y
+        fun getY(): Double = getMinecraft().gameRenderer.mainCamera.position().y
 
-        fun getZ(): Double = getMinecraft().gameRenderer.mainCamera().position().z
+        fun getZ(): Double = getMinecraft().gameRenderer.mainCamera.position().z
     }
 }
