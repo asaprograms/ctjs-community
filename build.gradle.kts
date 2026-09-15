@@ -49,6 +49,7 @@ dependencies {
     dokkaPlugin(libs.versioning)
 
     implementation(kotlin("stdlib-jdk8"))
+    testImplementation(kotlin("test"))
 //    implementation(project(":typing-generator"))
 //    ksp(project(":typing-generator"))
 }
@@ -75,6 +76,10 @@ java {
 //}
 
 tasks {
+    test {
+        useJUnitPlatform()
+    }
+
     processResources {
         val flkVersion = libs.versions.fabric.kotlin.get()
         val fapiVersion = libs.versions.fabric.api.get()

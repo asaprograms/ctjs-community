@@ -226,44 +226,43 @@ object FileLib {
     @Throws(IOException::class)
     @JvmStatic
     fun unzip(zipFilePath: String, destDirectory: String) {
-        val destDir = File(destDirectory)
-        if (!destDir.exists()) destDir.mkdir()
+        val destination = File(destDirectory).canonicalFile
+        destination.mkdirs()
+        val destinationPrefix = destination.path + File.separator
 
-        val zipIn = ZipInputStream(FileInputStream(zipFilePath))
-        var entry: ZipEntry? = zipIn.nextEntry
-        // iterates over entries in the zip file
-        while (entry != null) {
-            val filePath = destDirectory + File.separator + entry.name
-            if (!entry.isDirectory) {
-                // if the entry is a file, extracts it
-                extractFile(zipIn, filePath)
-            } else {
-                // if the entry is a directory, make the directory
-                val dir = File(filePath)
-                dir.mkdir()
+        ZipInputStream(BufferedInputStream(FileInputStream(zipFilePath))).use { zipIn ->
+            var entry: ZipEntry? = zipIn.nextEntry
+            while (entry != null) {
+                val output = File(destination, entry.name).canonicalFile
+                if (output != destination && !output.path.startsWith(destinationPrefix)) {
+                    throw IOException("Zip entry escapes destination: ${entry.name}")
+                }
+
+                if (entry.isDirectory) {
+                    output.mkdirs()
+                } else {
+                    extractFile(zipIn, output)
+                }
+
+                zipIn.closeEntry()
+                entry = zipIn.nextEntry
             }
-            zipIn.closeEntry()
-            entry = zipIn.nextEntry
         }
-        zipIn.close()
     }
 
     // helper method for unzipping
     @Throws(IOException::class)
     @JvmStatic
-    private fun extractFile(zipIn: ZipInputStream, filePath: String) {
-        val toWrite = File(filePath)
-        toWrite.parentFile.mkdirs()
-        toWrite.createNewFile()
-
-        val bos = BufferedOutputStream(FileOutputStream(filePath))
-        val bytesIn = ByteArray(4096)
-        var read = zipIn.read(bytesIn)
-        while (read != -1) {
-            bos.write(bytesIn, 0, read)
-            read = zipIn.read(bytesIn)
+    private fun extractFile(zipIn: ZipInputStream, output: File) {
+        output.parentFile?.mkdirs()
+        BufferedOutputStream(FileOutputStream(output)).use { stream ->
+            val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
+            var read = zipIn.read(buffer)
+            while (read != -1) {
+                stream.write(buffer, 0, read)
+                read = zipIn.read(buffer)
+            }
         }
-        bos.close()
     }
 
     private fun absoluteLocation(importName: String, fileLocation: String): String {
