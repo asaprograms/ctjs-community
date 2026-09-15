@@ -28,6 +28,9 @@ open class LivingEntity(override val mcValue: MCLivingEntity) : Entity(mcValue) 
         return mcValue.getItemBySlot(EquipmentSlot.entries[slot])?.let(Item::fromMC)
     }
 
+    /** Legacy 1.8.9 name for [getStackInSlot]. */
+    fun getItemInSlot(slot: Int) = getStackInSlot(slot)
+
     fun getHP() = mcValue.health
 
     fun getMaxHP() = mcValue.maxHealth

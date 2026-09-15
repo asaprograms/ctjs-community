@@ -70,6 +70,9 @@ class Item(override val mcValue: ItemStack) : CTWrapper<ItemStack> {
 
     fun isDamageable() = mcValue.isDamageableItem
 
+    /** Legacy misspelling retained for 1.8.9 modules. */
+    fun isDamagable() = isDamageable()
+
     fun getName(): String = TextComponent(mcValue.hoverName).formattedText
 
     fun setName(name: TextComponent?) = apply {

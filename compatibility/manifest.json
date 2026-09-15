@@ -21,6 +21,22 @@
       "coverage": ["setPacketClass", "setPacketClasses"],
       "status": "verified",
       "test": "ClassFilterCompatibilityTest"
+    },
+    {
+      "id": "common-legacy-api-aliases",
+      "source": "ChatTriggers 1.8.9 modules sampled from public repositories",
+      "coverage": [
+        "Client.getChatGUI",
+        "LivingEntity.getItemInSlot",
+        "Inventory.getItemInSlot",
+        "Item.isDamagable",
+        "Scoreboard.getScoreboardTitle",
+        "TabList.getFooterMessage",
+        "World.getAllTileEntities",
+        "Chunk.getAllTileEntities"
+      ],
+      "status": "verified",
+      "test": "LegacyApiAliasesTest"
     }
   ]
 }
