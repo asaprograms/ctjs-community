@@ -33,6 +33,9 @@ class LegacyApiAliasesTest {
         assertStaticMethod(Register::class.java, "registerHitBlock")
         assertStaticMethod(Register::class.java, "registerBlockBreak")
         assertStaticMethod(Register::class.java, "registerScreenshotTaken")
+        assertStaticMethod(Register::class.java, "registerRenderTileEntity")
+        assertStaticMethod(Register::class.java, "registerPostRenderEntity")
+        assertStaticMethod(Register::class.java, "registerPostRenderTileEntity")
     }
 
     private fun assertMethod(type: Class<*>, name: String) {

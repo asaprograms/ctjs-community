@@ -33,6 +33,13 @@ if (typeof screenshotTrigger.register !== "function") {
     throw new Error("Legacy screenshotTaken trigger is not exported");
 }
 
+for (const triggerName of ["renderTileEntity", "postRenderEntity", "postRenderTileEntity"]) {
+    const trigger = register(triggerName, () => {}).unregister();
+    if (typeof trigger.setFilteredClasses !== "function") {
+        throw new Error(`Legacy ${triggerName} class filter is not exported`);
+    }
+}
+
 register("command", () => {
     ChatLib.chat("&aLegacy module smoke test passed");
 }).setName("ctlegacytest");

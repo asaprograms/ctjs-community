@@ -736,6 +736,12 @@ object Register {
         return RenderEntityTrigger(method)
     }
 
+    /** Registers a trigger that runs after an entity is submitted for rendering. */
+    @JvmStatic
+    fun registerPostRenderEntity(method: Any): Trigger {
+        return RenderEntityTrigger(method, TriggerType.POST_RENDER_ENTITY)
+    }
+
     /**
      * Registers a new trigger that runs whenever a block entity is rendered
      *
@@ -756,6 +762,20 @@ object Register {
     fun registerRenderBlockEntity(method: Any): Trigger {
         return RenderBlockEntityTrigger(method)
     }
+
+    /** Legacy name for [registerRenderBlockEntity]. */
+    @JvmStatic
+    fun registerRenderTileEntity(method: Any): Trigger = registerRenderBlockEntity(method)
+
+    /** Registers a trigger that runs after a block entity is submitted for rendering. */
+    @JvmStatic
+    fun registerPostRenderBlockEntity(method: Any): Trigger {
+        return RenderBlockEntityTrigger(method, TriggerType.POST_RENDER_BLOCK_ENTITY)
+    }
+
+    /** Legacy 1.8.9 name for [registerPostRenderBlockEntity]. */
+    @JvmStatic
+    fun registerPostRenderTileEntity(method: Any): Trigger = registerPostRenderBlockEntity(method)
 
     /**
      * Registers a new trigger that runs after the current screen is rendered

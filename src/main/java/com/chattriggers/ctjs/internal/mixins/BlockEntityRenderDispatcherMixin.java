@@ -52,5 +52,24 @@ public abstract class BlockEntityRenderDispatcherMixin {
         }
     }
 
+    @Inject(method = "submit", at = @At("RETURN"))
+    private <S extends BlockEntityRenderState> void ctjs$postRenderBlockEntity(
+        S renderState,
+        PoseStack matrices,
+        SubmitNodeCollector queue,
+        CameraRenderState cameraRenderState,
+        CallbackInfo ci
+    ) {
+        ExtractedBlockEntity extracted = ctjs$extractedBlockEntities.get(renderState);
+        if (extracted != null) {
+            double x = renderState.blockPos.getX() - cameraRenderState.pos.x;
+            double y = renderState.blockPos.getY() - cameraRenderState.pos.y;
+            double z = renderState.blockPos.getZ() - cameraRenderState.pos.z;
+            CTEvents.POST_RENDER_BLOCK_ENTITY.invoker().render(
+                matrices, extracted.blockEntity(), x, y, z, extracted.partialTicks()
+            );
+        }
+    }
+
     private record ExtractedBlockEntity(BlockEntity blockEntity, float partialTicks) {}
 }

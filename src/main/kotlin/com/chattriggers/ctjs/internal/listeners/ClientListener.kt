@@ -29,6 +29,7 @@ import net.fabricmc.fabric.api.client.screen.v1.ScreenKeyboardEvents
 import net.fabricmc.fabric.api.event.player.*
 import net.minecraft.network.chat.Component
 import net.minecraft.world.InteractionResult
+import org.joml.Vector3f
 import org.lwjgl.glfw.GLFW
 import org.mozilla.javascript.Context
 
@@ -145,6 +146,26 @@ object ClientListener : Initializer {
         CTEvents.RENDER_BLOCK_ENTITY.register { stack, blockEntity, partialTicks, ci ->
             Renderer.withMatrix(stack, partialTicks) {
                 TriggerType.RENDER_BLOCK_ENTITY.triggerAll(BlockEntity(blockEntity), partialTicks, ci)
+            }
+        }
+
+        CTEvents.POST_RENDER_ENTITY.register { stack, entity, x, y, z, partialTicks ->
+            Renderer.withMatrix(stack, partialTicks) {
+                TriggerType.POST_RENDER_ENTITY.triggerAll(
+                    Entity.fromMC(entity),
+                    Vector3f(x.toFloat(), y.toFloat(), z.toFloat()),
+                    partialTicks,
+                )
+            }
+        }
+
+        CTEvents.POST_RENDER_BLOCK_ENTITY.register { stack, blockEntity, x, y, z, partialTicks ->
+            Renderer.withMatrix(stack, partialTicks) {
+                TriggerType.POST_RENDER_BLOCK_ENTITY.triggerAll(
+                    BlockEntity(blockEntity),
+                    Vector3f(x.toFloat(), y.toFloat(), z.toFloat()),
+                    partialTicks,
+                )
             }
         }
 
