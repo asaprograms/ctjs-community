@@ -807,6 +807,12 @@ object Register {
         return EventTrigger(method, TriggerType.RENDER_SLOT)
     }
 
+    /** Registers a trigger before the hovered container slot highlight is drawn. */
+    @JvmStatic
+    fun registerRenderSlotHighlight(method: Any): Trigger {
+        return EventTrigger(method, TriggerType.RENDER_SLOT_HIGHLIGHT)
+    }
+
     /**
      * Registers a new trigger that runs whenever a particle is spawned
      *

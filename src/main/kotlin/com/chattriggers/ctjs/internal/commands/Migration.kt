@@ -64,7 +64,6 @@ internal object Migration {
             "noteBlockPlay",
             "noteBlockChange",
             "renderItemOverlayIntoGui",
-            "renderSlotHighlight",
         )
 
         """

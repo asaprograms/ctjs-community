@@ -40,6 +40,11 @@ for (const triggerName of ["renderTileEntity", "postRenderEntity", "postRenderTi
     }
 }
 
+const slotHighlightTrigger = register("renderSlotHighlight", () => {}).unregister();
+if (typeof slotHighlightTrigger.register !== "function") {
+    throw new Error("Legacy renderSlotHighlight trigger is not exported");
+}
+
 register("command", () => {
     ChatLib.chat("&aLegacy module smoke test passed");
 }).setName("ctlegacytest");

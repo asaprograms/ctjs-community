@@ -3,6 +3,7 @@ package com.chattriggers.ctjs.internal.engine
 import com.chattriggers.ctjs.MCBlockEntity
 import com.chattriggers.ctjs.MCBlockPos
 import com.chattriggers.ctjs.MCEntity
+import com.chattriggers.ctjs.api.triggers.CancellableEvent
 import com.mojang.brigadier.CommandDispatcher
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
 import net.fabricmc.fabric.api.event.Event
@@ -52,6 +53,17 @@ internal object CTEvents {
         fun render(context: GuiGraphicsExtractor, slot: Slot, screen: Screen, ci: CallbackInfo)
     }
 
+    fun interface RenderSlotHighlightCallback {
+        fun render(
+            context: GuiGraphicsExtractor,
+            mouseX: Int,
+            mouseY: Int,
+            slot: Slot,
+            screen: Screen,
+            event: CancellableEvent,
+        )
+    }
+
     fun interface PacketReceivedCallback {
         fun receive(packet: Packet<*>, cb: CallbackInfo)
     }
@@ -96,6 +108,13 @@ internal object CTEvents {
     val RENDER_SLOT = make<RenderSlotCallback> { listeners ->
         RenderSlotCallback { context, slot, screen, ci ->
             listeners.forEach { it.render(context, slot, screen, ci) }
+        }
+    }
+
+    @JvmField
+    val RENDER_SLOT_HIGHLIGHT = make<RenderSlotHighlightCallback> { listeners ->
+        RenderSlotHighlightCallback { context, mouseX, mouseY, slot, screen, event ->
+            listeners.forEach { it.render(context, mouseX, mouseY, slot, screen, event) }
         }
     }
 

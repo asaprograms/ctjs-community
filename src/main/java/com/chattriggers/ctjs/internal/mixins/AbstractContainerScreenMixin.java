@@ -3,6 +3,7 @@ package com.chattriggers.ctjs.internal.mixins;
 import com.chattriggers.ctjs.api.inventory.Item;
 import com.chattriggers.ctjs.api.message.TextComponent;
 import com.chattriggers.ctjs.api.triggers.TriggerType;
+import com.chattriggers.ctjs.api.triggers.CancellableEvent;
 import com.chattriggers.ctjs.internal.engine.CTEvents;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
@@ -23,6 +24,11 @@ import java.util.Objects;
 
 @Mixin(AbstractContainerScreen.class)
 public class AbstractContainerScreenMixin extends Screen {
+    private int ctjs$slotHighlightMouseX;
+    private int ctjs$slotHighlightMouseY;
+    private boolean ctjs$cancelSlotHighlight;
+    private GuiGraphicsExtractor ctjs$slotHighlightGraphics;
+
     @Shadow
     protected Slot hoveredSlot;
 
@@ -67,5 +73,41 @@ public class AbstractContainerScreenMixin extends Screen {
     @Inject(method = "extractSlot", at = @At("HEAD"), cancellable = true)
     private void injectRenderSlot(GuiGraphicsExtractor graphics, Slot slot, int mouseX, int mouseY, CallbackInfo ci) {
         CTEvents.RENDER_SLOT.invoker().render(graphics, slot, this, ci);
+    }
+
+    @Inject(method = "extractSlots", at = @At("HEAD"))
+    private void ctjs$captureSlotHighlightContext(GuiGraphicsExtractor graphics, int mouseX, int mouseY, CallbackInfo ci) {
+        ctjs$slotHighlightGraphics = graphics;
+        ctjs$slotHighlightMouseX = mouseX;
+        ctjs$slotHighlightMouseY = mouseY;
+        ctjs$cancelSlotHighlight = false;
+    }
+
+    @Inject(method = "extractSlotHighlightBack", at = @At("HEAD"), cancellable = true)
+    private void ctjs$renderSlotHighlight(GuiGraphicsExtractor graphics, CallbackInfo ci) {
+        if (hoveredSlot == null) {
+            return;
+        }
+
+        CancellableEvent event = new CancellableEvent();
+        CTEvents.RENDER_SLOT_HIGHLIGHT.invoker().render(
+            ctjs$slotHighlightGraphics != null ? ctjs$slotHighlightGraphics : graphics,
+            ctjs$slotHighlightMouseX,
+            ctjs$slotHighlightMouseY,
+            hoveredSlot,
+            this,
+            event
+        );
+        ctjs$cancelSlotHighlight = event.isCancelled();
+        if (ctjs$cancelSlotHighlight) {
+            ci.cancel();
+        }
+    }
+
+    @Inject(method = "extractSlotHighlightFront", at = @At("HEAD"), cancellable = true)
+    private void ctjs$cancelFrontSlotHighlight(GuiGraphicsExtractor graphics, CallbackInfo ci) {
+        if (ctjs$cancelSlotHighlight) {
+            ci.cancel();
+        }
     }
 }

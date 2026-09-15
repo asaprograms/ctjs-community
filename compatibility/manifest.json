@@ -94,6 +94,13 @@
       "coverage": ["wrapped-source-entity", "camera-relative-position", "partial-ticks", "class-filtering"],
       "status": "implemented",
       "test": "Render submission tail mixins and legacy registration smoke"
+    },
+    {
+      "id": "legacy-slot-highlight-trigger",
+      "source": "ChatTriggers 2.2.0 renderSlotHighlight contract",
+      "coverage": ["mouse-position", "wrapped-slot", "container-screen", "two-layer-cancellation"],
+      "status": "implemented",
+      "test": "Container highlight mixin validation and legacy registration smoke"
     }
   ]
 }
