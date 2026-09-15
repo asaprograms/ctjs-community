@@ -697,7 +697,7 @@ object DynamicCommands : CommandCollection() {
         throw SimpleCommandExceptionType(message).createWithContext(reader)
 
     private fun getMockCommandSource(): CommandSourceStack {
-        return CommandSourceStack(
+        return com.chattriggers.ctjs.internal.commands.ClientCoordinateSource.create(
             object : CommandSource {
                 override fun sendSystemMessage(message: Component) {
                     ChatLib.chat(message)
@@ -708,11 +708,8 @@ object DynamicCommands : CommandCollection() {
             },
             Player.getPos().toVec3d(),
             Player.getRotation(),
-            null as ServerLevel,
-            { true }, // TODO: figure out if `true` should be returned or `false`
             Player.getName(),
             Player.getDisplayName(),
-            null as MinecraftServer,
             Player.toMC(),
         )
     }
