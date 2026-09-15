@@ -38,6 +38,7 @@ enum class TriggerType : ITriggerType {
     SERVER_DISCONNECT,
     GUI_CLOSED,
     DROP_ITEM,
+    SCREENSHOT_TAKEN,
 
     // rendering
     PRE_RENDER_WORLD,

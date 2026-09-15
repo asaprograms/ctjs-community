@@ -38,7 +38,6 @@ internal object Migration {
 
     private val removedTriggersRegex = let {
         val triggers = setOf(
-            "screenshotTaken",
             "pickupItem",
             "chatComponentClicked",
             "chatComponentHovered",

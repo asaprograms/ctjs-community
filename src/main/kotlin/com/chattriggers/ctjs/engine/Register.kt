@@ -433,6 +433,16 @@ object Register {
     }
 
     /**
+     * Registers a trigger that runs before a screenshot is taken.
+     *
+     * Passes the screenshot file name and a cancellable event.
+     */
+    @JvmStatic
+    fun registerScreenshotTaken(method: Any): Trigger {
+        return EventTrigger(method, TriggerType.SCREENSHOT_TAKEN)
+    }
+
+    /**
      * Registers a new trigger that runs before a message is sent in chat.
      *
      * Passes through two arguments:
