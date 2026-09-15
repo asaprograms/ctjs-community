@@ -74,7 +74,7 @@ object ModuleManager {
         modules.filter {
             it.metadata.entry != null
         }.forEach {
-            JSLoader.entryPass(it, File(it.folder, it.metadata.entry!!).toURI())
+            JSLoader.entryPass(it, ModulePaths.resolveEntry(it.folder, it.metadata.entry!!).toURI())
             completed++
             completionListener(completed.toFloat() / total)
         }
