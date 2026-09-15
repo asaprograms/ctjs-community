@@ -19,7 +19,7 @@ vigilance = "312"
 
 modmenu = "15.0.0"
 devauth = "1.2.1"
-dokka = "1.9.20"
+dokka = "2.2.0"
 
 # Plugin Versions
 kotlin = "2.3.20"
@@ -47,8 +47,6 @@ vigilance = { module = "gg.essential:vigilance", version.ref = "vigilance" }
 
 #modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }
 devauth = { module = "me.djtheredstoner:DevAuth-fabric", version.ref = "devauth" }
-versioning = { module = "org.jetbrains.dokka:versioning-plugin", version.ref = "dokka" }
-
 ksp = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "ksp" }
 gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 
