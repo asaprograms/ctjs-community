@@ -1,0 +1,7 @@
+{
+  "name": "LegacySmokeTest",
+  "creator": "CTJS community test fixture",
+  "version": "1.0.0",
+  "entry": "index.js",
+  "description": "Legacy-style runtime smoke test"
+}
