@@ -1,0 +1,48 @@
+package com.chattriggers.ctjs.api.inventory
+
+import com.chattriggers.ctjs.api.CTWrapper
+import com.chattriggers.ctjs.api.message.TextComponent
+import com.chattriggers.ctjs.api.world.block.BlockType
+import com.chattriggers.ctjs.MCItem
+import com.chattriggers.ctjs.internal.utils.toIdentifier
+import net.minecraft.core.component.DataComponents
+import net.minecraft.world.item.Items
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.network.chat.CommonComponents
+
+class ItemType(override val mcValue: MCItem) : CTWrapper<MCItem> {
+    init {
+        require(mcValue !== Items.AIR) {
+            "Can not wrap air as an ItemType"
+        }
+    }
+
+    constructor(itemName: String) : this(BuiltInRegistries.ITEM.getValue(itemName.toIdentifier()))
+
+    constructor(id: Int) : this(BuiltInRegistries.ITEM.byId(id))
+
+    constructor(blockType: BlockType) : this(blockType.toMC().asItem())
+
+    fun getName(): String = getNameComponent().formattedText
+
+    fun getNameComponent(): TextComponent = TextComponent(mcValue.components().getOrDefault(DataComponents.ITEM_NAME, CommonComponents.EMPTY))
+
+    fun getId(): Int = MCItem.getId(mcValue)
+
+    fun getTranslationKey(): String = mcValue.descriptionId
+
+    fun getRegistryName(): String = BuiltInRegistries.ITEM.getKey(mcValue).toString()
+
+    fun asItem(): Item = Item(this)
+
+    companion object {
+        @JvmStatic
+        fun fromMC(mcValue: MCItem): ItemType? {
+            return if (mcValue === Items.AIR) {
+                null
+            } else {
+                ItemType(mcValue)
+            }
+        }
+    }
+}

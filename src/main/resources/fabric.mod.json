@@ -1,0 +1,40 @@
+{
+    "schemaVersion": 1,
+    "id": "ctjs",
+    "name": "ChatTriggers",
+    "version": "$version",
+    "description": "A maintained community edition of the ChatTriggers JavaScript modding platform",
+    "authors": ["Ecolsson", "FalseHonesty", "kerbybit"],
+    "contributors": ["Squagward", "Debuggings", "DJtheRedstoner", "srockw", "DocilElm"],
+    "icon": "assets/ctjs/logo.png",
+    "license": ["MIT"],
+    "contact": {
+        "homepage": "https://ctjs.net",
+        "sources": "https://github.com/asaprograms/ctjs-community",
+        "issues": "https://github.com/asaprograms/ctjs-community/issues"
+    },
+    "environment": "client",
+    "entrypoints": {
+        "preLaunch": [
+            "com.chattriggers.ctjs.internal.launch.CTJSPreLaunch"
+        ],
+        "client": ["com.chattriggers.ctjs.CTJS"],
+        "modmenu": [
+            "com.chattriggers.ctjs.internal.compat.ModMenuEntry"
+        ]
+    },
+    "mixins": ["ctjs.mixins.json"],
+    "depends": {
+        "fabricloader": ">=$loader_version",
+        "fabric-api": ">=$fabric_api_version",
+        "fabric-language-kotlin": ">=$fabric_kotlin_version"
+    },
+    "custom": {
+        "modmenu": {
+            "links": {
+                "modmenu.discord": "https://discord.gg/chattriggers"
+            }
+        }
+    },
+    "accessWidener": "ctjs.accesswidener"
+}

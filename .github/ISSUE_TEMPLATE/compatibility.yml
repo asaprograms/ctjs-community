@@ -1,0 +1,38 @@
+name: Module compatibility report
+description: Report a module that behaves differently on a maintained Fabric release
+title: "[Compatibility] "
+labels: ["compatibility"]
+body:
+  - type: input
+    id: module
+    attributes:
+      label: Module and version
+    validations:
+      required: true
+  - type: dropdown
+    id: minecraft
+    attributes:
+      label: Minecraft version
+      options:
+        - 26.2
+        - 26.1.2
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior and logs
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps
+    validations:
+      required: true
