@@ -20,6 +20,9 @@ sealed class ClassFilterTrigger<Wrapped, Unwrapped>(
      */
     fun setFilteredClass(clazz: Class<Unwrapped>) = setFilteredClasses(listOf(clazz))
 
+    /** Legacy 1.8.9 name for [setFilteredClass]. */
+    fun setPacketClass(clazz: Class<Unwrapped>) = setFilteredClass(clazz)
+
     /**
      * Sets which classes this trigger should run for. If the list is empty, it runs
      * for every class.
@@ -28,6 +31,9 @@ sealed class ClassFilterTrigger<Wrapped, Unwrapped>(
      * @return This trigger object for chaining
      */
     fun setFilteredClasses(classes: List<Class<Unwrapped>>) = apply { triggerClasses = classes }
+
+    /** Legacy 1.8.9 name for [setFilteredClasses]. */
+    fun setPacketClasses(classes: List<Class<Unwrapped>>) = setFilteredClasses(classes)
 
     override fun trigger(args: Array<out Any?>) {
         val placeholder = evalTriggerType(args)
