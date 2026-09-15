@@ -80,6 +80,13 @@
       "coverage": ["generated-file-name", "explicit-file-name", "capture-cancellation"],
       "status": "implemented",
       "test": "Screenshot mixin target validation and legacy registration smoke"
+    },
+    {
+      "id": "entity-render-state-bridge",
+      "source": "ChatTriggers renderEntity and renderBlockEntity contracts",
+      "coverage": ["source-entity-identity", "partial-ticks", "render-cancellation"],
+      "status": "implemented",
+      "test": "Minecraft 26.2 render pipeline mixin validation"
     }
   ]
 }
