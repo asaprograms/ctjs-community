@@ -1,0 +1,9 @@
+{
+  "name": "LegacyFixture",
+  "creator": "ChatTriggers contributors",
+  "version": "1.0.0",
+  "entry": "index.js",
+  "requires": ["Vigilance"],
+  "description": "Representative public 2.x module metadata",
+  "ignored": ["README.md"]
+}
