@@ -44,6 +44,9 @@ class Inventory {
         return stack?.let(Item::fromMC)
     }
 
+    /** Legacy 1.8.9 name for [getStackInSlot]. */
+    fun getItemInSlot(slot: Int) = getStackInSlot(slot)
+
     /**
      * Returns the window identifier number of this Inventory.
      * This Inventory must be backed by a HandledScreen [isScreen]

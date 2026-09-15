@@ -66,6 +66,9 @@ class Chunk(override val mcValue: MCChunk) : CTWrapper<MCChunk> {
         return mcValue.asMixin<ChunkAccessAccessor>().blockEntities.values.map(::BlockEntity)
     }
 
+    /** Legacy 1.8.9 name for [getAllBlockEntities]. */
+    fun getAllTileEntities() = getAllBlockEntities()
+
     /**
      * Gets every block entity in this chunk of a certain class
      *
@@ -77,4 +80,7 @@ class Chunk(override val mcValue: MCChunk) : CTWrapper<MCChunk> {
             clazz.isInstance(it.toMC())
         }
     }
+
+    /** Legacy 1.8.9 name for [getAllBlockEntitiesOfType]. */
+    fun getAllTileEntitiesOfType(clazz: Class<*>) = getAllBlockEntitiesOfType(clazz)
 }

@@ -49,6 +49,9 @@ object Scoreboard {
         return scoreboardTitle
     }
 
+    /** Legacy 1.8.9 name for [getTitle]. */
+    fun getScoreboardTitle() = getTitle()
+
     /**
      * Sets the scoreboard title.
      *

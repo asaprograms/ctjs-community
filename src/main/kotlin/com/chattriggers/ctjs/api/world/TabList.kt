@@ -104,6 +104,9 @@ object TabList {
         return tabListFooter
     }
 
+    /** Legacy 1.8.9 name for [getFooterComponent]. */
+    fun getFooterMessage() = getFooterComponent()
+
     /**
      * Gets the tab list footer as a string.
      * Be aware that this can contain color codes.

@@ -211,12 +211,18 @@ object World {
         return blockEntities
     }
 
+    /** Legacy 1.8.9 name for [getAllBlockEntities]. */
+    fun getAllTileEntities() = getAllBlockEntities()
+
     @JvmStatic
     fun getAllBlockEntitiesOfType(clazz: Class<*>): List<BlockEntity> {
         return getAllBlockEntities().filter {
             clazz.isInstance(it.toMC())
         }
     }
+
+    /** Legacy 1.8.9 name for [getAllBlockEntitiesOfType]. */
+    fun getAllTileEntitiesOfType(clazz: Class<*>) = getAllBlockEntitiesOfType(clazz)
 
     /**
      * Returns the TPS of the current world.
