@@ -66,6 +66,13 @@
       "coverage": ["mouse-position", "button", "screen", "cancellation"],
       "status": "implemented",
       "test": "Fabric screen release callback and legacy registration smoke"
+    },
+    {
+      "id": "legacy-player-action-triggers",
+      "source": "ChatTriggers 2.2.0 attackEntity, hitBlock, and blockBreak contracts",
+      "coverage": ["wrapped-entity", "wrapped-block", "interaction-cancellation", "block-destroy"],
+      "status": "implemented",
+      "test": "Fabric interaction callbacks and legacy registration smoke"
     }
   ]
 }

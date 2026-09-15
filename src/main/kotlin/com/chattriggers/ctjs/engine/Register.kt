@@ -495,6 +495,24 @@ object Register {
         return EventTrigger(method, TriggerType.PLAYER_INTERACT)
     }
 
+    /** Legacy trigger fired when the player left-clicks an entity. */
+    @JvmStatic
+    fun registerAttackEntity(method: Any): Trigger {
+        return EventTrigger(method, TriggerType.ATTACK_ENTITY)
+    }
+
+    /** Legacy trigger fired once when the player starts hitting a block. */
+    @JvmStatic
+    fun registerHitBlock(method: Any): Trigger {
+        return EventTrigger(method, TriggerType.HIT_BLOCK)
+    }
+
+    /** Legacy trigger fired immediately before a block is destroyed. */
+    @JvmStatic
+    fun registerBlockBreak(method: Any): Trigger {
+        return RegularTrigger(method, TriggerType.BLOCK_BREAK)
+    }
+
     /**
      * Registers a new trigger that runs when an entity is damaged by the player
      *

@@ -21,6 +21,13 @@ if (typeof mouseReleaseTrigger.register !== "function") {
     throw new Error("Legacy guiMouseRelease trigger is not exported");
 }
 
+for (const triggerName of ["attackEntity", "hitBlock", "blockBreak"]) {
+    const trigger = register(triggerName, () => {}).unregister();
+    if (typeof trigger.register !== "function") {
+        throw new Error(`Legacy ${triggerName} trigger is not exported`);
+    }
+}
+
 register("command", () => {
     ChatLib.chat("&aLegacy module smoke test passed");
 }).setName("ctlegacytest");

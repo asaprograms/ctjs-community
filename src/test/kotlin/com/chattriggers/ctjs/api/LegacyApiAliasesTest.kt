@@ -29,6 +29,9 @@ class LegacyApiAliasesTest {
         assertMethod(Chunk::class.java, "getAllTileEntitiesOfType")
         assertStaticMethod(Register::class.java, "registerRenderSlot")
         assertStaticMethod(Register::class.java, "registerGuiMouseRelease")
+        assertStaticMethod(Register::class.java, "registerAttackEntity")
+        assertStaticMethod(Register::class.java, "registerHitBlock")
+        assertStaticMethod(Register::class.java, "registerBlockBreak")
     }
 
     private fun assertMethod(type: Class<*>, name: String) {
