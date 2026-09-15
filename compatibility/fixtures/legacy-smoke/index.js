@@ -2,6 +2,15 @@ const marker = "CTJS_LEGACY_SMOKE_LOADED";
 
 console.log(marker);
 
+if (typeof Client.getChatGUI !== "function") {
+    throw new Error("Client.getChatGUI legacy alias is not exported");
+}
+
+const packetTrigger = register("packetReceived", () => {}).unregister();
+if (typeof packetTrigger.setPacketClass !== "function" || typeof packetTrigger.setPacketClasses !== "function") {
+    throw new Error("Legacy packet filter aliases are not exported");
+}
+
 register("command", () => {
     ChatLib.chat("&aLegacy module smoke test passed");
 }).setName("ctlegacytest");

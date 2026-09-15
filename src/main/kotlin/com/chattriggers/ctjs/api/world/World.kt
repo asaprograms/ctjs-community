@@ -212,6 +212,7 @@ object World {
     }
 
     /** Legacy 1.8.9 name for [getAllBlockEntities]. */
+    @JvmStatic
     fun getAllTileEntities() = getAllBlockEntities()
 
     @JvmStatic
@@ -222,6 +223,7 @@ object World {
     }
 
     /** Legacy 1.8.9 name for [getAllBlockEntitiesOfType]. */
+    @JvmStatic
     fun getAllTileEntitiesOfType(clazz: Class<*>) = getAllBlockEntitiesOfType(clazz)
 
     /**

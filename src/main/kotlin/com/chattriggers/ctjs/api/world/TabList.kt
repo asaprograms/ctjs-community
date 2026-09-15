@@ -56,6 +56,10 @@ object TabList {
         return tabListHeader
     }
 
+    /** Legacy 1.8.9 name for [getHeaderComponent]. */
+    @JvmStatic
+    fun getHeaderMessage() = getHeaderComponent()
+
     /**
      * Gets the tab list header as a formatted string.
      *
@@ -105,6 +109,7 @@ object TabList {
     }
 
     /** Legacy 1.8.9 name for [getFooterComponent]. */
+    @JvmStatic
     fun getFooterMessage() = getFooterComponent()
 
     /**

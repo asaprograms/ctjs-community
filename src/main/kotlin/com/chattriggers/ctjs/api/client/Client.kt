@@ -115,6 +115,7 @@ object Client {
     fun getChatGui(): ChatComponent = getMinecraft().gui.hud.chat
 
     /** Legacy 1.8.9 capitalization for [getChatGui]. */
+    @JvmStatic
     fun getChatGUI() = getChatGui()
 
     @JvmStatic

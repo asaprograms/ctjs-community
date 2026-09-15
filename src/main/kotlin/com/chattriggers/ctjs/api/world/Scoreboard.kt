@@ -50,6 +50,7 @@ object Scoreboard {
     }
 
     /** Legacy 1.8.9 name for [getTitle]. */
+    @JvmStatic
     fun getScoreboardTitle() = getTitle()
 
     /**
