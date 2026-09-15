@@ -1,7 +1,4 @@
-//import org.jetbrains.dokka.versioning.VersioningConfiguration
-//import org.jetbrains.dokka.versioning.VersioningPlugin
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import java.net.URI
 
 //buildscript {
 //    dependencies {
@@ -43,8 +40,6 @@ dependencies {
 
 //    modApi(libs.modmenu)
 //    modRuntimeOnly(libs.devauth)
-    dokkaPlugin(libs.versioning)
-
     implementation(kotlin("stdlib-jdk8"))
     testImplementation(kotlin("test"))
 //    implementation(project(":typing-generator"))
@@ -114,51 +109,31 @@ tasks {
         }
     }
 
-    dokkaHtml {
-        // Just use the module name here since the MC version doesn't affect CT's API
-        // across the same mod version
-        moduleVersion.set(project.version.toString())
+}
+
+dokka {
+    dokkaPublications.html {
         moduleName.set("ctjs")
-
-        val docVersionsDir = projectDir.resolve("build/javadocs")
-
-        outputDirectory.set(file(docVersionsDir))
-
-//        pluginConfiguration<VersioningPlugin, VersioningConfiguration> {
-//            version = project.version.toString()
-//            olderVersionsDir = docVersionsDir
-//            renderVersionsNavigationOnAllPages = true
-//        }
-
+        moduleVersion.set(project.version.toString())
+        outputDirectory.set(layout.buildDirectory.dir("javadocs"))
         suppressObviousFunctions.set(true)
         suppressInheritedMembers.set(true)
+    }
 
-        val branch = System.getenv("GITHUB_SHA") ?: "main"
-        dokkaSourceSets {
-            configureEach {
-                jdkVersion.set(25)
+    dokkaSourceSets.main {
+        jdkVersion.set(25)
 
-                perPackageOption {
-                    matchingRegex.set("com\\.chattriggers\\.ctjs\\.internal(\$|\\.).*")
-                    suppress.set(true)
-                }
-
-                sourceLink {
-                    localDirectory.set(file("src/main/kotlin"))
-                    remoteUrl.set(URI.create("https://github.com/asaprograms/ctjs-community/blob/$branch/src/main/kotlin").toURL())
-                    remoteLineSuffix.set("#L")
-                }
-
-                // maybe add mcsrc link to the version
-//                externalDocumentationLink {
-//                    val yarnVersion = libs.versions.yarn.get()
-//
-//                    url.set(URI.create("https://maven.fabricmc.net/docs/yarn-$yarnVersion/").toURL())
-//                    packageListUrl.set(URI.create("https://maven.fabricmc.net/docs/yarn-$yarnVersion/element-list").toURL())
-//                }
-            }
+        perPackageOption {
+            matchingRegex.set("com\\.chattriggers\\.ctjs\\.internal(\$|\\.).*")
+            suppress.set(true)
         }
 
+        val branch = System.getenv("GITHUB_SHA") ?: "main"
+        sourceLink {
+            localDirectory.set(file("src/main/kotlin"))
+            remoteUrl("https://github.com/asaprograms/ctjs-community/blob/$branch/src/main/kotlin")
+            remoteLineSuffix.set("#L")
+        }
     }
 }
 
