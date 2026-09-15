@@ -14,6 +14,13 @@
       "coverage": ["nested-files", "path-traversal-rejection"],
       "status": "verified",
       "test": "FileLibTest"
+    },
+    {
+      "id": "legacy-packet-filter-names",
+      "source": "ChatTriggers 2.x ClassFilterTrigger API",
+      "coverage": ["setPacketClass", "setPacketClasses"],
+      "status": "verified",
+      "test": "ClassFilterCompatibilityTest"
     }
   ]
 }
