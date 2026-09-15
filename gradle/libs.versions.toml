@@ -19,7 +19,7 @@ vigilance = "312"
 
 modmenu = "15.0.0"
 devauth = "1.2.1"
-dokka = "1.9.20"
+dokka = "2.2.0"
 
 # Plugin Versions
 kotlin = "2.3.20"
