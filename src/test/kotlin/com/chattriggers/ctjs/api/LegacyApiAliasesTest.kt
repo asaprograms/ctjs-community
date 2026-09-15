@@ -10,23 +10,32 @@ import com.chattriggers.ctjs.api.world.TabList
 import com.chattriggers.ctjs.api.world.World
 import kotlin.test.Test
 import kotlin.test.assertTrue
+import java.lang.reflect.Modifier
 
 class LegacyApiAliasesTest {
     @Test
     fun `common 1_8_9 method names remain exported`() {
-        assertMethod(Client::class.java, "getChatGUI")
+        assertStaticMethod(Client::class.java, "getChatGUI")
         assertMethod(LivingEntity::class.java, "getItemInSlot")
         assertMethod(Inventory::class.java, "getItemInSlot")
         assertMethod(Item::class.java, "isDamagable")
-        assertMethod(Scoreboard::class.java, "getScoreboardTitle")
-        assertMethod(TabList::class.java, "getFooterMessage")
-        assertMethod(World::class.java, "getAllTileEntities")
-        assertMethod(World::class.java, "getAllTileEntitiesOfType")
+        assertStaticMethod(Scoreboard::class.java, "getScoreboardTitle")
+        assertStaticMethod(TabList::class.java, "getFooterMessage")
+        assertStaticMethod(TabList::class.java, "getHeaderMessage")
+        assertStaticMethod(World::class.java, "getAllTileEntities")
+        assertStaticMethod(World::class.java, "getAllTileEntitiesOfType")
         assertMethod(Chunk::class.java, "getAllTileEntities")
         assertMethod(Chunk::class.java, "getAllTileEntitiesOfType")
     }
 
     private fun assertMethod(type: Class<*>, name: String) {
         assertTrue(type.methods.any { it.name == name }, "Expected ${type.simpleName}.$name to be exported")
+    }
+
+    private fun assertStaticMethod(type: Class<*>, name: String) {
+        assertTrue(
+            type.methods.any { it.name == name && Modifier.isStatic(it.modifiers) },
+            "Expected static ${type.simpleName}.$name to be exported",
+        )
     }
 }

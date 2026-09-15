@@ -32,11 +32,26 @@
         "Item.isDamagable",
         "Scoreboard.getScoreboardTitle",
         "TabList.getFooterMessage",
+        "TabList.getHeaderMessage",
         "World.getAllTileEntities",
         "Chunk.getAllTileEntities"
       ],
       "status": "verified",
       "test": "LegacyApiAliasesTest"
+    },
+    {
+      "id": "legacy-runtime-smoke",
+      "source": "compatibility/fixtures/legacy-smoke",
+      "coverage": [
+        "module-entry",
+        "global-register",
+        "command-trigger",
+        "Client.getChatGUI",
+        "setPacketClass",
+        "setPacketClasses"
+      ],
+      "status": "verified",
+      "test": "runClient on Minecraft 26.2 and 26.1.2"
     }
   ]
 }
