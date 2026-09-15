@@ -59,6 +59,7 @@ internal object MouseListener : Initializer {
 
             ScreenMouseEvents.allowMouseRelease(screen).register { _, click ->
                 val event = CancellableEvent()
+                TriggerType.GUI_MOUSE_RELEASE.triggerAll(click.x, click.y, click.button(), screen, event)
                 TriggerType.GUI_MOUSE_CLICK.triggerAll(click.x, click.y, click.button(), false, screen, event)
 
                 !event.isCanceled()

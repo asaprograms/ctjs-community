@@ -586,6 +586,16 @@ object Register {
     }
 
     /**
+     * Legacy trigger fired when a mouse button is released over a screen.
+     *
+     * Passes mouse x, mouse y, the button, the screen, and a cancellable event.
+     */
+    @JvmStatic
+    fun registerGuiMouseRelease(method: Any): Trigger {
+        return EventTrigger(method, TriggerType.GUI_MOUSE_RELEASE)
+    }
+
+    /**
      * Registers a new trigger that runs whenever a mouse button held and dragged
      * with a gui open
      *

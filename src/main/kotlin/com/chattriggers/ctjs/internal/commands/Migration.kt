@@ -71,7 +71,6 @@ internal object Migration {
             "attackEntity",
             "hitBlock",
             "blockBreak",
-            "guiMouseRelease"
         )
 
         """

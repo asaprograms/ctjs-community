@@ -16,6 +16,11 @@ if (typeof renderSlotTrigger.register !== "function") {
     throw new Error("Legacy renderSlot trigger is not exported");
 }
 
+const mouseReleaseTrigger = register("guiMouseRelease", () => {}).unregister();
+if (typeof mouseReleaseTrigger.register !== "function") {
+    throw new Error("Legacy guiMouseRelease trigger is not exported");
+}
+
 register("command", () => {
     ChatLib.chat("&aLegacy module smoke test passed");
 }).setName("ctlegacytest");

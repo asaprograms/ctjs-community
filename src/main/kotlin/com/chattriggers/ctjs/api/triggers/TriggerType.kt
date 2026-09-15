@@ -27,6 +27,7 @@ enum class TriggerType : ITriggerType {
     PLAYER_INTERACT,
     GUI_KEY,
     GUI_MOUSE_CLICK,
+    GUI_MOUSE_RELEASE,
     GUI_MOUSE_DRAG,
     PACKET_SENT,
     PACKET_RECEIVED,

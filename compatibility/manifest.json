@@ -59,6 +59,13 @@
       "coverage": ["slot-wrapper", "container-screen", "render-cancellation"],
       "status": "implemented",
       "test": "Mixin target validation and legacy registration smoke"
+    },
+    {
+      "id": "legacy-gui-mouse-release",
+      "source": "ChatTriggers 2.2.0 guiMouseRelease contract",
+      "coverage": ["mouse-position", "button", "screen", "cancellation"],
+      "status": "implemented",
+      "test": "Fabric screen release callback and legacy registration smoke"
     }
   ]
 }
