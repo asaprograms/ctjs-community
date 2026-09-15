@@ -52,6 +52,13 @@
       ],
       "status": "verified",
       "test": "runClient on Minecraft 26.2 and 26.1.2"
+    },
+    {
+      "id": "legacy-render-slot",
+      "source": "ChatTriggers 2.2.0 renderSlot contract",
+      "coverage": ["slot-wrapper", "container-screen", "render-cancellation"],
+      "status": "implemented",
+      "test": "Mixin target validation and legacy registration smoke"
     }
   ]
 }

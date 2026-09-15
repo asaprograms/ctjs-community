@@ -5,6 +5,7 @@ import com.chattriggers.ctjs.api.entity.BlockEntity
 import com.chattriggers.ctjs.api.entity.Entity
 import com.chattriggers.ctjs.api.entity.PlayerInteraction
 import com.chattriggers.ctjs.api.inventory.Item
+import com.chattriggers.ctjs.api.inventory.Slot
 import com.chattriggers.ctjs.api.message.TextComponent
 import com.chattriggers.ctjs.api.render.Renderer
 import com.chattriggers.ctjs.api.triggers.CancellableEvent
@@ -126,6 +127,12 @@ object ClientListener : Initializer {
         CTEvents.RENDER_OVERLAY.register { ctx, stack, partialTicks ->
             Renderer.withMatrix(stack, partialTicks) {
                 TriggerType.RENDER_OVERLAY.triggerAll(ctx)
+            }
+        }
+
+        CTEvents.RENDER_SLOT.register { ctx, slot, screen, ci ->
+            Renderer.withMatrix(UMatrixStack(ctx.pose()).toMC()) {
+                TriggerType.RENDER_SLOT.triggerAll(Slot(slot), screen, ci)
             }
         }
 
