@@ -73,6 +73,13 @@
       "coverage": ["wrapped-entity", "wrapped-block", "interaction-cancellation", "block-destroy"],
       "status": "implemented",
       "test": "Fabric interaction callbacks and legacy registration smoke"
+    },
+    {
+      "id": "legacy-screenshot-trigger",
+      "source": "ChatTriggers 2.2.0 screenshotTaken contract",
+      "coverage": ["generated-file-name", "explicit-file-name", "capture-cancellation"],
+      "status": "implemented",
+      "test": "Screenshot mixin target validation and legacy registration smoke"
     }
   ]
 }

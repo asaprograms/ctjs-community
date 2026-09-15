@@ -28,6 +28,11 @@ for (const triggerName of ["attackEntity", "hitBlock", "blockBreak"]) {
     }
 }
 
+const screenshotTrigger = register("screenshotTaken", () => {}).unregister();
+if (typeof screenshotTrigger.register !== "function") {
+    throw new Error("Legacy screenshotTaken trigger is not exported");
+}
+
 register("command", () => {
     ChatLib.chat("&aLegacy module smoke test passed");
 }).setName("ctlegacytest");

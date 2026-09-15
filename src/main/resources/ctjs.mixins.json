@@ -36,6 +36,8 @@
         "PlayerTabOverlayAccessor",
         "PlayerTabOverlayMixin",
         "RenderTickCounterMixin",
+        "ScreenshotAccessor",
+        "ScreenshotMixin",
         "commands.ClientPacketListenerMixin",
         "commands.ClientSuggestionProviderMixin",
         "sound.ChannelAccessor",
