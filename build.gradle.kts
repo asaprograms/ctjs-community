@@ -1,9 +1,6 @@
-import org.gradle.kotlin.dsl.support.unzipTo
 //import org.jetbrains.dokka.versioning.VersioningConfiguration
 //import org.jetbrains.dokka.versioning.VersioningPlugin
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import java.net.HttpURLConnection
-import java.io.ByteArrayOutputStream
 import java.net.URI
 
 //buildscript {
@@ -124,11 +121,8 @@ tasks {
         moduleName.set("ctjs")
 
         val docVersionsDir = projectDir.resolve("build/javadocs")
-        val currentVersion = project.version.toString()
-        val currentDocsDir = docVersionsDir.resolve(currentVersion)
-        outputs.upToDateWhen { docVersionsDir.exists() }
 
-        outputDirectory.set(file(currentDocsDir))
+        outputDirectory.set(file(docVersionsDir))
 
 //        pluginConfiguration<VersioningPlugin, VersioningConfiguration> {
 //            version = project.version.toString()
@@ -139,7 +133,7 @@ tasks {
         suppressObviousFunctions.set(true)
         suppressInheritedMembers.set(true)
 
-        val branch = getBranch()
+        val branch = System.getenv("GITHUB_SHA") ?: "main"
         dokkaSourceSets {
             configureEach {
                 jdkVersion.set(25)
@@ -151,7 +145,7 @@ tasks {
 
                 sourceLink {
                     localDirectory.set(file("src/main/kotlin"))
-                    remoteUrl.set(URI.create("https://github.com/ChatTriggers/ctjs/blob/$branch/src/main/kotlin").toURL())
+                    remoteUrl.set(URI.create("https://github.com/asaprograms/ctjs-community/blob/$branch/src/main/kotlin").toURL())
                     remoteLineSuffix.set("#L")
                 }
 
@@ -165,58 +159,6 @@ tasks {
             }
         }
 
-        doFirst {
-            val archiveBase = "https://www.chattriggers.com/javadocs-archive/"
-            val versions = String(downloadFile(archiveBase + "versions")).lines().map(String::trim)
-            val tmpFile = File(temporaryDir, "oldVersionsZip.zip")
-
-            versions.filter(String::isNotEmpty).map(String::trim).forEach { version ->
-                val zipBytes = downloadFile("$archiveBase$version.zip")
-                tmpFile.writeBytes(zipBytes)
-                unzipTo(docVersionsDir, tmpFile)
-            }
-
-            tmpFile.delete()
-        }
-
-        doLast {
-            // At this point we have a structure that looks something like this:
-            // javadocs
-            //   \-- 2.2.0-1.8.9
-            //   \-- 3.0.0
-            //         \-- older
-            //
-            // The "older" directory contains all old versions, so we want to
-            // delete the top-level older versions and move everything inside the
-            // latest directory to the top level so the GitHub actions workflow
-            // doesn't need to figure out the correct version name
-
-            docVersionsDir.listFiles()?.forEach {
-                if (it.name != version)
-                    it.deleteRecursively()
-            }
-
-            val latestVersionDir = docVersionsDir.listFiles()!!.single()
-            latestVersionDir.listFiles()!!.forEach {
-                it.renameTo(File(it.parentFile.parentFile, it.name))
-            }
-            latestVersionDir.deleteRecursively()
-        }
     }
 }
 
-fun downloadFile(url: String): ByteArray {
-    return (URI.create(url).toURL().openConnection() as HttpURLConnection).apply {
-        requestMethod = "GET"
-        doOutput = true
-    }.inputStream.readAllBytes()
-}
-
-fun getBranch(): String {
-    val stdout = ByteArrayOutputStream()
-    providers.exec {
-        commandLine("git", "rev-parse", "HEAD")
-        standardOutput = stdout
-    }
-    return stdout.toString().trim()
-}
