@@ -137,6 +137,12 @@ object ClientListener : Initializer {
             }
         }
 
+        CTEvents.RENDER_SLOT_HIGHLIGHT.register { ctx, mouseX, mouseY, slot, screen, event ->
+            Renderer.withMatrix(UMatrixStack(ctx.pose()).toMC()) {
+                TriggerType.RENDER_SLOT_HIGHLIGHT.triggerAll(mouseX, mouseY, Slot(slot), screen, event)
+            }
+        }
+
         CTEvents.RENDER_ENTITY.register { stack, entity, partialTicks, ci ->
             Renderer.withMatrix(stack, partialTicks) {
                 TriggerType.RENDER_ENTITY.triggerAll(Entity.fromMC(entity), partialTicks, ci)

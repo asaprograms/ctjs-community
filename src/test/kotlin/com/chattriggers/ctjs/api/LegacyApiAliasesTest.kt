@@ -36,6 +36,7 @@ class LegacyApiAliasesTest {
         assertStaticMethod(Register::class.java, "registerRenderTileEntity")
         assertStaticMethod(Register::class.java, "registerPostRenderEntity")
         assertStaticMethod(Register::class.java, "registerPostRenderTileEntity")
+        assertStaticMethod(Register::class.java, "registerRenderSlotHighlight")
     }
 
     private fun assertMethod(type: Class<*>, name: String) {
