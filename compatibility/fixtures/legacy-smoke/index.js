@@ -11,6 +11,11 @@ if (typeof packetTrigger.setPacketClass !== "function" || typeof packetTrigger.s
     throw new Error("Legacy packet filter aliases are not exported");
 }
 
+const renderSlotTrigger = register("renderSlot", () => {}).unregister();
+if (typeof renderSlotTrigger.register !== "function") {
+    throw new Error("Legacy renderSlot trigger is not exported");
+}
+
 register("command", () => {
     ChatLib.chat("&aLegacy module smoke test passed");
 }).setName("ctlegacytest");

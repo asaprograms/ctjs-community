@@ -12,6 +12,7 @@ import net.minecraft.client.gui.screens.Screen
 import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.network.protocol.Packet
+import net.minecraft.world.inventory.Slot
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
 
 internal object CTEvents {
@@ -37,6 +38,10 @@ internal object CTEvents {
 
     fun interface RenderOverlayCallback {
         fun render(context: GuiGraphicsExtractor, matrixStack: PoseStack, partialTicks: Float)
+    }
+
+    fun interface RenderSlotCallback {
+        fun render(context: GuiGraphicsExtractor, slot: Slot, screen: Screen, ci: CallbackInfo)
     }
 
     fun interface PacketReceivedCallback {
@@ -76,6 +81,13 @@ internal object CTEvents {
     val RENDER_OVERLAY = make<RenderOverlayCallback> { listeners ->
         RenderOverlayCallback { ctx, stack, partialTicks ->
             listeners.forEach { it.render(ctx, stack, partialTicks) }
+        }
+    }
+
+    @JvmField
+    val RENDER_SLOT = make<RenderSlotCallback> { listeners ->
+        RenderSlotCallback { context, slot, screen, ci ->
+            listeners.forEach { it.render(context, slot, screen, ci) }
         }
     }
 

@@ -45,6 +45,7 @@ enum class TriggerType : ITriggerType {
     RENDER_BLOCK_ENTITY,
     GUI_RENDER,
     POST_GUI_RENDER,
+    RENDER_SLOT,
 
     // world
     SOUND_PLAY,

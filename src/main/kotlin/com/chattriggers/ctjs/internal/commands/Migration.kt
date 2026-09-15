@@ -42,7 +42,6 @@ internal object Migration {
             "pickupItem",
             "chatComponentClicked",
             "chatComponentHovered",
-            "renderSlot",
             "guiDrawBackground",
             "renderBossHealth",
             "renderDebug",

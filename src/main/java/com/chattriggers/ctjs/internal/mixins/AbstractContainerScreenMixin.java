@@ -3,6 +3,7 @@ package com.chattriggers.ctjs.internal.mixins;
 import com.chattriggers.ctjs.api.inventory.Item;
 import com.chattriggers.ctjs.api.message.TextComponent;
 import com.chattriggers.ctjs.api.triggers.TriggerType;
+import com.chattriggers.ctjs.internal.engine.CTEvents;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -61,5 +62,10 @@ public class AbstractContainerScreenMixin extends Screen {
         ) {
             TriggerType.DROP_ITEM.triggerAll(Item.fromMC(menu.getCarried()), buttonNum == 0, ci);
         }
+    }
+
+    @Inject(method = "extractSlot", at = @At("HEAD"), cancellable = true)
+    private void injectRenderSlot(GuiGraphicsExtractor graphics, Slot slot, int mouseX, int mouseY, CallbackInfo ci) {
+        CTEvents.RENDER_SLOT.invoker().render(graphics, slot, this, ci);
     }
 }

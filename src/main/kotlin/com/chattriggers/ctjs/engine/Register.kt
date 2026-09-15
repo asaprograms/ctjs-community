@@ -739,6 +739,17 @@ object Register {
     }
 
     /**
+     * Registers a trigger before a container slot is drawn.
+     *
+     * Passes the wrapped slot, the container screen, and a cancellable event.
+     * Cancelling the event hides that slot for the current frame.
+     */
+    @JvmStatic
+    fun registerRenderSlot(method: Any): Trigger {
+        return EventTrigger(method, TriggerType.RENDER_SLOT)
+    }
+
+    /**
      * Registers a new trigger that runs whenever a particle is spawned
      *
      * Passes through two arguments:

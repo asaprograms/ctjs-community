@@ -8,6 +8,7 @@ import com.chattriggers.ctjs.api.world.Chunk
 import com.chattriggers.ctjs.api.world.Scoreboard
 import com.chattriggers.ctjs.api.world.TabList
 import com.chattriggers.ctjs.api.world.World
+import com.chattriggers.ctjs.engine.Register
 import kotlin.test.Test
 import kotlin.test.assertTrue
 import java.lang.reflect.Modifier
@@ -26,6 +27,7 @@ class LegacyApiAliasesTest {
         assertStaticMethod(World::class.java, "getAllTileEntitiesOfType")
         assertMethod(Chunk::class.java, "getAllTileEntities")
         assertMethod(Chunk::class.java, "getAllTileEntitiesOfType")
+        assertStaticMethod(Register::class.java, "registerRenderSlot")
     }
 
     private fun assertMethod(type: Class<*>, name: String) {
