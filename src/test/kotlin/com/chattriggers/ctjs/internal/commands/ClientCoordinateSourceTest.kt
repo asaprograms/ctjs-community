@@ -1,6 +1,8 @@
 package com.chattriggers.ctjs.internal.commands
 
 import net.minecraft.commands.CommandSource
+import com.mojang.brigadier.StringReader
+import net.minecraft.commands.arguments.coordinates.WorldCoordinates
 import net.minecraft.network.chat.Component
 import net.minecraft.world.phys.Vec2
 import net.minecraft.world.phys.Vec3
@@ -17,5 +19,7 @@ class ClientCoordinateSourceTest {
         )
         assertEquals(position, source.position)
         assertEquals(rotation, source.rotation)
+        val relative = WorldCoordinates.parseDouble(StringReader("~2 ~-4 ~5"), false)
+        assertEquals(Vec3(12.0, 60.0, -15.0), relative.getPosition(source))
     }
 }
