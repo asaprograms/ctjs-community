@@ -21,6 +21,8 @@ object Renderer3d {
 //    private val tessellator = Tesselator.getInstance()
     private val worldRenderer = UGraphics.getFromTessellator()
 
+    internal fun isDrawing() = began
+
     /**
      * Begin drawing with the world renderer
      *
