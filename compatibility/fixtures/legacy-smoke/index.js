@@ -117,6 +117,13 @@ for (const triggerName of ["renderExperience", "renderJumpBar"]) {
     }
 }
 
+for (const triggerName of ["playerJoined", "playerLeft"]) {
+    const trigger = register(triggerName, () => {}).unregister();
+    if (typeof trigger.register !== "function") {
+        throw new Error(`Legacy ${triggerName} trigger is not exported`);
+    }
+}
+
 register("command", () => {
     ChatLib.chat("&aLegacy module smoke test passed");
 }).setName("ctlegacytest");
