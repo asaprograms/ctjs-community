@@ -137,6 +137,13 @@
       "status": "partial",
       "limitation": "Modern hit-testing exposes the selected Style but not its source Component text; the wrapped component therefore has empty text.",
       "test": "Chat screen and GUI hover mixin validation plus legacy registration smoke"
+    },
+    {
+      "id": "legacy-pickup-item-trigger",
+      "source": "ChatTriggers 2.2.0 pickupItem contract",
+      "coverage": ["wrapped-item", "wrapped-player", "item-position", "item-motion", "client-packet-cancellation"],
+      "status": "implemented",
+      "test": "Take-item packet mixin validation and legacy registration smoke"
     }
   ]
 }

@@ -72,6 +72,11 @@ for (const triggerName of ["chatComponentClicked", "chatComponentHovered"]) {
     }
 }
 
+const pickupItemTrigger = register("pickupItem", () => {}).unregister();
+if (typeof pickupItemTrigger.register !== "function") {
+    throw new Error("Legacy pickupItem trigger is not exported");
+}
+
 register("command", () => {
     ChatLib.chat("&aLegacy module smoke test passed");
 }).setName("ctlegacytest");
