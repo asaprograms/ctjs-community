@@ -84,6 +84,17 @@ for (const triggerName of ["noteBlockPlay", "noteBlockChange"]) {
     }
 }
 
+for (const triggerName of [
+    "renderCrosshair", "renderDebug", "renderBossHealth", "renderHealth",
+    "renderArmor", "renderFood", "renderMountHealth", "renderHotbar",
+    "renderAir", "renderPortal", "renderChat", "renderScoreboard", "renderTitle"
+]) {
+    const trigger = register(triggerName, () => {}).unregister();
+    if (typeof trigger.register !== "function") {
+        throw new Error(`Legacy ${triggerName} trigger is not exported`);
+    }
+}
+
 register("command", () => {
     ChatLib.chat("&aLegacy module smoke test passed");
 }).setName("ctlegacytest");

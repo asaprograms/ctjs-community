@@ -23,7 +23,7 @@
         "CreativeModeInventoryScreenMixin",
         "EntityRenderDispatcherMixin",
         "GuiGraphicsExtractorMixin",
-        "GuiMixin",
+        "HudMixin",
         "KeyMappingAccessor",
         "LevelRendererAccessor",
         "LevelRendererMixin",

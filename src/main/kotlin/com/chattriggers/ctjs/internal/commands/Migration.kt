@@ -39,23 +39,10 @@ internal object Migration {
     private val removedTriggersRegex = let {
         val triggers = setOf(
             "guiDrawBackground",
-            "renderBossHealth",
-            "renderDebug",
-            "renderCrosshair",
-            "renderHotbar",
             "renderExperience",
-            "renderArmor",
-            "renderHealth",
-            "renderFood",
-            "renderMountHealth",
-            "renderAir",
-            "renderPortal",
             "renderJumpBar",
-            "renderChat",
             "renderHelmet",
             "renderHand",
-            "renderScoreboard",
-            "renderTitle",
         )
 
         """
