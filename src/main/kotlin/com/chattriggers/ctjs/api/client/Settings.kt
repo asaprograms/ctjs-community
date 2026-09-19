@@ -40,45 +40,87 @@ object Settings {
     class SkinWrapper {
         fun isCapeEnabled() = toMC().isModelPartEnabled(PlayerModelPart.CAPE)
 
+        @Deprecated("Use isCapeEnabled", ReplaceWith("isCapeEnabled()"))
+        fun getCape() = isCapeEnabled()
+
         fun setCapeEnabled(toggled: Boolean) {
             toMC().setModelPart(PlayerModelPart.CAPE, toggled)
         }
 
+        @Deprecated("Use setCapeEnabled", ReplaceWith("setCapeEnabled(toggled)"))
+        fun setCape(toggled: Boolean) = setCapeEnabled(toggled)
+
         fun isJacketEnabled() = toMC().isModelPartEnabled(PlayerModelPart.JACKET)
+
+        @Deprecated("Use isJacketEnabled", ReplaceWith("isJacketEnabled()"))
+        fun getJacket() = isJacketEnabled()
 
         fun setJacketEnabled(toggled: Boolean) {
             toMC().setModelPart(PlayerModelPart.JACKET, toggled)
         }
 
+        @Deprecated("Use setJacketEnabled", ReplaceWith("setJacketEnabled(toggled)"))
+        fun setJacket(toggled: Boolean) = setJacketEnabled(toggled)
+
         fun isLeftSleeveEnabled() = toMC().isModelPartEnabled(PlayerModelPart.LEFT_SLEEVE)
+
+        @Deprecated("Use isLeftSleeveEnabled", ReplaceWith("isLeftSleeveEnabled()"))
+        fun getLeftSleeve() = isLeftSleeveEnabled()
 
         fun setLeftSleeveEnabled(toggled: Boolean) {
             toMC().setModelPart(PlayerModelPart.LEFT_SLEEVE, toggled)
         }
 
+        @Deprecated("Use setLeftSleeveEnabled", ReplaceWith("setLeftSleeveEnabled(toggled)"))
+        fun setLeftSleeve(toggled: Boolean) = setLeftSleeveEnabled(toggled)
+
         fun isRightSleeveEnabled() = toMC().isModelPartEnabled(PlayerModelPart.RIGHT_SLEEVE)
+
+        @Deprecated("Use isRightSleeveEnabled", ReplaceWith("isRightSleeveEnabled()"))
+        fun getRightSleeve() = isRightSleeveEnabled()
 
         fun setRightSleeveEnabled(toggled: Boolean) {
             toMC().setModelPart(PlayerModelPart.RIGHT_SLEEVE, toggled)
         }
 
+        @Deprecated("Use setRightSleeveEnabled", ReplaceWith("setRightSleeveEnabled(toggled)"))
+        fun setRightSleeve(toggled: Boolean) = setRightSleeveEnabled(toggled)
+
         fun isLeftPantsLegEnabled() = toMC().isModelPartEnabled(PlayerModelPart.LEFT_PANTS_LEG)
+
+        @Deprecated("Use isLeftPantsLegEnabled", ReplaceWith("isLeftPantsLegEnabled()"))
+        fun getLeftPantsLeg() = isLeftPantsLegEnabled()
 
         fun setLeftPantsLegEnabled(toggled: Boolean) {
             toMC().setModelPart(PlayerModelPart.LEFT_PANTS_LEG, toggled)
         }
 
+        @Deprecated("Use setLeftPantsLegEnabled", ReplaceWith("setLeftPantsLegEnabled(toggled)"))
+        fun setLeftPantsLeg(toggled: Boolean) = setLeftPantsLegEnabled(toggled)
+
         fun isRightPantsLegEnabled() = toMC().isModelPartEnabled(PlayerModelPart.RIGHT_PANTS_LEG)
+
+        @Deprecated("Use isRightPantsLegEnabled", ReplaceWith("isRightPantsLegEnabled()"))
+        fun getRightPantsLeg() = isRightPantsLegEnabled()
 
         fun setRightPantsLegEnabled(toggled: Boolean) {
             toMC().setModelPart(PlayerModelPart.RIGHT_PANTS_LEG, toggled)
         }
 
+        @Deprecated("Use setRightPantsLegEnabled", ReplaceWith("setRightPantsLegEnabled(toggled)"))
+        fun setRightPantsLeg(toggled: Boolean) = setRightPantsLegEnabled(toggled)
+
         fun isHatEnabled() = toMC().isModelPartEnabled(PlayerModelPart.HAT)
+
+        @Deprecated("Use isHatEnabled", ReplaceWith("isHatEnabled()"))
+        fun getHat() = isHatEnabled()
 
         fun setHatEnabled(toggled: Boolean) {
             toMC().setModelPart(PlayerModelPart.HAT, toggled)
         }
+
+        @Deprecated("Use setHatEnabled", ReplaceWith("setHatEnabled(toggled)"))
+        fun setHat(toggled: Boolean) = setHatEnabled(toggled)
     }
 
     class SoundWrapper {

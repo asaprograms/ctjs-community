@@ -202,6 +202,13 @@
       "test": "LegacyApiAliasesTest reflection coverage"
     },
     {
+      "id": "legacy-settings-skin-methods",
+      "source": "ChatTriggers 2.2.0 Settings.skin API",
+      "coverage": ["cape", "jacket", "left-and-right-sleeves", "left-and-right-pants-legs", "hat"],
+      "status": "implemented",
+      "test": "LegacyApiAliasesTest reflection coverage"
+    },
+    {
       "id": "legacy-register-surface",
       "source": "ChatTriggers 2.2.0 IRegister public surface",
       "coverage": ["all-74-registration-entry-points", "static-javascript-export"],
