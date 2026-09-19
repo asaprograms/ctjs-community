@@ -195,6 +195,13 @@
       "test": "LegacyApiAliasesTest reflection coverage"
     },
     {
+      "id": "legacy-chatlib-player-helper",
+      "source": "ChatTriggers 2.2.0 ChatLib API",
+      "coverage": ["player-availability-check", "missing-player-console-output"],
+      "status": "implemented",
+      "test": "LegacyApiAliasesTest reflection coverage"
+    },
+    {
       "id": "legacy-register-surface",
       "source": "ChatTriggers 2.2.0 IRegister public surface",
       "coverage": ["all-74-registration-entry-points", "static-javascript-export"],

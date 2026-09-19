@@ -5,6 +5,7 @@ import com.chattriggers.ctjs.api.entity.LivingEntity
 import com.chattriggers.ctjs.api.entity.Entity
 import com.chattriggers.ctjs.api.inventory.Inventory
 import com.chattriggers.ctjs.api.inventory.Item
+import com.chattriggers.ctjs.api.message.ChatLib
 import com.chattriggers.ctjs.api.world.Chunk
 import com.chattriggers.ctjs.api.world.Scoreboard
 import com.chattriggers.ctjs.api.world.TabList
@@ -19,6 +20,7 @@ class LegacyApiAliasesTest {
     @Test
     fun `common 1_8_9 method names remain exported`() {
         assertStaticMethod(Client::class.java, "getChatGUI")
+        assertStaticMethod(ChatLib::class.java, "isPlayer")
         assertStaticMethod(com.chattriggers.ctjs.api.client.Player::class.java, "getRawYaw")
         assertStaticMethod(com.chattriggers.ctjs.api.client.Player::class.java, "getUUIDObj")
         assertStaticMethod(com.chattriggers.ctjs.api.client.Player::class.java, "getOpenedInventory")

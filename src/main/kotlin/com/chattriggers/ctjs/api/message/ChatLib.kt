@@ -2,6 +2,7 @@ package com.chattriggers.ctjs.api.message
 
 import com.chattriggers.ctjs.api.client.Client
 import com.chattriggers.ctjs.api.render.Renderer
+import com.chattriggers.ctjs.engine.printToConsole
 import com.chattriggers.ctjs.internal.listeners.ClientListener
 import com.chattriggers.ctjs.internal.mixins.ChatComponentAccessor
 import com.chattriggers.ctjs.internal.utils.asMixin
@@ -19,6 +20,20 @@ import kotlin.math.roundToInt
 object ChatLib {
     private val chatLineIds = mutableMapOf<GuiMessage, Int>()
     private val chatHudAccessor get() = Client.getChatGui()?.asMixin<ChatComponentAccessor>()
+
+    /**
+     * Returns whether a client player is available. If not, writes [out] to the
+     * ChatTriggers console. This preserves the helper exposed by legacy ChatLib.
+     */
+    @JvmStatic
+    fun isPlayer(out: String): Boolean {
+        if (com.chattriggers.ctjs.api.client.Player.toMC() == null) {
+            out.printToConsole()
+            return false
+        }
+
+        return true
+    }
 
     /**
      * Prints text in the chat.
