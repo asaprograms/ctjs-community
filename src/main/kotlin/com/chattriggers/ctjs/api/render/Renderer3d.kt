@@ -20,7 +20,7 @@ object Renderer3d {
     private var began = false
 
     private val tessellator = Tesselator.getInstance()
-    private val worldRenderer = UGraphics.getFromTessellator()
+    private val worldRenderer by lazy(LazyThreadSafetyMode.NONE) { UGraphics.getFromTessellator() }
 
     internal fun isDrawing() = began
 
