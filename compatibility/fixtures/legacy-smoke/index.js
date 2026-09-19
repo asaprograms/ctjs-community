@@ -95,6 +95,11 @@ for (const triggerName of [
     }
 }
 
+const guiBackgroundTrigger = register("guiDrawBackground", () => {}).unregister();
+if (typeof guiBackgroundTrigger.register !== "function") {
+    throw new Error("Legacy guiDrawBackground trigger is not exported");
+}
+
 register("command", () => {
     ChatLib.chat("&aLegacy module smoke test passed");
 }).setName("ctlegacytest");

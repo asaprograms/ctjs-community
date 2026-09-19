@@ -41,6 +41,7 @@
         "RenderTickCounterMixin",
         "ScreenshotAccessor",
         "ScreenshotMixin",
+        "ScreenMixin",
         "commands.ClientPacketListenerMixin",
         "commands.ClientSuggestionProviderMixin",
         "sound.ChannelAccessor",
