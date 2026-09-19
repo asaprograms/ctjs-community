@@ -14,6 +14,7 @@
         "ChatComponentAccessor",
         "ChatComponentMixin",
         "ChatScreenAccessor",
+        "ChatScreenMixin",
         "ClientChunkCacheAccessor",
         "ClientChunkMapAccessor",
         "ClientLevelAccessor",
