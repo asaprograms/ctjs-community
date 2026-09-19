@@ -9,7 +9,7 @@ fabric-kotlin = "1.13.10+kotlin.2.3.20"
 mapping-io = "0.6.1"
 rhino = "7c7c509668"
 jackson-core = "2.13.2"
-textarea = "3.2.0"
+textarea = "4.0.1"
 serialization = "1.5.1"
 koffee = "315bc11234"
 
