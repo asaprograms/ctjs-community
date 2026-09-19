@@ -5,7 +5,7 @@
     "version": "$version",
     "description": "A maintained community edition of the ChatTriggers JavaScript modding platform",
     "authors": ["Ecolsson", "FalseHonesty", "kerbybit"],
-    "contributors": ["Squagward", "Debuggings", "DJtheRedstoner", "srockw", "DocilElm"],
+    "contributors": ["Squagward", "Debuggings", "DJtheRedstoner", "srockw", "DocilElm", "asaprograms"],
     "icon": "assets/ctjs/logo.png",
     "license": ["MIT"],
     "contact": {
@@ -28,13 +28,6 @@
         "fabricloader": ">=$loader_version",
         "fabric-api": ">=$fabric_api_version",
         "fabric-language-kotlin": ">=$fabric_kotlin_version"
-    },
-    "custom": {
-        "modmenu": {
-            "links": {
-                "modmenu.discord": "https://discord.gg/chattriggers"
-            }
-        }
     },
     "accessWidener": "ctjs.accesswidener"
 }
