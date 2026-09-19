@@ -120,6 +120,10 @@ object Player {
     @JvmStatic
     fun getYaw(): Double = UMath.wrapAngleTo180(toMC()?.yRot?.toDouble() ?: 0.0)
 
+    /** Returns the unwrapped Minecraft yaw used by legacy modules. */
+    @JvmStatic
+    fun getRawYaw(): Float = toMC()?.yRot ?: 0f
+
     /**
      * Gets the player's username.
      *
@@ -136,6 +140,10 @@ object Player {
      */
     @JvmStatic
     fun getUUID(): UUID = Client.getMinecraft().gameProfile.id
+
+    /** Legacy name retained now that getUUID also returns a UUID object. */
+    @JvmStatic
+    fun getUUIDObj(): UUID = getUUID()
 
     @JvmStatic
     fun getHP(): Float = toMC()?.health ?: 0f
@@ -336,6 +344,10 @@ object Player {
      */
     @JvmStatic
     fun getContainer(): Inventory? = (Client.getMinecraft().gui.screen() as? AbstractContainerScreen<*>)?.let(::Inventory)
+
+    @Deprecated("Use getContainer", ReplaceWith("getContainer()"))
+    @JvmStatic
+    fun getOpenedInventory(): Inventory? = getContainer()
 
     /**
      * Draws the player in the GUI. Takes the same parameters as [Renderer.drawPlayer]

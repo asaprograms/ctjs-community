@@ -186,6 +186,13 @@
       "coverage": ["wrapped-player-on-join", "player-name-on-leave", "world-transition-reset"],
       "status": "implemented",
       "test": "World player-set tracking and legacy registration smoke"
+    },
+    {
+      "id": "legacy-wrapper-method-aliases-2",
+      "source": "ChatTriggers 2.2.0 wrapper API",
+      "coverage": ["player-yaw-and-uuid", "opened-inventory", "single-rider", "item-identity-and-damage", "score-points", "block-face-names"],
+      "status": "implemented",
+      "test": "LegacyApiAliasesTest reflection coverage"
     }
   ]
 }

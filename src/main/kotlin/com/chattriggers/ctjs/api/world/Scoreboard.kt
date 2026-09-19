@@ -281,6 +281,9 @@ object Scoreboard {
          */
         fun getScore(): Int = scoreState.get()
 
+        @Deprecated("Use getScore", ReplaceWith("getScore()"))
+        fun getPoints(): Int = getScore()
+
         /**
          * Sets the score value for this score
          *
@@ -291,6 +294,9 @@ object Scoreboard {
             scoreState.set(score)
             mcValue.set(score)
         }
+
+        @Deprecated("Use setScore", ReplaceWith("setScore(points)"))
+        fun setPoints(points: Int) = setScore(points)
 
         /**
          * Gets the display text of this score
