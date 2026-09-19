@@ -73,6 +73,7 @@ enum class TriggerType : ITriggerType {
     RENDER_CHAT,
     RENDER_SCOREBOARD,
     RENDER_TITLE,
+    GUI_DRAW_BACKGROUND,
 
     // world
     SOUND_PLAY,

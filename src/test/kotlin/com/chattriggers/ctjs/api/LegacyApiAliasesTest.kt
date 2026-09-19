@@ -48,6 +48,7 @@ class LegacyApiAliasesTest {
         for (name in listOf("Crosshair", "Debug", "BossHealth", "Health", "Armor", "Food", "MountHealth", "Hotbar", "Air", "Portal", "Chat", "Scoreboard", "Title")) {
             assertStaticMethod(Register::class.java, "registerRender$name")
         }
+        assertStaticMethod(Register::class.java, "registerGuiDrawBackground")
     }
 
     private fun assertMethod(type: Class<*>, name: String) {
