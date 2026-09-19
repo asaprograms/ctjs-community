@@ -22,7 +22,7 @@ devauth = "1.2.1"
 dokka = "2.2.0"
 
 # Plugin Versions
-kotlin = "2.3.20"
+kotlin = "2.4.20"
 loom = "1.17-SNAPSHOT"
 validator = "0.18.1"
 ksp = "2.3.10"
