@@ -193,6 +193,13 @@
       "coverage": ["player-yaw-and-uuid", "opened-inventory", "single-rider", "item-identity-and-damage", "score-points", "block-face-names"],
       "status": "implemented",
       "test": "LegacyApiAliasesTest reflection coverage"
+    },
+    {
+      "id": "legacy-register-surface",
+      "source": "ChatTriggers 2.2.0 IRegister public surface",
+      "coverage": ["all-74-registration-entry-points", "static-javascript-export"],
+      "status": "verified",
+      "test": "LegacyRegisterSurfaceTest"
     }
   ]
 }
