@@ -72,6 +72,7 @@ public class AbstractContainerScreenMixin extends Screen {
 
     @Inject(method = "extractSlot", at = @At("HEAD"), cancellable = true)
     private void injectRenderSlot(GuiGraphicsExtractor graphics, Slot slot, int mouseX, int mouseY, CallbackInfo ci) {
+        TriggerType.PRE_ITEM_RENDER.triggerAll(mouseX, mouseY, new com.chattriggers.ctjs.api.inventory.Slot(slot), this);
         CTEvents.RENDER_SLOT.invoker().render(graphics, slot, this, ci);
     }
 

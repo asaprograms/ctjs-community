@@ -807,6 +807,12 @@ object Register {
         return EventTrigger(method, TriggerType.RENDER_SLOT)
     }
 
+    /** Runs immediately before an item slot is extracted for rendering. */
+    @JvmStatic
+    fun registerPreItemRender(method: Any): Trigger {
+        return RegularTrigger(method, TriggerType.PRE_ITEM_RENDER)
+    }
+
     /** Registers a trigger before the hovered container slot highlight is drawn. */
     @JvmStatic
     fun registerRenderSlotHighlight(method: Any): Trigger {

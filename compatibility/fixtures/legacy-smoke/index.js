@@ -50,6 +50,11 @@ if (typeof slotHighlightTrigger.register !== "function") {
     throw new Error("Legacy renderSlotHighlight trigger is not exported");
 }
 
+const preItemRenderTrigger = register("preItemRender", () => {}).unregister();
+if (typeof preItemRenderTrigger.register !== "function") {
+    throw new Error("Legacy preItemRender trigger is not exported");
+}
+
 register("command", () => {
     ChatLib.chat("&aLegacy module smoke test passed");
 }).setName("ctlegacytest");
