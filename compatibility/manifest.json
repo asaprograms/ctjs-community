@@ -165,6 +165,13 @@
       "coverage": ["first-person-hand-pass", "cancellation"],
       "status": "implemented",
       "test": "Game renderer mixin validation and legacy registration smoke"
+    },
+    {
+      "id": "legacy-render-helmet-trigger",
+      "source": "ChatTriggers 2.2.0 renderHelmet contract",
+      "coverage": ["equipped-camera-overlay", "isolated-cancellation"],
+      "status": "implemented",
+      "test": "HUD camera-overlay redirect validation and legacy registration smoke"
     }
   ]
 }

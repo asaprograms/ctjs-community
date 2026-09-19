@@ -40,7 +40,6 @@ internal object Migration {
         val triggers = setOf(
             "renderExperience",
             "renderJumpBar",
-            "renderHelmet",
         )
 
         """
