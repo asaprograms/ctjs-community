@@ -859,6 +859,20 @@ object Register {
         return EventTrigger(method, TriggerType.RENDER_ITEM_OVERLAY_INTO_GUI)
     }
 
+    @JvmStatic fun registerRenderCrosshair(method: Any) = EventTrigger(method, TriggerType.RENDER_CROSSHAIR)
+    @JvmStatic fun registerRenderDebug(method: Any) = EventTrigger(method, TriggerType.RENDER_DEBUG)
+    @JvmStatic fun registerRenderBossHealth(method: Any) = EventTrigger(method, TriggerType.RENDER_BOSS_HEALTH)
+    @JvmStatic fun registerRenderHealth(method: Any) = EventTrigger(method, TriggerType.RENDER_HEALTH)
+    @JvmStatic fun registerRenderArmor(method: Any) = EventTrigger(method, TriggerType.RENDER_ARMOR)
+    @JvmStatic fun registerRenderFood(method: Any) = EventTrigger(method, TriggerType.RENDER_FOOD)
+    @JvmStatic fun registerRenderMountHealth(method: Any) = EventTrigger(method, TriggerType.RENDER_MOUNT_HEALTH)
+    @JvmStatic fun registerRenderHotbar(method: Any) = EventTrigger(method, TriggerType.RENDER_HOTBAR)
+    @JvmStatic fun registerRenderAir(method: Any) = EventTrigger(method, TriggerType.RENDER_AIR)
+    @JvmStatic fun registerRenderPortal(method: Any) = EventTrigger(method, TriggerType.RENDER_PORTAL)
+    @JvmStatic fun registerRenderChat(method: Any) = EventTrigger(method, TriggerType.RENDER_CHAT)
+    @JvmStatic fun registerRenderScoreboard(method: Any) = EventTrigger(method, TriggerType.RENDER_SCOREBOARD)
+    @JvmStatic fun registerRenderTitle(method: Any) = EventTrigger(method, TriggerType.RENDER_TITLE)
+
     /**
      * Registers a new trigger that runs whenever a particle is spawned
      *

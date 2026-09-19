@@ -151,6 +151,13 @@
       "coverage": ["position", "legacy-note-name", "legacy-octave", "client-event-cancellation"],
       "status": "implemented",
       "test": "Block event and block update packet mixin validation plus legacy registration smoke"
+    },
+    {
+      "id": "legacy-hud-render-triggers",
+      "source": "ChatTriggers 2.2.0 HUD render trigger contracts",
+      "coverage": ["crosshair", "debug", "boss-health", "player-health", "armor", "food", "mount-health", "hotbar", "air", "portal", "chat", "scoreboard", "title-and-subtitle", "cancellation"],
+      "status": "implemented",
+      "test": "Hud extraction mixin validation and legacy registration smoke"
     }
   ]
 }

@@ -45,6 +45,9 @@ class LegacyApiAliasesTest {
         assertStaticMethod(Register::class.java, "registerPickupItem")
         assertStaticMethod(Register::class.java, "registerNoteBlockPlay")
         assertStaticMethod(Register::class.java, "registerNoteBlockChange")
+        for (name in listOf("Crosshair", "Debug", "BossHealth", "Health", "Armor", "Food", "MountHealth", "Hotbar", "Air", "Portal", "Chat", "Scoreboard", "Title")) {
+            assertStaticMethod(Register::class.java, "registerRender$name")
+        }
     }
 
     private fun assertMethod(type: Class<*>, name: String) {
