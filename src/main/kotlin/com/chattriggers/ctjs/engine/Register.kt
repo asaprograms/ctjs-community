@@ -875,6 +875,8 @@ object Register {
     @JvmStatic fun registerGuiDrawBackground(method: Any) = EventTrigger(method, TriggerType.GUI_DRAW_BACKGROUND)
     @JvmStatic fun registerRenderHand(method: Any) = EventTrigger(method, TriggerType.RENDER_HAND)
     @JvmStatic fun registerRenderHelmet(method: Any) = EventTrigger(method, TriggerType.RENDER_HELMET)
+    @JvmStatic fun registerRenderExperience(method: Any) = EventTrigger(method, TriggerType.RENDER_EXPERIENCE)
+    @JvmStatic fun registerRenderJumpBar(method: Any) = EventTrigger(method, TriggerType.RENDER_JUMP_BAR)
 
     /**
      * Registers a new trigger that runs whenever a particle is spawned

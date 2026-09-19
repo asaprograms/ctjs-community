@@ -172,6 +172,13 @@
       "coverage": ["equipped-camera-overlay", "isolated-cancellation"],
       "status": "implemented",
       "test": "HUD camera-overlay redirect validation and legacy registration smoke"
+    },
+    {
+      "id": "legacy-contextual-bar-triggers",
+      "source": "ChatTriggers 2.2.0 renderExperience and renderJumpBar contracts",
+      "coverage": ["experience-bar", "experience-level-text", "jump-bar", "isolated-cancellation"],
+      "status": "implemented",
+      "test": "HUD contextual-bar redirect validation and legacy registration smoke"
     }
   ]
 }

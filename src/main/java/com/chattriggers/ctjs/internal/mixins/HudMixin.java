@@ -3,11 +3,16 @@ package com.chattriggers.ctjs.internal.mixins;
 import com.chattriggers.ctjs.api.world.Scoreboard;
 import com.chattriggers.ctjs.api.message.TextComponent;
 import com.chattriggers.ctjs.api.triggers.TriggerType;
+import com.chattriggers.ctjs.api.triggers.CancellableEvent;
 import com.chattriggers.ctjs.internal.engine.CTEvents;
 import gg.essential.universal.UMatrixStack;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.contextualbar.ContextualBarRenderer;
+import net.minecraft.client.gui.contextualbar.ExperienceBarRenderer;
+import net.minecraft.client.gui.contextualbar.JumpableVehicleBarRenderer;
 import net.minecraft.world.scores.Objective;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -21,6 +26,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Gui.class)
 public abstract class HudMixin {
+    private boolean ctjs$cancelExperienceBar;
+    private boolean ctjs$cancelJumpBar;
     @Shadow private Component title;
     @Shadow private Component subtitle;
     @Shadow protected abstract void extractTextureOverlay(GuiGraphicsExtractor graphics, Identifier texture, float alpha);
@@ -34,12 +41,65 @@ public abstract class HudMixin {
         )
     )
     private void ctjs$renderHelmet(Gui instance, GuiGraphicsExtractor graphics, Identifier texture, float alpha) {
-        com.chattriggers.ctjs.api.triggers.CancellableEvent event =
-            new com.chattriggers.ctjs.api.triggers.CancellableEvent();
+        CancellableEvent event = new CancellableEvent();
         TriggerType.RENDER_HELMET.triggerAll(event);
         if (!event.isCancelled()) {
             extractTextureOverlay(graphics, texture, alpha);
         }
+    }
+
+    @Redirect(
+        method = "extractHotbarAndDecorations",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/client/gui/contextualbar/ContextualBarRenderer;extractBackground(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/DeltaTracker;)V"
+        )
+    )
+    private void ctjs$renderContextualBarBackground(ContextualBarRenderer bar, GuiGraphicsExtractor graphics, DeltaTracker delta) {
+        ctjs$cancelExperienceBar = false;
+        ctjs$cancelJumpBar = false;
+
+        if (bar instanceof ExperienceBarRenderer) {
+            CancellableEvent event = new CancellableEvent();
+            TriggerType.RENDER_EXPERIENCE.triggerAll(event);
+            ctjs$cancelExperienceBar = event.isCancelled();
+        } else if (bar instanceof JumpableVehicleBarRenderer) {
+            CancellableEvent event = new CancellableEvent();
+            TriggerType.RENDER_JUMP_BAR.triggerAll(event);
+            ctjs$cancelJumpBar = event.isCancelled();
+        }
+
+        if (!ctjs$cancelExperienceBar && !ctjs$cancelJumpBar) {
+            bar.extractBackground(graphics, delta);
+        }
+    }
+
+    @Redirect(
+        method = "extractHotbarAndDecorations",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/client/gui/contextualbar/ContextualBarRenderer;extractExperienceLevel(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/gui/Font;I)V"
+        )
+    )
+    private void ctjs$renderExperienceLevel(GuiGraphicsExtractor graphics, Font font, int level) {
+        if (!ctjs$cancelExperienceBar) {
+            ContextualBarRenderer.extractExperienceLevel(graphics, font, level);
+        }
+    }
+
+    @Redirect(
+        method = "extractHotbarAndDecorations",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/client/gui/contextualbar/ContextualBarRenderer;extractRenderState(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/DeltaTracker;)V"
+        )
+    )
+    private void ctjs$renderContextualBarState(ContextualBarRenderer bar, GuiGraphicsExtractor graphics, DeltaTracker delta) {
+        if (!ctjs$cancelExperienceBar && !ctjs$cancelJumpBar) {
+            bar.extractRenderState(graphics, delta);
+        }
+        ctjs$cancelExperienceBar = false;
+        ctjs$cancelJumpBar = false;
     }
 
     @Inject(method = "extractCrosshair", at = @At("HEAD"), cancellable = true)
@@ -121,3 +181,4 @@ public abstract class HudMixin {
         CTEvents.RENDER_OVERLAY.invoker().render(graphics, new UMatrixStack(graphics.pose()).toMC(), deltaTracker.getGameTimeDeltaTicks());
     }
 }
+
