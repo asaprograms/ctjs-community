@@ -39,6 +39,8 @@ enum class TriggerType : ITriggerType {
     GUI_CLOSED,
     DROP_ITEM,
     SCREENSHOT_TAKEN,
+    CHAT_COMPONENT_CLICKED,
+    CHAT_COMPONENT_HOVERED,
 
     // rendering
     PRE_RENDER_WORLD,

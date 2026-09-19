@@ -129,6 +129,14 @@
       "coverage": ["wrapped-item", "gui-position", "overlay-cancellation"],
       "status": "implemented",
       "test": "Gui item decoration mixin validation and legacy registration smoke"
+    },
+    {
+      "id": "legacy-chat-component-triggers",
+      "source": "ChatTriggers 2.2.0 chatComponentClicked and chatComponentHovered contracts",
+      "coverage": ["click-style-metadata", "hover-style-metadata", "mouse-position", "cancellation"],
+      "status": "partial",
+      "limitation": "Modern hit-testing exposes the selected Style but not its source Component text; the wrapped component therefore has empty text.",
+      "test": "Chat screen and GUI hover mixin validation plus legacy registration smoke"
     }
   ]
 }

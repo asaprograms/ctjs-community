@@ -442,6 +442,18 @@ object Register {
         return EventTrigger(method, TriggerType.SCREENSHOT_TAKEN)
     }
 
+    /** Registers a cancellable trigger before a clickable chat style is handled. */
+    @JvmStatic
+    fun registerChatComponentClicked(method: Any): Trigger {
+        return EventTrigger(method, TriggerType.CHAT_COMPONENT_CLICKED)
+    }
+
+    /** Registers a cancellable trigger before a hovered text style displays its tooltip. */
+    @JvmStatic
+    fun registerChatComponentHovered(method: Any): Trigger {
+        return EventTrigger(method, TriggerType.CHAT_COMPONENT_HOVERED)
+    }
+
     /**
      * Registers a new trigger that runs before a message is sent in chat.
      *
