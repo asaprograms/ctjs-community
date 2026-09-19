@@ -105,6 +105,11 @@ if (typeof renderHandTrigger.register !== "function") {
     throw new Error("Legacy renderHand trigger is not exported");
 }
 
+const renderHelmetTrigger = register("renderHelmet", () => {}).unregister();
+if (typeof renderHelmetTrigger.register !== "function") {
+    throw new Error("Legacy renderHelmet trigger is not exported");
+}
+
 register("command", () => {
     ChatLib.chat("&aLegacy module smoke test passed");
 }).setName("ctlegacytest");
