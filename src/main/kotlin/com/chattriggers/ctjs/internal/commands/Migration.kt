@@ -59,7 +59,6 @@ internal object Migration {
             "renderHand",
             "renderScoreboard",
             "renderTitle",
-            "preItemRender",
             "renderItemIntoGui",
             "noteBlockPlay",
             "noteBlockChange",

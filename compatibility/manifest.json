@@ -108,6 +108,13 @@
       "coverage": ["rgba-packing", "default-alpha", "active-vertex-color-dispatch"],
       "status": "verified",
       "test": "RendererCompatibilityTest with Rhino JavaScript dispatch"
+    },
+    {
+      "id": "legacy-pre-item-render-trigger",
+      "source": "ChatTriggers 2.2.0 preItemRender contract",
+      "coverage": ["mouse-position", "wrapped-slot", "container-screen", "pre-slot-extraction"],
+      "status": "implemented",
+      "test": "Container slot mixin validation and legacy registration smoke"
     }
   ]
 }
