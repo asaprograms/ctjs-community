@@ -43,6 +43,8 @@ class LegacyApiAliasesTest {
         assertStaticMethod(Register::class.java, "registerChatComponentClicked")
         assertStaticMethod(Register::class.java, "registerChatComponentHovered")
         assertStaticMethod(Register::class.java, "registerPickupItem")
+        assertStaticMethod(Register::class.java, "registerNoteBlockPlay")
+        assertStaticMethod(Register::class.java, "registerNoteBlockChange")
     }
 
     private fun assertMethod(type: Class<*>, name: String) {

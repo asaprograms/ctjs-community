@@ -144,6 +144,13 @@
       "coverage": ["wrapped-item", "wrapped-player", "item-position", "item-motion", "client-packet-cancellation"],
       "status": "implemented",
       "test": "Take-item packet mixin validation and legacy registration smoke"
+    },
+    {
+      "id": "legacy-note-block-triggers",
+      "source": "ChatTriggers 2.2.0 noteBlockPlay and noteBlockChange contracts",
+      "coverage": ["position", "legacy-note-name", "legacy-octave", "client-event-cancellation"],
+      "status": "implemented",
+      "test": "Block event and block update packet mixin validation plus legacy registration smoke"
     }
   ]
 }

@@ -56,8 +56,6 @@ internal object Migration {
             "renderHand",
             "renderScoreboard",
             "renderTitle",
-            "noteBlockPlay",
-            "noteBlockChange",
         )
 
         """

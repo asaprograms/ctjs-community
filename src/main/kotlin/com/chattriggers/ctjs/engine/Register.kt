@@ -201,6 +201,16 @@ object Register {
         return SoundPlayTrigger(method)
     }
 
+    @JvmStatic
+    fun registerNoteBlockPlay(method: Any): Trigger {
+        return EventTrigger(method, TriggerType.NOTE_BLOCK_PLAY)
+    }
+
+    @JvmStatic
+    fun registerNoteBlockChange(method: Any): Trigger {
+        return EventTrigger(method, TriggerType.NOTE_BLOCK_CHANGE)
+    }
+
     /**
      * Registers a new trigger that runs before every game tick.
      *
