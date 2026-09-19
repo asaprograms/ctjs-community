@@ -819,6 +819,18 @@ object Register {
         return EventTrigger(method, TriggerType.RENDER_SLOT_HIGHLIGHT)
     }
 
+    /** Registers a cancellable trigger before an item is drawn in a GUI. */
+    @JvmStatic
+    fun registerRenderItemIntoGui(method: Any): Trigger {
+        return EventTrigger(method, TriggerType.RENDER_ITEM_INTO_GUI)
+    }
+
+    /** Registers a cancellable trigger before an item's GUI decorations are drawn. */
+    @JvmStatic
+    fun registerRenderItemOverlayIntoGui(method: Any): Trigger {
+        return EventTrigger(method, TriggerType.RENDER_ITEM_OVERLAY_INTO_GUI)
+    }
+
     /**
      * Registers a new trigger that runs whenever a particle is spawned
      *

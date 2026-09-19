@@ -55,6 +55,8 @@ enum class TriggerType : ITriggerType {
     RENDER_SLOT,
     PRE_ITEM_RENDER,
     RENDER_SLOT_HIGHLIGHT,
+    RENDER_ITEM_INTO_GUI,
+    RENDER_ITEM_OVERLAY_INTO_GUI,
 
     // world
     SOUND_PLAY,

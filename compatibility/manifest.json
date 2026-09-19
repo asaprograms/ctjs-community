@@ -115,6 +115,20 @@
       "coverage": ["mouse-position", "wrapped-slot", "container-screen", "pre-slot-extraction"],
       "status": "implemented",
       "test": "Container slot mixin validation and legacy registration smoke"
+    },
+    {
+      "id": "legacy-render-item-into-gui-trigger",
+      "source": "ChatTriggers 2.2.0 renderItemIntoGui contract",
+      "coverage": ["wrapped-item", "gui-position", "render-cancellation", "fake-item-path"],
+      "status": "implemented",
+      "test": "Gui item extraction mixin validation and legacy registration smoke"
+    },
+    {
+      "id": "legacy-render-item-overlay-into-gui-trigger",
+      "source": "ChatTriggers 2.2.0 renderItemOverlayIntoGui contract",
+      "coverage": ["wrapped-item", "gui-position", "overlay-cancellation"],
+      "status": "implemented",
+      "test": "Gui item decoration mixin validation and legacy registration smoke"
     }
   ]
 }
