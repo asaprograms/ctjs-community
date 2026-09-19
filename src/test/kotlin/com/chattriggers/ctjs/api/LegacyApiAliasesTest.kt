@@ -1,6 +1,7 @@
 package com.chattriggers.ctjs.api
 
 import com.chattriggers.ctjs.api.client.Client
+import com.chattriggers.ctjs.api.client.Settings
 import com.chattriggers.ctjs.api.entity.LivingEntity
 import com.chattriggers.ctjs.api.entity.Entity
 import com.chattriggers.ctjs.api.inventory.Inventory
@@ -21,6 +22,10 @@ class LegacyApiAliasesTest {
     fun `common 1_8_9 method names remain exported`() {
         assertStaticMethod(Client::class.java, "getChatGUI")
         assertStaticMethod(ChatLib::class.java, "isPlayer")
+        for (part in listOf("Cape", "Jacket", "LeftSleeve", "RightSleeve", "LeftPantsLeg", "RightPantsLeg", "Hat")) {
+            assertMethod(Settings.SkinWrapper::class.java, "get$part")
+            assertMethod(Settings.SkinWrapper::class.java, "set$part")
+        }
         assertStaticMethod(com.chattriggers.ctjs.api.client.Player::class.java, "getRawYaw")
         assertStaticMethod(com.chattriggers.ctjs.api.client.Player::class.java, "getUUIDObj")
         assertStaticMethod(com.chattriggers.ctjs.api.client.Player::class.java, "getOpenedInventory")
