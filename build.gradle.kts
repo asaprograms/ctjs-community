@@ -68,6 +68,15 @@ java {
 //}
 
 tasks {
+    val stageLegacySmokeFixture by registering(Sync::class) {
+        from("compatibility/fixtures/legacy-smoke")
+        into("run/config/ChatTriggers/modules/LegacySmokeTest")
+    }
+
+    named("runClient") {
+        dependsOn(stageLegacySmokeFixture)
+    }
+
     test {
         useJUnitPlatform()
     }
