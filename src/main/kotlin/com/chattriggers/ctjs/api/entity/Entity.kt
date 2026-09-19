@@ -95,6 +95,10 @@ open class Entity(override val mcValue: MCEntity) : CTWrapper<MCEntity> {
      */
     fun getRiders() = mcValue.passengers?.map(::fromMC).orEmpty()
 
+    /** Legacy single-passenger view. Modern entities may have more than one rider. */
+    @Deprecated("Use getRiders", ReplaceWith("getRiders().firstOrNull()"))
+    fun getRider(): Entity? = getRiders().firstOrNull()
+
     /**
      * Checks whether the entity is dead.
      * This is a fairly loose term, dead for a particle could mean it has faded,

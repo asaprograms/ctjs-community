@@ -28,6 +28,8 @@ enum class BlockFace(
 
     fun getOffsetZ() = directionVec.z
 
+    fun getName(): String = serializedName
+
     fun rotateAround(axis: Axis): BlockFace {
         return when (axis) {
             Axis.X -> if (this != WEST && this != EAST) rotateX() else this
@@ -128,5 +130,9 @@ enum class BlockFace(
             Direction.WEST -> WEST
             Direction.EAST -> EAST
         }
+
+        @Deprecated("Use fromMC", ReplaceWith("fromMC(facing)"))
+        @JvmStatic
+        fun fromMCEnumFacing(facing: Direction) = fromMC(facing)
     }
 }

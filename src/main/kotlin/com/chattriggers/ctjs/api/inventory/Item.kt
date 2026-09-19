@@ -68,6 +68,22 @@ class Item(override val mcValue: ItemStack) : CTWrapper<ItemStack> {
 
     fun getDamage() = mcValue.damageValue
 
+    fun setDamage(damage: Int) = apply {
+        mcValue.damageValue = damage
+    }
+
+    /** Legacy numeric item identifier. Prefer Item.type.getRegistryName(). */
+    fun getID(): Int = type.getId()
+
+    /** Legacy 1.8 metadata maps to item damage for damageable stacks. */
+    fun getMetadata(): Int = getDamage()
+
+    fun getRegistryName(): String = type.getRegistryName()
+
+    fun getUnlocalizedName(): String = type.getTranslationKey()
+
+    fun getTextComponent(): TextComponent = TextComponent(mcValue.hoverName)
+
     fun isDamageable() = mcValue.isDamageableItem
 
     /** Legacy misspelling retained for 1.8.9 modules. */
