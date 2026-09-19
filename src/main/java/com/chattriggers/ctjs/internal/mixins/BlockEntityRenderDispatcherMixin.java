@@ -29,7 +29,6 @@ public abstract class BlockEntityRenderDispatcherMixin {
         E blockEntity,
         float partialTicks,
         ModelFeatureRenderer.CrumblingOverlay breakProgress,
-        boolean render,
         CallbackInfoReturnable<S> cir
     ) {
         S state = cir.getReturnValue();
