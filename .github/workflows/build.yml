@@ -66,12 +66,33 @@ jobs:
           LIBGL_ALWAYS_SOFTWARE: '1'
         run: |
           set +e
-          timeout 180s xvfb-run -a ./gradlew --no-daemon runClient > client-smoke.log 2>&1
+          setsid timeout 180s xvfb-run -a ./gradlew --no-daemon runClient > client-smoke.log 2>&1 &
+          runner=$!
+          set -e
+
+          found=0
+          for _ in $(seq 1 180); do
+            if grep -Fq 'CTJS_LEGACY_SMOKE_LOADED' client-smoke.log; then
+              found=1
+              break
+            fi
+            if ! kill -0 "$runner" 2>/dev/null; then
+              break
+            fi
+            sleep 1
+          done
+
+          if [ "$found" -eq 1 ]; then
+            kill -TERM -- "-$runner" 2>/dev/null || true
+          fi
+
+          set +e
+          wait "$runner"
           status=$?
           set -e
           cat client-smoke.log
           grep -Fq 'CTJS_LEGACY_SMOKE_LOADED' client-smoke.log
-          if [ "$status" -ne 0 ] && [ "$status" -ne 124 ]; then
+          if [ "$found" -ne 1 ]; then
             exit "$status"
           fi
 

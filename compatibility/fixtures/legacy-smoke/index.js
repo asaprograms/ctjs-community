@@ -1,7 +1,5 @@
 const marker = "CTJS_LEGACY_SMOKE_LOADED";
 
-console.log(marker);
-
 const packedColor = Renderer.color(12, 34, 56, 78);
 if (typeof packedColor !== "number" || packedColor !== Renderer.getColor(12, 34, 56, 78)) {
     throw new Error("Legacy Renderer.color did not return a packed color");
@@ -127,3 +125,5 @@ for (const triggerName of ["playerJoined", "playerLeft"]) {
 register("command", () => {
     ChatLib.chat("&aLegacy module smoke test passed");
 }).setName("ctlegacytest");
+
+console.log(marker);
