@@ -74,6 +74,7 @@ enum class TriggerType : ITriggerType {
     RENDER_SCOREBOARD,
     RENDER_TITLE,
     GUI_DRAW_BACKGROUND,
+    RENDER_HAND,
 
     // world
     SOUND_PLAY,

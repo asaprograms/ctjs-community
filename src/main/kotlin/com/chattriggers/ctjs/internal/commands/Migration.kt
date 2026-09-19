@@ -41,7 +41,6 @@ internal object Migration {
             "renderExperience",
             "renderJumpBar",
             "renderHelmet",
-            "renderHand",
         )
 
         """

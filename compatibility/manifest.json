@@ -158,6 +158,13 @@
       "coverage": ["crosshair", "debug", "boss-health", "player-health", "armor", "food", "mount-health", "hotbar", "air", "portal", "chat", "scoreboard", "title-and-subtitle", "cancellation"],
       "status": "implemented",
       "test": "Hud extraction mixin validation and legacy registration smoke"
+    },
+    {
+      "id": "legacy-render-hand-trigger",
+      "source": "ChatTriggers 2.2.0 renderHand contract",
+      "coverage": ["first-person-hand-pass", "cancellation"],
+      "status": "implemented",
+      "test": "Game renderer mixin validation and legacy registration smoke"
     }
   ]
 }

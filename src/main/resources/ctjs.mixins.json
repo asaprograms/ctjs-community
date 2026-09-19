@@ -22,6 +22,7 @@
         "ClientPacketListenerMixin",
         "CreativeModeInventoryScreenMixin",
         "EntityRenderDispatcherMixin",
+        "GameRendererMixin",
         "GuiGraphicsExtractorMixin",
         "HudMixin",
         "KeyMappingAccessor",
