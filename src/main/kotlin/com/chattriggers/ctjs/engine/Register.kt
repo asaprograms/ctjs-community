@@ -118,6 +118,14 @@ object Register {
         return RegularTrigger(method, TriggerType.WORLD_UNLOAD)
     }
 
+    /** Registers a trigger that runs when a player enters the loaded world. */
+    @JvmStatic
+    fun registerPlayerJoined(method: Any): Trigger = RegularTrigger(method, TriggerType.PLAYER_JOINED)
+
+    /** Registers a trigger that runs when a player leaves the loaded world. */
+    @JvmStatic
+    fun registerPlayerLeft(method: Any): Trigger = RegularTrigger(method, TriggerType.PLAYER_LEFT)
+
     /**
      * Registers a new trigger that runs before a mouse button is being pressed or released.
      *

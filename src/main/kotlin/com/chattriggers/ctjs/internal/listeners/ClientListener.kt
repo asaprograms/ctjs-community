@@ -38,6 +38,7 @@ object ClientListener : Initializer {
     val chatHistory = mutableListOf<TextComponent>()
     val actionBarHistory = mutableListOf<TextComponent>()
     private val tasks = mutableListOf<Task>()
+    private val worldPlayerNames = linkedSetOf<String>()
     private lateinit var packetContext: Context
 
     class Task(var delay: Int, val callback: () -> Unit)
@@ -64,7 +65,20 @@ object ClientListener : Initializer {
                 }
             }
 
-            if (World.isLoaded() && World.toMC()?.tickRateManager()?.runsNormally() == true) {
+            if (!World.isLoaded()) {
+                worldPlayerNames.clear()
+            } else if (World.toMC()?.tickRateManager()?.runsNormally() == true) {
+                val playersByName = World.getAllPlayers().associateBy { it.getName() }
+                playersByName.filterKeys { it !in worldPlayerNames }.values.forEach {
+                    worldPlayerNames.add(it.getName())
+                    TriggerType.PLAYER_JOINED.triggerAll(it)
+                }
+
+                worldPlayerNames.firstOrNull { it !in playersByName }?.let {
+                    worldPlayerNames.remove(it)
+                    TriggerType.PLAYER_LEFT.triggerAll(it)
+                }
+
                 TriggerType.TICK.triggerAll(ticksPassed)
                 ticksPassed++
 

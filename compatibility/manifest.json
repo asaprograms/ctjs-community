@@ -179,6 +179,13 @@
       "coverage": ["experience-bar", "experience-level-text", "jump-bar", "isolated-cancellation"],
       "status": "implemented",
       "test": "HUD contextual-bar redirect validation and legacy registration smoke"
+    },
+    {
+      "id": "legacy-player-presence-triggers",
+      "source": "ChatTriggers 2.2.0 playerJoined and playerLeft contracts",
+      "coverage": ["wrapped-player-on-join", "player-name-on-leave", "world-transition-reset"],
+      "status": "implemented",
+      "test": "World player-set tracking and legacy registration smoke"
     }
   ]
 }

@@ -88,6 +88,8 @@ enum class TriggerType : ITriggerType {
     ENTITY_DAMAGE,
     NOTE_BLOCK_PLAY,
     NOTE_BLOCK_CHANGE,
+    PLAYER_JOINED,
+    PLAYER_LEFT,
 
     // misc
     COMMAND,
