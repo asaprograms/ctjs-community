@@ -23,6 +23,7 @@
         "CreativeModeInventoryScreenMixin",
         "EntityRenderDispatcherMixin",
         "GameRendererAccessor",
+        "GameRendererMixin",
         "GuiGraphicsExtractorMixin",
         "GuiMixin",
         "HudMixin",
