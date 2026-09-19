@@ -68,6 +68,8 @@ enum class TriggerType : ITriggerType {
     SPAWN_PARTICLE,
     ENTITY_DEATH,
     ENTITY_DAMAGE,
+    NOTE_BLOCK_PLAY,
+    NOTE_BLOCK_CHANGE,
 
     // misc
     COMMAND,

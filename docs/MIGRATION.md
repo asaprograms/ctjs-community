@@ -69,7 +69,7 @@ These are API changes that typically involve consistency and affect multiple dif
 Here is a list of targeted changes for various different APIs:
 
 - Triggers
-  - The following less-used trigger have been removed: `guiDrawBackground`, `renderBossHealth`, `renderDebug`, `renderCrosshair`, `renderHotbar`, `renderExperience`, `renderArmor`, `renderHealth`, `renderFood`, `renderMountHealth`, `renderAir`, `renderPortal`, `renderJumpBar`, `renderChat`, `renderHelmet`, `renderHand`, `renderScoreboard`, `renderTitle`, `noteBlockPlay`, and `noteBlockChange`
+  - The following less-used trigger have been removed: `guiDrawBackground`, `renderBossHealth`, `renderDebug`, `renderCrosshair`, `renderHotbar`, `renderExperience`, `renderArmor`, `renderHealth`, `renderFood`, `renderMountHealth`, `renderAir`, `renderPortal`, `renderJumpBar`, `renderChat`, `renderHelmet`, `renderHand`, `renderScoreboard`, and `renderTitle`
   - `chatComponentClicked` and `chatComponentHovered` receive a styled component that preserves the click or hover metadata. Minecraft's current text hit-testing exposes the selected style but not the source component text, so the wrapper's text is empty.
     - All of these triggers had less than 10 uses over all releases on our website. If you maintain one of the few releases who used one of these triggers, they can be replaced with a custom Mixin.
   - The following triggers have been removed in favor of other triggers: `attackEntity`, `hitBlock`, and `blockBreak` (replaced by `playerInteract`); `guiMouseRelease` (replaced by a parameter in `guiMouseClick`)
