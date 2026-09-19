@@ -10,7 +10,6 @@ import gg.essential.elementa.dsl.component3
 import gg.essential.elementa.dsl.component4
 import gg.essential.universal.UGraphics
 import net.minecraft.client.gui.Font
-import com.mojang.blaze3d.vertex.Tesselator
 import org.joml.Vector3f
 import org.mozilla.javascript.NativeObject
 import java.awt.Color
@@ -19,7 +18,6 @@ object Renderer3d {
     private var firstVertex = true
     private var began = false
 
-    private val tessellator = Tesselator.getInstance()
     private val worldRenderer by lazy(LazyThreadSafetyMode.NONE) { UGraphics.getFromTessellator() }
 
     internal fun isDrawing() = began
