@@ -55,6 +55,16 @@ if (typeof preItemRenderTrigger.register !== "function") {
     throw new Error("Legacy preItemRender trigger is not exported");
 }
 
+const renderItemIntoGuiTrigger = register("renderItemIntoGui", () => {}).unregister();
+if (typeof renderItemIntoGuiTrigger.register !== "function") {
+    throw new Error("Legacy renderItemIntoGui trigger is not exported");
+}
+
+const renderItemOverlayIntoGuiTrigger = register("renderItemOverlayIntoGui", () => {}).unregister();
+if (typeof renderItemOverlayIntoGuiTrigger.register !== "function") {
+    throw new Error("Legacy renderItemOverlayIntoGui trigger is not exported");
+}
+
 register("command", () => {
     ChatLib.chat("&aLegacy module smoke test passed");
 }).setName("ctlegacytest");

@@ -21,6 +21,7 @@
         "CreativeModeInventoryScreenMixin",
         "EntityRenderDispatcherMixin",
         "GameRendererAccessor",
+        "GuiGraphicsExtractorMixin",
         "GuiMixin",
         "HudMixin",
         "KeyMappingAccessor",
