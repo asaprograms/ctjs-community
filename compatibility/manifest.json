@@ -101,6 +101,13 @@
       "coverage": ["mouse-position", "wrapped-slot", "container-screen", "two-layer-cancellation"],
       "status": "implemented",
       "test": "Container highlight mixin validation and legacy registration smoke"
+    },
+    {
+      "id": "legacy-renderer-color",
+      "source": "ChatTriggers 2.2.0 Renderer.color contract",
+      "coverage": ["rgba-packing", "default-alpha", "active-vertex-color-dispatch"],
+      "status": "verified",
+      "test": "RendererCompatibilityTest with Rhino JavaScript dispatch"
     }
   ]
 }

@@ -2,6 +2,11 @@ const marker = "CTJS_LEGACY_SMOKE_LOADED";
 
 console.log(marker);
 
+const packedColor = Renderer.color(12, 34, 56, 78);
+if (typeof packedColor !== "number" || packedColor !== Renderer.getColor(12, 34, 56, 78)) {
+    throw new Error("Legacy Renderer.color did not return a packed color");
+}
+
 if (typeof Client.getChatGUI !== "function") {
     throw new Error("Client.getChatGUI legacy alias is not exported");
 }

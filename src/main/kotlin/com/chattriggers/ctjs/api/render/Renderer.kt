@@ -330,33 +330,23 @@ object Renderer {
     }
 
     /**
-     * Sets the color for the last defined vertex.
-     *
-     * @param r the red value of the color, between 0 and 1
-     * @param g the green value of the color, between 0 and 1
-     * @param b the blue value of the color, between 0 and 1
-     * @param a the alpha value of the color, between 0 and 1
-     * @return [Renderer] to allow for method chaining
+     * Creates a packed color using the legacy API, or colors the current vertex when a
+     * manual renderer draw is active.
      */
     @JvmStatic
     @JvmOverloads
-    fun color(r: Float, g: Float, b: Float, a: Float = 1f) = apply {
-        Renderer3d.color(r, g, b, a)
-    }
+    fun color(r: Number, g: Number, b: Number, a: Number? = null): Any {
+        if (!Renderer3d.isDrawing()) {
+            return getColor(r.toInt(), g.toInt(), b.toInt(), a?.toInt() ?: 255)
+        }
 
-    /**
-     * Sets the color for the last defined vertex.
-     *
-     * @param r the red value of the color, between 0 and 255
-     * @param g the green value of the color, between 0 and 255
-     * @param b the blue value of the color, between 0 and 255
-     * @param a the alpha value of the color, between 0 and 255
-     * @return [Renderer] to allow for method chaining
-     */
-    @JvmStatic
-    @JvmOverloads
-    fun color(r: Int, g: Int, b: Int, a: Int = 255) = apply {
-        Renderer3d.color(r, g, b, a)
+        val alpha = a ?: 1f
+        if (listOf(r, g, b, alpha).all { it.toDouble() in 0.0..1.0 }) {
+            Renderer3d.color(r.toFloat(), g.toFloat(), b.toFloat(), alpha.toFloat())
+        } else {
+            Renderer3d.color(r.toInt(), g.toInt(), b.toInt(), alpha.toInt())
+        }
+        return this
     }
 
     /**
