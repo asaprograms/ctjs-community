@@ -19,6 +19,7 @@
         "ClientChunkMapAccessor",
         "ClientLevelAccessor",
         "ClientPacketListenerAccessor",
+        "ClientPacketListenerMixin",
         "CreativeModeInventoryScreenMixin",
         "EntityRenderDispatcherMixin",
         "GuiGraphicsExtractorMixin",

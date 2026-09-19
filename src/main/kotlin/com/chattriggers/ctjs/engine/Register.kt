@@ -432,6 +432,12 @@ object Register {
         return EventTrigger(method, TriggerType.DROP_ITEM)
     }
 
+    /** Registers a cancellable trigger before the client handles an item pickup. */
+    @JvmStatic
+    fun registerPickupItem(method: Any): Trigger {
+        return EventTrigger(method, TriggerType.PICKUP_ITEM)
+    }
+
     /**
      * Registers a trigger that runs before a screenshot is taken.
      *
