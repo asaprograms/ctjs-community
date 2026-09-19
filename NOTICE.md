@@ -27,4 +27,6 @@ Contributors named in the modern project metadata include:
 
 Additional authorship remains available in the upstream Git histories. This notice supplements, and does not replace, the copyright notice in LICENSE.
 
+Community Edition maintenance and current-version porting are coordinated through the `asaprograms/ctjs-community` repository. Current contributors are recorded in Git history and the Fabric metadata rather than being substituted for the original authors.
+
 ChatTriggers names and artwork remain associated with their respective creators. This community project does not claim endorsement by the original ChatTriggers team.
