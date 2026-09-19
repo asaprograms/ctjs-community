@@ -110,6 +110,13 @@ if (typeof renderHelmetTrigger.register !== "function") {
     throw new Error("Legacy renderHelmet trigger is not exported");
 }
 
+for (const triggerName of ["renderExperience", "renderJumpBar"]) {
+    const trigger = register(triggerName, () => {}).unregister();
+    if (typeof trigger.register !== "function") {
+        throw new Error(`Legacy ${triggerName} trigger is not exported`);
+    }
+}
+
 register("command", () => {
     ChatLib.chat("&aLegacy module smoke test passed");
 }).setName("ctlegacytest");

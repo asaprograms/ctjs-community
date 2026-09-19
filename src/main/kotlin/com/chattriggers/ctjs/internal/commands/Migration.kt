@@ -36,17 +36,6 @@ internal object Migration {
         """Config\.modulesFolder""".toRegex() to "ChatTriggers.MODULES_FOLDER",
     )
 
-    private val removedTriggersRegex = let {
-        val triggers = setOf(
-            "renderExperience",
-            "renderJumpBar",
-        )
-
-        """
-            register\(['"`](${triggers.joinToString("|")})['"`]
-        """.trimIndent().toRegex(RegexOption.IGNORE_CASE)
-    }
-
     private val guiMouseClickRegex = """register\(['"`]guiMouseClick['"`]""".toRegex(RegexOption.IGNORE_CASE)
     private val guiMouseDragRegex = """register\(['"`]guiMouseDrag['"`]""".toRegex(RegexOption.IGNORE_CASE)
     private val guiOpenedRegex = """register\(['"`]guiOpened['"`]""".toRegex(RegexOption.IGNORE_CASE)
@@ -114,10 +103,6 @@ internal object Migration {
 
     private fun collectErrors(text: String): List<Pair<Int, String>> {
         val errors = mutableListOf<Pair<Int, String>>()
-
-        removedTriggersRegex.findAll(text).forEach {
-            errors.add(it.groups[0]!!.range.first to "&6Warning: trigger \"${it.groups[1]!!.value}\" was removed")
-        }
 
         fun Regex.warn(block: (MatchResult) -> String) {
             findAll(text).forEach {

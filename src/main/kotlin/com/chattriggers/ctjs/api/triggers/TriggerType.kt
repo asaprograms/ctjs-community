@@ -76,6 +76,8 @@ enum class TriggerType : ITriggerType {
     GUI_DRAW_BACKGROUND,
     RENDER_HAND,
     RENDER_HELMET,
+    RENDER_EXPERIENCE,
+    RENDER_JUMP_BAR,
 
     // world
     SOUND_PLAY,
