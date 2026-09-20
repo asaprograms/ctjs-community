@@ -14,6 +14,7 @@ import com.chattriggers.ctjs.api.inventory.nbt.NBTTagList
 import com.chattriggers.ctjs.api.message.ChatLib
 import com.chattriggers.ctjs.api.message.TextComponent
 import com.chattriggers.ctjs.api.render.Gui
+import com.chattriggers.ctjs.api.render.Renderer
 import com.chattriggers.ctjs.api.world.Chunk
 import com.chattriggers.ctjs.api.world.Scoreboard
 import com.chattriggers.ctjs.api.world.PotionEffect
@@ -40,6 +41,9 @@ class LegacyApiAliasesTest {
             "drawString", "drawCreativeTabHoveringString", "drawHoveringString",
         )) {
             assertMethod(Gui::class.java, name)
+        }
+        for (name in listOf("drawShape", "finishDraw", "getDrawMode", "setDrawMode", "retainTransforms")) {
+            assertStaticMethod(Renderer::class.java, name)
         }
         assertTrue(
             Sound::class.java.methods.any {
