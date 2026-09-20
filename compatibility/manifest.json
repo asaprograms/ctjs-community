@@ -390,6 +390,13 @@
       "coverage": ["integer-cloud-setter", "integer-particle-setter", "string-chat-visibility", "commands-visibility-alias"],
       "status": "verified",
       "test": "SettingsCompatibilityTest, LegacyApiAliasesTest, and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
+    },
+    {
+      "id": "legacy-combined-block-wrapper",
+      "source": "ChatTriggers 1.3.2 Block API",
+      "coverage": ["legacy-constructors", "block-property", "blockPos-property", "mutating-position", "mutating-face", "type-method-delegation"],
+      "status": "verified",
+      "test": "BlockCompatibilityTest, LegacyApiAliasesTest, and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
     }
   ]
 }

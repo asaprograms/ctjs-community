@@ -74,6 +74,21 @@ for (const method of ["getMetadata", "isPowered", "getRedstoneStrength"]) {
         throw new Error(`Legacy Block.${method} is not exported`);
     }
 }
+for (const method of [
+    "setBlockPos", "setFace", "getID", "getRegistryName", "getUnlocalizedName",
+    "getName", "getLightValue", "getDefaultState", "getDefaultMetadata",
+    "canProvidePower", "isTranslucent",
+]) {
+    if (typeof legacyBlock[method] !== "function") {
+        throw new Error(`Legacy Block.${method} is not exported`);
+    }
+}
+if (legacyBlock.setBlockPos(new BlockPos(1, 2, 3)) !== legacyBlock ||
+    legacyBlock.setFace(BlockFace.NORTH) !== legacyBlock ||
+    legacyBlock.getX() !== 1 || legacyBlock.getY() !== 2 || legacyBlock.getZ() !== 3 ||
+    legacyBlock.getRegistryName() !== "minecraft:stone") {
+    throw new Error("Legacy mutable Block wrapper contract failed");
+}
 
 const packetTrigger = register("packetReceived", () => {}).unregister();
 if (typeof packetTrigger.setPacketClass !== "function" || typeof packetTrigger.setPacketClasses !== "function") {
