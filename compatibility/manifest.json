@@ -294,6 +294,13 @@
       "test": "SlotCompatibilityTest and LegacyApiAliasesTest"
     },
     {
+      "id": "legacy-display-lifecycle",
+      "source": "ChatTriggers 2.2.0 Display and DisplayHandler APIs",
+      "coverage": ["automatic-registration", "overlay-rendering", "post-gui-rendering", "visibility", "legacy-position", "registration-type", "module-teardown"],
+      "status": "verified",
+      "test": "DisplayCompatibilityTest and client display smoke fixture on Minecraft 26.2 and 26.1.2"
+    },
+    {
       "id": "legacy-register-surface",
       "source": "ChatTriggers 2.2.0 IRegister public surface",
       "coverage": ["all-74-registration-entry-points", "static-javascript-export"],

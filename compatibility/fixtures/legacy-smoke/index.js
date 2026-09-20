@@ -158,7 +158,17 @@ register("command", () => {
 }).setName("ctlegacytest");
 
 let rendererSmokeDrawn = false;
+let displayFrameCount = 0;
+const legacyDisplay = new Display()
+    .setLine(0, "&aLegacy display smoke")
+    .setRenderLoc(6, 6)
+    .setRegisterType("post gui render");
 register("guiRender", () => {
+    displayFrameCount++;
+    if (displayFrameCount === 2) {
+        console.log("CTJS_DISPLAY_SMOKE_RENDERED");
+    }
+
     if (rendererSmokeDrawn) return;
 
     Renderer.begin(Renderer.DrawMode.QUADS, Renderer.VertexFormat.POSITION_COLOR);
