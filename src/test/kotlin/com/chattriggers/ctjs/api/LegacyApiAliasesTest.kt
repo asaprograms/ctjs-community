@@ -49,6 +49,12 @@ class LegacyApiAliasesTest {
         assertStaticMethod(com.chattriggers.ctjs.api.client.Player::class.java, "getUUIDObj")
         assertStaticMethod(com.chattriggers.ctjs.api.client.Player::class.java, "getOpenedInventory")
         assertMethod(Entity::class.java, "getRider")
+        for (name in listOf(
+            "setAir", "setPosition", "setAngles", "setOnFire", "extinguish", "move", "setIsSilent",
+            "addVelocity", "setIsSneaking", "setIsSprinting", "setIsInvisible", "isEating", "setIsEating",
+        )) {
+            assertMethod(Entity::class.java, name)
+        }
         for (name in listOf("setX", "setY", "setZ", "multiplyVelocity", "setColor", "setAlpha", "getColor")) {
             assertMethod(Particle::class.java, name)
         }

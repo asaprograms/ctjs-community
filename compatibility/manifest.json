@@ -273,6 +273,13 @@
       "test": "Client render smoke fixture on Minecraft 26.2 and 26.1.2"
     },
     {
+      "id": "legacy-entity-mutators",
+      "source": "ChatTriggers 2.2.0 Entity wrapper API",
+      "coverage": ["air", "position", "view-angles", "fire", "motion", "silent-state", "sneaking", "sprinting", "visibility", "item-use-state"],
+      "status": "implemented",
+      "test": "LegacyApiAliasesTest reflection coverage"
+    },
+    {
       "id": "legacy-register-surface",
       "source": "ChatTriggers 2.2.0 IRegister public surface",
       "coverage": ["all-74-registration-entry-points", "static-javascript-export"],
