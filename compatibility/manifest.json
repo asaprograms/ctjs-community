@@ -216,6 +216,13 @@
       "test": "Legacy client smoke fixture and LegacyApiAliasesTest"
     },
     {
+      "id": "legacy-particle-motion-methods",
+      "source": "ChatTriggers 2.2.0 Particle API",
+      "coverage": ["coordinate-setters", "velocity-multiplier", "previous-z-coordinate"],
+      "status": "implemented",
+      "test": "LegacyApiAliasesTest reflection coverage"
+    },
+    {
       "id": "legacy-register-surface",
       "source": "ChatTriggers 2.2.0 IRegister public surface",
       "coverage": ["all-74-registration-entry-points", "static-javascript-export"],
