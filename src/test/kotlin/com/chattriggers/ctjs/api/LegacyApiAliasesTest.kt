@@ -106,6 +106,8 @@ class LegacyApiAliasesTest {
         assertStaticMethod(World::class.java, "stopAllSounds")
         assertMethod(Chunk::class.java, "getAllTileEntities")
         assertMethod(Chunk::class.java, "getAllTileEntitiesOfType")
+        assertMethod(Chunk::class.java, "getSkyLightLevel")
+        assertMethod(Chunk::class.java, "getBlockLightLevel")
         assertStaticMethod(Register::class.java, "registerRenderSlot")
         assertStaticMethod(Register::class.java, "registerGuiMouseRelease")
         assertStaticMethod(Register::class.java, "registerAttackEntity")
