@@ -223,6 +223,13 @@
       "test": "LegacyApiAliasesTest reflection coverage"
     },
     {
+      "id": "legacy-particle-color-methods",
+      "source": "ChatTriggers 2.2.0 Particle API",
+      "coverage": ["quad-particle-rgb", "quad-particle-alpha", "packed-color", "color-readback", "explicit-non-quad-rejection"],
+      "status": "implemented",
+      "test": "Client mixin validation and LegacyApiAliasesTest reflection coverage"
+    },
+    {
       "id": "legacy-register-surface",
       "source": "ChatTriggers 2.2.0 IRegister public surface",
       "coverage": ["all-74-registration-entry-points", "static-javascript-export"],
