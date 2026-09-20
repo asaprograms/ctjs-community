@@ -117,6 +117,22 @@ class LegacyApiAliasesTest {
         for (name in listOf("getMetadata", "isPowered", "getRedstoneStrength")) {
             assertMethod(Block::class.java, name)
         }
+        for (name in listOf(
+            "getBlock", "getBlockPos", "setBlockPos", "setFace", "getID", "getRegistryName",
+            "getUnlocalizedName", "getName", "getLightValue", "getDefaultState", "getDefaultMetadata",
+            "canProvidePower", "isTranslucent",
+        )) {
+            assertMethod(Block::class.java, name)
+        }
+        for (parameter in listOf<Class<*>>(
+            BlockType::class.java, Block::class.java, String::class.java,
+            Int::class.javaPrimitiveType!!, Item::class.java,
+        )) {
+            assertTrue(
+                Block::class.java.constructors.any { it.parameterTypes.contentEquals(arrayOf(parameter)) },
+                "Expected Block constructor accepting ${parameter.simpleName}",
+            )
+        }
         assertMethod(BlockType::class.java, "getDefaultMetadata")
         assertMethod(BlockType::class.java, "getUnlocalizedName")
         assertStaticMethod(Scoreboard::class.java, "getScoreboardTitle")

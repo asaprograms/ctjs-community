@@ -4,15 +4,27 @@ import com.chattriggers.ctjs.api.client.Player
 import com.chattriggers.ctjs.api.inventory.Item
 import com.chattriggers.ctjs.api.world.World
 
-/**
- * An immutable reference to a placed block in the world. It
- * has a block type, a position, and optionally a specific face.
- */
+/** A reference to a block type and its optional world position and face. */
 open class Block(
     val type: BlockType,
-    val pos: BlockPos,
-    val face: BlockFace? = null,
+    pos: BlockPos,
+    face: BlockFace? = null,
 ) {
+    var pos: BlockPos = pos
+        private set
+    private var currentFace: BlockFace? = face
+    val face: BlockFace? get() = currentFace
+
+    /** Legacy names for the wrapped block and its position. */
+    val block get() = type.mcValue
+    val blockPos get() = pos
+
+    constructor(type: BlockType) : this(type, BlockPos(0, 0, 0))
+    constructor(block: Block) : this(block.type, block.pos, block.face)
+    constructor(blockName: String) : this(BlockType(blockName))
+    constructor(blockID: Int) : this(BlockType(blockID))
+    constructor(item: Item) : this(BlockType(item))
+
     val x: Int get() = pos.x
     val y: Int get() = pos.y
     val z: Int get() = pos.z
@@ -21,12 +33,40 @@ open class Block(
 
     fun withPos(pos: BlockPos) = Block(type, pos, face)
 
+    /** Legacy mutating position setter. */
+    fun setBlockPos(blockPos: BlockPos) = apply {
+        pos = blockPos
+    }
+
     /**
      * Narrows this block to reference a certain face. Used by
      * [Player.lookingAt] to specify the block face
      * being looked at.
      */
     fun withFace(face: BlockFace) = Block(type, pos, face)
+
+    /** Legacy mutating face setter. */
+    fun setFace(face: BlockFace) = apply {
+        currentFace = face
+    }
+
+    fun getID() = type.getID()
+
+    fun getRegistryName() = type.getRegistryName()
+
+    fun getUnlocalizedName() = type.getUnlocalizedName()
+
+    fun getName() = type.getName()
+
+    fun getLightValue() = getState()?.lightEmission ?: type.getLightValue()
+
+    fun getDefaultState() = type.getDefaultState()
+
+    fun getDefaultMetadata() = type.getDefaultMetadata()
+
+    fun canProvidePower() = getState()?.isSignalSource ?: type.canProvidePower()
+
+    fun isTranslucent() = getState()?.useShapeForLightOcclusion() ?: type.isTranslucent()
 
     fun getState() = World.toMC()?.getBlockState(pos.toMC())
 
