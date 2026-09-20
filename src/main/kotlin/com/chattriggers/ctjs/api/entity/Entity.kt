@@ -10,9 +10,12 @@ import com.chattriggers.ctjs.MCDimensionType
 import com.chattriggers.ctjs.MCEntity
 import com.chattriggers.ctjs.MCLivingEntity
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.entity.MoverType
+import net.minecraft.world.InteractionHand
 import net.minecraft.resources.ResourceKey
 import net.minecraft.util.Mth
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes
+import net.minecraft.world.phys.Vec3
 import java.util.*
 import kotlin.math.sqrt
 
@@ -173,6 +176,10 @@ open class Entity(override val mcValue: MCEntity) : CTWrapper<MCEntity> {
      */
     fun getAir(): Int = mcValue.airSupply
 
+    fun setAir(air: Int) = apply {
+        mcValue.airSupply = air
+    }
+
     fun distanceTo(other: Entity): Float = distanceTo(other.mcValue)
 
     fun distanceTo(other: MCEntity): Float = mcValue.distanceTo(other)
@@ -203,15 +210,43 @@ open class Entity(override val mcValue: MCEntity) : CTWrapper<MCEntity> {
 
     fun isWet() = mcValue.isInWaterOrRain
 
+    fun setPosition(x: Double, y: Double, z: Double) = apply {
+        mcValue.setPos(x, y, z)
+    }
+
+    fun setAngles(yaw: Float, pitch: Float) = apply {
+        mcValue.turn(yaw.toDouble(), pitch.toDouble())
+    }
+
     fun getDimension() = mcValue.level().dimensionTypeRegistration().unwrapKey().let { key ->
         DimensionType.entries.first { it.toMC() == key }
     }
 
     fun getMaxInPortalTime() = mcValue.portalCooldown
 
+    fun setOnFire(seconds: Int) = apply {
+        mcValue.igniteForSeconds(seconds.toFloat())
+    }
+
+    fun extinguish() = apply {
+        mcValue.extinguishFire()
+    }
+
+    fun move(x: Double, y: Double, z: Double) = apply {
+        mcValue.move(MoverType.SELF, Vec3(x, y, z))
+    }
+
     fun isSilent() = mcValue.isSilent
 
+    fun setIsSilent(silent: Boolean) = apply {
+        mcValue.isSilent = silent
+    }
+
     fun isInLava() = mcValue.isInLava
+
+    fun addVelocity(x: Double, y: Double, z: Double) = apply {
+        mcValue.addDeltaMovement(Vec3(x, y, z))
+    }
 
     @JvmOverloads
     fun getLookVector(partialTicks: Float = Renderer.partialTicks) = mcValue.getViewVector(partialTicks)
@@ -225,9 +260,28 @@ open class Entity(override val mcValue: MCEntity) : CTWrapper<MCEntity> {
 
     fun isSneaking() = mcValue.isShiftKeyDown
 
+    fun setIsSneaking(sneaking: Boolean) = apply {
+        mcValue.isShiftKeyDown = sneaking
+    }
+
     fun isSprinting() = mcValue.isSprinting
 
+    fun setIsSprinting(sprinting: Boolean) = apply {
+        mcValue.isSprinting = sprinting
+    }
+
     fun isInvisible() = mcValue.isInvisible
+
+    fun setIsInvisible(invisible: Boolean) = apply {
+        mcValue.isInvisible = invisible
+    }
+
+    fun isEating() = (mcValue as? MCLivingEntity)?.isUsingItem ?: false
+
+    fun setIsEating(eating: Boolean) = apply {
+        val living = mcValue as? MCLivingEntity ?: return@apply
+        if (eating) living.startUsingItem(InteractionHand.MAIN_HAND) else living.stopUsingItem()
+    }
 
     fun isOutsideBorder() = World.toMC()?.worldBorder?.isWithinBounds(mcValue.blockPosition()) ?: false
 
