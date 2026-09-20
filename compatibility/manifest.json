@@ -266,6 +266,13 @@
       "test": "SoundCompatibilityTest and LegacyApiAliasesTest"
     },
     {
+      "id": "legacy-manual-renderer",
+      "source": "ChatTriggers 2.2.0 Renderer and Tessellator API",
+      "coverage": ["buffer-begin", "position-color-vertices", "quad-submission", "world-text-submission"],
+      "status": "implemented",
+      "test": "Client render smoke fixture on Minecraft 26.2 and 26.1.2"
+    },
+    {
       "id": "legacy-register-surface",
       "source": "ChatTriggers 2.2.0 IRegister public surface",
       "coverage": ["all-74-registration-entry-points", "static-javascript-export"],

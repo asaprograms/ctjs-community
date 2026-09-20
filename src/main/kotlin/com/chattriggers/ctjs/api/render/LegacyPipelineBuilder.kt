@@ -55,7 +55,8 @@ object LegacyPipelineBuilder {
 
         val basePipeline = RenderPipeline.builder(snippet.mcSnippet)
             .withLocation("ctjs/custom/pipeline${hashCode()}")
-//            .withVertexFormat(vertexFormat.toMC(), drawMode.toUC().mcMode)
+            .withVertexBinding(0, vertexFormat.toMC())
+            .withPrimitiveTopology(drawMode.toUC().mcMode)
 //        if (blend == true) basePipeline.withBlend(BlendFunction(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO))
 //
 //        if (cull != null) basePipeline.withCull(cull!!)

@@ -9,7 +9,8 @@ import gg.essential.elementa.dsl.component2
 import gg.essential.elementa.dsl.component3
 import gg.essential.elementa.dsl.component4
 import gg.essential.universal.UGraphics
-import net.minecraft.client.gui.Font
+import gg.essential.universal.render.URenderPipeline
+import gg.essential.universal.vertex.UBufferBuilder
 import org.joml.Vector3f
 import org.mozilla.javascript.NativeObject
 import java.awt.Color
@@ -18,8 +19,7 @@ object Renderer3d {
     private var firstVertex = true
     private var began = false
 
-//    private val tessellator = Tesselator.getInstance()
-    private val worldRenderer by lazy(LazyThreadSafetyMode.NONE) { UGraphics.getFromTessellator() }
+    private lateinit var worldRenderer: UBufferBuilder
 
     internal fun isDrawing() = began
 
@@ -41,7 +41,8 @@ object Renderer3d {
         Renderer.pushMatrix()
             .enableBlend()
             .disableCull()
-//        worldRenderer.beginRenderLayer(LegacyPipelineBuilder.begin(drawMode, vertexFormat, snippet).layer())
+        LegacyPipelineBuilder.begin(drawMode, vertexFormat, snippet)
+        worldRenderer = UBufferBuilder.create(drawMode.toUC(), vertexFormat.toMC())
 
         firstVertex = true
         began = true
@@ -179,7 +180,7 @@ object Renderer3d {
 
         worldRenderer.endVertex()
 
-        worldRenderer.drawDirect()
+        worldRenderer.build()?.drawAndClose(URenderPipeline.wrap(LegacyPipelineBuilder.build()))
         Renderer.colorize(1f, 1f, 1f, 1f)
             .disableBlend()
             .enableCull()
@@ -215,7 +216,6 @@ object Renderer3d {
         centered: Boolean = true,
         renderThroughBlocks: Boolean = true,
     ) {
-        // TODO: this method is broke
         val (lines, width, height) = Renderer.splitText(text)
 
         val fontRenderer = Renderer.getFontRenderer()
@@ -242,9 +242,12 @@ object Renderer3d {
         val xShift = -width / 2
         val yShift = -height / 2
 
-//        val vertexConsumers = Client.getMinecraft().renderBuffers().bufferSource()
         var yOffset = 0
-        val textLayer = if (renderThroughBlocks) Font.DisplayMode.SEE_THROUGH else Font.DisplayMode.NORMAL
+
+        if (renderThroughBlocks) {
+            UGraphics.depthMask(false)
+            UGraphics.disableDepth()
+        }
 
         for (line in lines) {
             val centerShift = if (centered) {
@@ -252,40 +255,22 @@ object Renderer3d {
             } else 0f
 
             Renderer.pushMatrix()
-            val matrix = Renderer.matrixStack.toMC().last().pose()
-
-//            if (renderBlackBox) {
-//                fontRenderer.drawInBatch(
-//                    line,
-//                    xShift - centerShift,
-//                    yShift + yOffset,
-//                    0x20FFFFFF,
-//                    false,
-//                    matrix,
-//                    vertexConsumers,
-//                    textLayer,
-//                    opacity,
-//                    -1
-//                )
-//                Renderer.translate(0f, 0f, -0.03f)
-//            }
-//
-//            fontRenderer.drawInBatch(
-//                line,
-//                xShift - centerShift,
-//                yShift + yOffset,
-//                color.toInt(),
-//                false,
-//                matrix,
-//                vertexConsumers,
-//                textLayer,
-//                0,
-//                -1
-//            )
-//            vertexConsumers.endBatch()
+            UGraphics.drawString(
+                Renderer.matrixStack,
+                line,
+                xShift - centerShift,
+                yShift + yOffset,
+                color.toInt(),
+                if (renderBlackBox) opacity else 0,
+            )
             Renderer.popMatrix()
 
             yOffset += fontRenderer.lineHeight + 1
+        }
+
+        if (renderThroughBlocks) {
+            UGraphics.depthMask(true)
+            UGraphics.enableDepth()
         }
 
         Renderer.popMatrix()
