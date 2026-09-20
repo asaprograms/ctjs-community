@@ -494,7 +494,7 @@ class Gui @JvmOverloads constructor(
     fun setButtonText(buttonId: Int, text: String) = setButtonText(buttonId, TextComponent(text))
 
     fun drawString(text: String, x: Int, y: Int, color: Int) {
-        Renderer.drawString(currentDrawContext(), text, x.toFloat(), y.toFloat(), color.toLong())
+        Renderer.drawString(text, x.toFloat(), y.toFloat(), color.toLong())
     }
 
     fun drawCreativeTabHoveringString(text: String, mouseX: Int, mouseY: Int) {
