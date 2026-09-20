@@ -13,6 +13,7 @@ import com.chattriggers.ctjs.internal.utils.asMixin
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance
 import net.minecraft.client.resources.sounds.Sound.Type
 import net.minecraft.client.sounds.WeighedSoundEvents
+import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
 import net.minecraft.server.packs.resources.ResourceMetadata
 import net.minecraft.server.packs.metadata.MetadataSectionType
@@ -21,6 +22,7 @@ import net.minecraft.sounds.SoundEvent
 import net.minecraft.server.packs.PackLocationInfo
 import net.minecraft.server.packs.PackResources
 import net.minecraft.server.packs.PackType
+import net.minecraft.server.packs.repository.PackSource
 import net.minecraft.server.packs.resources.IoSupplier
 import net.minecraft.server.packs.resources.Resource
 import net.minecraft.world.phys.Vec3
@@ -28,6 +30,7 @@ import net.minecraft.util.RandomSource
 import org.mozilla.javascript.NativeObject
 import java.io.File
 import java.io.InputStream
+import java.util.Optional
 import kotlin.io.path.Path
 import kotlin.io.path.nameWithoutExtension
 
@@ -145,6 +148,8 @@ class Sound(private val config: NativeObject) {
     fun setCategory(category: Category) = apply {
         soundData.category = category
     }
+
+    fun setCategory(category: String) = setCategory(Category.from(category))
 
     /**
      * Gets this sound's volume.
@@ -473,7 +478,19 @@ class Sound(private val config: NativeObject) {
 
             @JvmStatic
             fun from(value: Any) = when (value) {
-                is CharSequence -> valueOf(value.toString())
+                is CharSequence -> when (value.toString().trim().lowercase()) {
+                    "master" -> MASTER
+                    "music" -> MUSIC
+                    "record", "records" -> RECORDS
+                    "weather" -> WEATHER
+                    "block", "blocks" -> BLOCKS
+                    "hostile" -> HOSTILE
+                    "neutral" -> NEUTRAL
+                    "player", "players" -> PLAYERS
+                    "ambient" -> AMBIENT
+                    "voice" -> VOICE
+                    else -> throw IllegalArgumentException("Unknown sound category: $value")
+                }
                 is SoundSource -> fromMC(value)
                 is Category -> value
                 else -> throw IllegalArgumentException("Cannot create Sound.Category from $value")
@@ -499,41 +516,32 @@ class Sound(private val config: NativeObject) {
         }
     }
 
-    private object CTResourcePack : PackResources {
-        override fun packId() = CTJS.MOD_ID
+    internal object CTResourcePack : PackResources {
+        private val location = PackLocationInfo(
+            CTJS.MOD_ID,
+            Component.literal("ChatTriggers generated sounds"),
+            PackSource.DEFAULT,
+            Optional.empty(),
+        )
 
-        override fun close() {
-            throw UnsupportedOperationException()
-        }
+        override fun close() = Unit
 
-        override fun getRootResource(vararg segments: String): IoSupplier<InputStream>? {
-            throw UnsupportedOperationException()
-        }
+        override fun getRootResource(vararg segments: String): IoSupplier<InputStream>? = null
 
-        override fun getResource(type: PackType, id: Identifier): IoSupplier<InputStream>? {
-            throw UnsupportedOperationException()
-        }
+        override fun getResource(type: PackType, id: Identifier): IoSupplier<InputStream>? = null
 
         override fun listResources(
             type: PackType,
             namespace: String,
             prefix: String,
             consumer: PackResources.ResourceOutput
-        ) {
-            throw UnsupportedOperationException()
-        }
+        ) = Unit
 
-        override fun getNamespaces(type: PackType): MutableSet<String> {
-            throw UnsupportedOperationException()
-        }
+        override fun getNamespaces(type: PackType): MutableSet<String> = mutableSetOf(CTJS.MOD_ID)
 
-        override fun <T : Any> getMetadataSection(metaReader: MetadataSectionType<T>): T? {
-            throw UnsupportedOperationException()
-        }
+        override fun <T : Any> getMetadataSection(metaReader: MetadataSectionType<T>): T? = null
 
-        override fun location(): PackLocationInfo {
-            throw NotImplementedError()
-        }
+        override fun location(): PackLocationInfo = location
     }
 
     private companion object {

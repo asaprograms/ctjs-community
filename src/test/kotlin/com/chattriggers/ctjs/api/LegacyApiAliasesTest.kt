@@ -2,6 +2,7 @@ package com.chattriggers.ctjs.api
 
 import com.chattriggers.ctjs.api.client.Client
 import com.chattriggers.ctjs.api.client.Settings
+import com.chattriggers.ctjs.api.client.Sound
 import com.chattriggers.ctjs.api.entity.LivingEntity
 import com.chattriggers.ctjs.api.entity.Entity
 import com.chattriggers.ctjs.api.entity.Particle
@@ -27,6 +28,12 @@ class LegacyApiAliasesTest {
     fun `common 1_8_9 method names remain exported`() {
         assertStaticMethod(Client::class.java, "getChatGUI")
         assertStaticMethod(ChatLib::class.java, "isPlayer")
+        assertTrue(
+            Sound::class.java.methods.any {
+                it.name == "setCategory" && it.parameterTypes.contentEquals(arrayOf(String::class.java))
+            },
+            "Expected Sound.setCategory(String) to be exported",
+        )
         for (name in listOf(
             "getText", "setText", "isFormatted", "setFormatted",
             "setClick", "getClickAction", "setClickAction", "getClickValue", "setClickValue",
