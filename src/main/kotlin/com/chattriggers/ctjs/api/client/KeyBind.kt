@@ -1,11 +1,13 @@
 package com.chattriggers.ctjs.api.client
 
+import com.chattriggers.ctjs.CTJS
 import com.chattriggers.ctjs.api.triggers.RegularTrigger
 import com.chattriggers.ctjs.api.triggers.TriggerType
 import com.chattriggers.ctjs.api.world.World
 import com.chattriggers.ctjs.internal.BoundKeyUpdater
 import com.chattriggers.ctjs.internal.mixins.OptionsAccessor
 import com.chattriggers.ctjs.internal.mixins.KeyMappingAccessor
+import com.chattriggers.ctjs.internal.mixins.KeyMappingCategoryAccessor
 import com.chattriggers.ctjs.internal.utils.Initializer
 import com.chattriggers.ctjs.internal.utils.asMixin
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
@@ -17,6 +19,7 @@ import java.util.concurrent.CopyOnWriteArrayList
 
 class KeyBind {
     private val keyBinding: KeyMapping
+    private val categoryName: String
     private var onKeyPress: RegularTrigger? = null
     private var onKeyRelease: RegularTrigger? = null
     private var onKeyDown: RegularTrigger? = null
@@ -33,10 +36,10 @@ class KeyBind {
      */
     @JvmOverloads
     constructor(description: String, keyCode: Int, category: String = "ChatTriggers") {
+        val categoryId = categoryIdentifier(category)
         val possibleDuplicate = Client.getMinecraft().options.keyMappings.find {
             I18n.get(it.saveString()) == I18n.get(description) &&
-                // TODO: check if this is right
-                I18n.get(it.category.id.toLanguageKey("key.category")) == I18n.get(category)
+                it.category.id == categoryId
         }
 
         if (possibleDuplicate != null) {
@@ -45,15 +48,17 @@ class KeyBind {
                     "use the other KeyBind constructor or Client.getKeyBindFromKey."
             }
             keyBinding = possibleDuplicate
+            categoryName = category
         } else {
-            val categoryList = KeyMappingAccessor.Category.getCategoryList()
+            val categoryList = KeyMappingCategoryAccessor.getCategoryList()
 
-            if (!categoryList.stream().anyMatch { it.id.path.equals(category) }) {
+            if (categoryList.none { it.id == categoryId }) {
                 uniqueCategories[category] = 0
             }
-            val keyCategory = KeyMapping.Category.register(Identifier.parse(category))
-            uniqueCategories[category] = uniqueCategories[category]!! + 1
+            val keyCategory = KeyMapping.Category.register(categoryId)
+            uniqueCategories[category] = uniqueCategories.getOrDefault(category, 0) + 1
             keyBinding = KeyMapping(description, keyCode, keyCategory)
+            categoryName = category
 
             // We need to update the bound key for the KeyBind we just made to the previous binding,
             // just in case it existed last time the game was opened. This will only matter for the first
@@ -70,19 +75,23 @@ class KeyBind {
 
     constructor(keyBinding: KeyMapping) {
         this.keyBinding = keyBinding
+        categoryName = getCategoryName(keyBinding.category)
         keyBinds.add(this)
     }
 
-    fun registerKeyPress(method: Any) = apply {
-        onKeyPress = RegularTrigger(method, TriggerType.OTHER)
+    fun registerKeyPress(method: Any): RegularTrigger {
+        unregisterKeyPress()
+        return RegularTrigger(method, TriggerType.OTHER).also { onKeyPress = it }
     }
 
-    fun registerKeyRelease(method: Any) = apply {
-        onKeyRelease = RegularTrigger(method, TriggerType.OTHER)
+    fun registerKeyRelease(method: Any): RegularTrigger {
+        unregisterKeyRelease()
+        return RegularTrigger(method, TriggerType.OTHER).also { onKeyRelease = it }
     }
 
-    fun registerKeyDown(method: Any) = apply {
-        onKeyDown = RegularTrigger(method, TriggerType.OTHER)
+    fun registerKeyDown(method: Any): RegularTrigger {
+        unregisterKeyDown()
+        return RegularTrigger(method, TriggerType.OTHER).also { onKeyDown = it }
     }
 
     fun unregisterKeyPress() = apply {
@@ -160,7 +169,7 @@ class KeyBind {
      *
      * @return the category
      */
-    fun getCategory(): String = keyBinding.category.id.toLanguageKey("key.category")
+    fun getCategory(): String = categoryName
 
     /**
      * Sets the state of the key.
@@ -196,7 +205,8 @@ class KeyBind {
             }
         }
 
-        internal fun clearKeyBinds() {
+        @JvmStatic
+        fun clearKeyBinds() {
             keyBinds.toList().forEach(::removeKeyBind)
             customKeyBindings.clear()
             keyBinds.clear()
@@ -221,12 +231,13 @@ class KeyBind {
 
                 if (uniqueCategories[categoryName] == 0) {
                     uniqueCategories.remove(categoryName)
-                    KeyMappingAccessor.Category.getCategoryList().removeIf { it.id.equals(category.id) }
+                    KeyMappingCategoryAccessor.getCategoryList().removeIf { it.id.equals(category.id) }
                 }
             }
         }
 
-        private fun removeKeyBind(keyBind: KeyBind) {
+        @JvmStatic
+        fun removeKeyBind(keyBind: KeyBind) {
             val keyBinding = keyBind.keyBinding
             if (keyBinding !in customKeyBindings) return
 
@@ -243,9 +254,18 @@ class KeyBind {
                 )
             )
 
-            KeyMappingAccessor.Category.getCategoryList().add(keyBinding.category)
+            if (KeyMappingCategoryAccessor.getCategoryList().none { it.id == keyBinding.category.id }) {
+                KeyMappingCategoryAccessor.getCategoryList().add(keyBinding.category)
+            }
 
             return keyBinding
+        }
+
+        private fun categoryIdentifier(category: String): Identifier {
+            val path = category.lowercase().map { character ->
+                if (character in 'a'..'z' || character in '0'..'9' || character in "._-/") character else '_'
+            }.joinToString("").trim('/').ifEmpty { "chattriggers" }
+            return Identifier.fromNamespaceAndPath(CTJS.MOD_ID, path)
         }
     }
 }
