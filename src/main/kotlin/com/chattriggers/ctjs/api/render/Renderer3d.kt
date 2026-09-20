@@ -9,6 +9,8 @@ import gg.essential.elementa.dsl.component2
 import gg.essential.elementa.dsl.component3
 import gg.essential.elementa.dsl.component4
 import gg.essential.universal.UGraphics
+import gg.essential.universal.render.URenderPipeline
+import gg.essential.universal.vertex.UBufferBuilder
 import net.minecraft.client.gui.Font
 import org.joml.Vector3f
 import org.mozilla.javascript.NativeObject
@@ -18,7 +20,7 @@ object Renderer3d {
     private var firstVertex = true
     private var began = false
 
-    private val worldRenderer by lazy(LazyThreadSafetyMode.NONE) { UGraphics.getFromTessellator() }
+    private lateinit var worldRenderer: UBufferBuilder
 
     internal fun isDrawing() = began
 
@@ -40,7 +42,8 @@ object Renderer3d {
         Renderer.pushMatrix()
             .enableBlend()
             .disableCull()
-//        worldRenderer.beginRenderLayer(LegacyPipelineBuilder.begin(drawMode, vertexFormat, snippet).layer())
+        LegacyPipelineBuilder.begin(drawMode, vertexFormat, snippet)
+        worldRenderer = UBufferBuilder.create(drawMode.toUC(), vertexFormat.toMC())
 
         firstVertex = true
         began = true
@@ -178,7 +181,7 @@ object Renderer3d {
 
         worldRenderer.endVertex()
 
-        worldRenderer.drawDirect()
+        worldRenderer.build()?.drawAndClose(URenderPipeline.wrap(LegacyPipelineBuilder.build()))
         Renderer.colorize(1f, 1f, 1f, 1f)
             .disableBlend()
             .enableCull()
@@ -244,6 +247,11 @@ object Renderer3d {
         var yOffset = 0
         val textLayer = if (renderThroughBlocks) Font.DisplayMode.SEE_THROUGH else Font.DisplayMode.NORMAL
 
+        if (renderThroughBlocks) {
+            UGraphics.depthMask(false)
+            UGraphics.disableDepth()
+        }
+
         for (line in lines) {
             val centerShift = if (centered) {
                 xShift + (fontRenderer.width(line) / 2f)
@@ -284,6 +292,11 @@ object Renderer3d {
             Renderer.popMatrix()
 
             yOffset += fontRenderer.lineHeight + 1
+        }
+
+        if (renderThroughBlocks) {
+            UGraphics.depthMask(true)
+            UGraphics.enableDepth()
         }
 
         Renderer.popMatrix()

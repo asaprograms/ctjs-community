@@ -72,7 +72,7 @@ jobs:
 
           found=0
           for _ in $(seq 1 180); do
-            if grep -Fq 'CTJS_LEGACY_SMOKE_LOADED' client-smoke.log; then
+            if grep -Fq 'CTJS_LEGACY_SMOKE_LOADED' client-smoke.log && grep -Fq 'CTJS_RENDERER_SMOKE_DRAWN' client-smoke.log; then
               found=1
               break
             fi
@@ -92,6 +92,7 @@ jobs:
           set -e
           cat client-smoke.log
           grep -Fq 'CTJS_LEGACY_SMOKE_LOADED' client-smoke.log
+          grep -Fq 'CTJS_RENDERER_SMOKE_DRAWN' client-smoke.log
           if [ "$found" -ne 1 ]; then
             exit "$status"
           fi

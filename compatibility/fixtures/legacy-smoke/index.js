@@ -157,4 +157,19 @@ register("command", () => {
     ChatLib.chat("&aLegacy module smoke test passed");
 }).setName("ctlegacytest");
 
+let rendererSmokeDrawn = false;
+register("guiRender", () => {
+    if (rendererSmokeDrawn) return;
+
+    Renderer.begin(Renderer.DrawMode.QUADS, Renderer.VertexFormat.POSITION_COLOR);
+    Renderer.pos(2, 2).color(255, 255, 255, 255);
+    Renderer.pos(2, 4).color(255, 255, 255, 255);
+    Renderer.pos(4, 4).color(255, 255, 255, 255);
+    Renderer.pos(4, 2).color(255, 255, 255, 255);
+    Renderer.draw();
+
+    rendererSmokeDrawn = true;
+    console.log("CTJS_RENDERER_SMOKE_DRAWN");
+});
+
 console.log(marker);
