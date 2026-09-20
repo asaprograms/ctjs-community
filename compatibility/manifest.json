@@ -280,6 +280,13 @@
       "test": "LegacyApiAliasesTest reflection coverage"
     },
     {
+      "id": "legacy-vector-arithmetic",
+      "source": "ChatTriggers 2.2.0 Vec3i and BlockPos wrapper APIs",
+      "coverage": ["distance", "squared-distance", "center-distance", "ordering", "block-position-addition", "block-position-subtraction", "raw-block-position-alias"],
+      "status": "verified",
+      "test": "LegacyVectorCompatibilityTest"
+    },
+    {
       "id": "legacy-register-surface",
       "source": "ChatTriggers 2.2.0 IRegister public surface",
       "coverage": ["all-74-registration-entry-points", "static-javascript-export"],

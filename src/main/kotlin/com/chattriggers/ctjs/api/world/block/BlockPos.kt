@@ -23,6 +23,14 @@ class BlockPos(x: Int, y: Int, z: Int) : Vec3i(x, y, z), CTWrapper<MCBlockPos> {
 
     constructor(source: Entity) : this(source.getPos())
 
+    fun add(other: Vec3i) = BlockPos(x + other.x, y + other.y, z + other.z)
+
+    fun add(x: Number, y: Number, z: Number) = add(Vec3i(x, y, z))
+
+    fun subtract(other: Vec3i) = BlockPos(x - other.x, y - other.y, z - other.z)
+
+    fun subtract(x: Number, y: Number, z: Number) = subtract(Vec3i(x, y, z))
+
     override fun translated(dx: Int, dy: Int, dz: Int) = BlockPos(super.translated(dx, dy, dz))
 
     override fun scaled(scale: Int) = BlockPos(super.scaled(scale))
@@ -68,4 +76,6 @@ class BlockPos(x: Int, y: Int, z: Int) : Vec3i(x, y, z), CTWrapper<MCBlockPos> {
     }
 
     fun toVec3d() = Vec3(x.toDouble(), y.toDouble(), z.toDouble())
+
+    fun toMCBlock() = mcValue
 }
