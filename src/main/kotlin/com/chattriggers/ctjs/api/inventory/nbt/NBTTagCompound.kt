@@ -7,6 +7,8 @@ import com.chattriggers.ctjs.internal.utils.asMixin
 import net.minecraft.nbt.ByteArrayTag
 import net.minecraft.nbt.IntArrayTag
 import net.minecraft.nbt.LongArrayTag
+import net.minecraft.nbt.ListTag
+import net.minecraft.nbt.StringTag
 import org.mozilla.javascript.NativeObject
 
 class NBTTagCompound(override val mcValue: MCNbtCompound) : NBTBase(mcValue) {
@@ -34,31 +36,36 @@ class NBTTagCompound(override val mcValue: MCNbtCompound) : NBTBase(mcValue) {
 
     fun getTag(key: String): NBTBase? = mcValue.get(key)?.let(::fromMC)
 
-    fun getTagId(key: String) = mcValue.get(key)?.id
+    fun getTagId(key: String): Byte = mcValue.get(key)?.id ?: 0
 
-    fun getByte(key: String) = mcValue.getByte(key)
+    fun getByte(key: String): Byte = mcValue.getByte(key).orElse(0)
 
-    fun getShort(key: String) = mcValue.getShort(key)
+    fun getShort(key: String): Short = mcValue.getShort(key).orElse(0)
 
-    fun getInteger(key: String) = mcValue.getInt(key)
+    fun getInteger(key: String): Int = mcValue.getInt(key).orElse(0)
 
-    fun getLong(key: String) = mcValue.getLong(key)
+    fun getLong(key: String): Long = mcValue.getLong(key).orElse(0L)
 
-    fun getFloat(key: String) = mcValue.getFloat(key)
+    fun getFloat(key: String): Float = mcValue.getFloat(key).orElse(0f)
 
-    fun getDouble(key: String) = mcValue.getDouble(key)
+    fun getDouble(key: String): Double = mcValue.getDouble(key).orElse(0.0)
 
-    fun getString(key: String) = mcValue.getString(key)
+    fun getString(key: String): String = mcValue.getString(key).orElse("")
 
-    fun getByteArray(key: String) = mcValue.getByteArray(key)
+    fun getByteArray(key: String): ByteArray = mcValue.getByteArray(key).orElseGet { ByteArray(0) }
 
-    fun getIntArray(key: String) = mcValue.getIntArray(key)
+    fun getIntArray(key: String): IntArray = mcValue.getIntArray(key).orElseGet { IntArray(0) }
 
-    fun getBoolean(key: String) = mcValue.getBoolean(key)
+    fun getBoolean(key: String): Boolean = mcValue.getBoolean(key).orElse(false)
 
-    fun getCompoundTag(key: String) = NBTTagCompound(mcValue.getCompound(key).get())
+    fun getCompoundTag(key: String) = NBTTagCompound(mcValue.getCompound(key).orElseGet(::MCNbtCompound))
 
-    fun getTagList(key: String) = NBTTagList(mcValue.getList(key).get())
+    fun getTagList(key: String) = NBTTagList(mcValue.getList(key).orElseGet(::ListTag))
+
+    fun getTagList(key: String, type: Int): NBTTagList {
+        val list = mcValue.getList(key).orElseGet(::ListTag)
+        return if (list.isEmpty() || list[0].id.toInt() == type) NBTTagList(list) else NBTTagList(ListTag())
+    }
 
     fun get(key: String, type: NBTDataType, tagType: Int?): Any? {
         return when (type) {
@@ -68,29 +75,16 @@ class NBTTagCompound(override val mcValue: MCNbtCompound) : NBTBase(mcValue) {
             NBTDataType.LONG -> getLong(key)
             NBTDataType.FLOAT -> getFloat(key)
             NBTDataType.DOUBLE -> getDouble(key)
-            NBTDataType.STRING -> {
-                if (mcValue.contains(key))
-                    tagMap[key]?.let { NBTBase(it).toString() }
-                else null
-            }
-            NBTDataType.BYTE_ARRAY -> {
-                if (mcValue.contains(key))
-                    (tagMap[key] as ByteArrayTag).asByteArray
-                else null
-            }
-            NBTDataType.INT_ARRAY -> {
-                if (mcValue.contains(key))
-                    (tagMap[key] as IntArrayTag).asIntArray
-                else null
-            }
-            NBTDataType.LONG_ARRAY -> {
-                if (mcValue.contains(key))
-                    (tagMap[key] as LongArrayTag).asLongArray
-                else null
-            }
+            NBTDataType.STRING -> (mcValue.get(key) as? StringTag)?.asString()
+            NBTDataType.BYTE_ARRAY -> (mcValue.get(key) as? ByteArrayTag)?.asByteArray
+            NBTDataType.INT_ARRAY -> (mcValue.get(key) as? IntArrayTag)?.asIntArray
+            NBTDataType.LONG_ARRAY -> (mcValue.get(key) as? LongArrayTag)?.asLongArray
             NBTDataType.BOOLEAN -> getBoolean(key)
             NBTDataType.COMPOUND_TAG -> getCompoundTag(key)
-            NBTDataType.TAG_LIST -> getTagList(key)
+            NBTDataType.TAG_LIST -> getTagList(
+                key,
+                tagType ?: throw IllegalArgumentException("For accessing a tag list you need to provide the tagType argument"),
+            )
         }
     }
 
@@ -146,6 +140,8 @@ class NBTTagCompound(override val mcValue: MCNbtCompound) : NBTBase(mcValue) {
         mcValue.putLongArray(key, value)
     }
 
+    fun setLongArray(key: String, value: LongArray) = putLongArray(key, value)
+
     operator fun set(key: String, value: Any) = apply {
         when (value) {
             is NBTBase -> setNBTBase(key, value)
@@ -159,6 +155,7 @@ class NBTTagCompound(override val mcValue: MCNbtCompound) : NBTBase(mcValue) {
             is CharSequence -> setString(key, value.toString())
             is ByteArray -> setByteArray(key, value)
             is IntArray -> setIntArray(key, value)
+            is LongArray -> setLongArray(key, value)
             is Boolean -> setBoolean(key, value)
             else -> throw IllegalArgumentException("Unsupported NBT type: ${value.javaClass.simpleName}")
         }

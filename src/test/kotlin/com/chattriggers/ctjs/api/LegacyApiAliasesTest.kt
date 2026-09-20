@@ -7,6 +7,8 @@ import com.chattriggers.ctjs.api.entity.Entity
 import com.chattriggers.ctjs.api.entity.Particle
 import com.chattriggers.ctjs.api.inventory.Inventory
 import com.chattriggers.ctjs.api.inventory.Item
+import com.chattriggers.ctjs.api.inventory.nbt.NBTTagCompound
+import com.chattriggers.ctjs.api.inventory.nbt.NBTTagList
 import com.chattriggers.ctjs.api.message.ChatLib
 import com.chattriggers.ctjs.api.message.TextComponent
 import com.chattriggers.ctjs.api.world.Chunk
@@ -53,6 +55,10 @@ class LegacyApiAliasesTest {
         )) {
             assertMethod(Item::class.java, name)
         }
+        for (name in listOf("getTagId", "getTagList", "setLongArray")) {
+            assertMethod(NBTTagCompound::class.java, name)
+        }
+        assertMethod(NBTTagList::class.java, "get")
         for (parameter in listOf<Class<*>>(String::class.java, Int::class.javaPrimitiveType!!, BlockType::class.java, Entity::class.java)) {
             assertTrue(
                 Item::class.java.constructors.any { it.parameterTypes.contentEquals(arrayOf(parameter)) },
