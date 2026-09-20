@@ -259,6 +259,13 @@
       "test": "NBTCompatibilityTest and LegacyApiAliasesTest"
     },
     {
+      "id": "legacy-custom-sound-category",
+      "source": "ChatTriggers 2.2.0 Sound API",
+      "coverage": ["lowercase-category-names", "singular-category-aliases", "string-category-setter", "generated-resource-lifecycle"],
+      "status": "verified",
+      "test": "SoundCompatibilityTest and LegacyApiAliasesTest"
+    },
+    {
       "id": "legacy-register-surface",
       "source": "ChatTriggers 2.2.0 IRegister public surface",
       "coverage": ["all-74-registration-entry-points", "static-javascript-export"],
