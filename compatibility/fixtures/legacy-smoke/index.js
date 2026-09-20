@@ -8,6 +8,14 @@ if (typeof packedColor !== "number" || packedColor !== Renderer.getColor(12, 34,
 if (typeof Client.getChatGUI !== "function") {
     throw new Error("Client.getChatGUI legacy alias is not exported");
 }
+for (const method of ["playSound", "playRecord", "stopAllSounds"]) {
+    if (typeof World[method] !== "function") {
+        throw new Error(`Legacy World.${method} is not exported`);
+    }
+}
+World.playSound("minecraft:ui.button.click", 0, 1);
+World.playRecord(null, 0, 0, 0);
+World.stopAllSounds();
 
 const packetTrigger = register("packetReceived", () => {}).unregister();
 if (typeof packetTrigger.setPacketClass !== "function" || typeof packetTrigger.setPacketClasses !== "function") {
