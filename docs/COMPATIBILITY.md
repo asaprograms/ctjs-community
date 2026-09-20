@@ -36,6 +36,20 @@ Modules require changes when they directly depend on any of the following:
 
 Where practical, the project provides a compatibility wrapper with the old ChatTriggers shape. Where a faithful wrapper would be misleading or unsafe, the migration is documented instead.
 
+### APIs that cannot be represented faithfully
+
+The following legacy calls remain unavailable rather than returning invented data or silently doing nothing:
+
+- `World.getSeed()` and `World.getType()`: multiplayer clients are not sent the world seed or server generator type.
+- `Entity.dropItem()` and `Entity.setIsOutsideBorder()`: these mutate server-owned entity state.
+- `Entity.isAirborne()`: the old state flag no longer has a stable client-side equivalent.
+- `Settings.video.get3dAnaglyph()`: Minecraft removed the setting.
+- Forge, MCP, LWJGL 2, coremod, and raw ASM entry points listed above.
+
+`BlockType.getHarvestLevel()` and `Item.canDestroy(BlockType)` are still under review. Modern Minecraft represents tool suitability and adventure-mode block predicates through tags, block state, data components, and world context, so a single context-free legacy value would not be reliable.
+
+The project does restore compatible public shapes when modern Minecraft exposes equivalent behavior. This includes legacy block metadata indexing, redstone queries, inventory actions, moon phase, display lines, draw-mode helpers, sound controls, keybind callback lifecycles, and common wrapper aliases. The manifest is the authoritative list of verified surfaces.
+
 ## Evidence
 
-The compatibility manifest records each fixture, upstream module version, APIs exercised, expected result, and the last branches on which it passed. A compatibility claim should not be marked Verified without an executable fixture.
+The compatibility manifest records each fixture, upstream module version, APIs exercised, expected result, and the test that enforces it. Both maintained branches run unit tests and a real Minecraft client smoke fixture in CI. A compatibility claim should not be marked Verified without executable evidence.
