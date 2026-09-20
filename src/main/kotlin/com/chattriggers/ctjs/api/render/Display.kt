@@ -10,6 +10,10 @@ class Display() {
 
     private var x = 0
     private var y = 0
+    private var renderX = 0f
+    private var renderY = 0f
+    private var shouldRender = true
+    private var registerType = DisplayHandler.RegisterType.RENDER_OVERLAY
     private var order = Order.NORMAL
 
     private var backgroundColor: Long = 0x50000000
@@ -21,6 +25,10 @@ class Display() {
     private var width = 0
     private var height = 0
 
+    init {
+        DisplayHandler.registerDisplay(this)
+    }
+
     constructor(config: NativeObject?) : this() {
         setBackgroundColor(config.getOption("backgroundColor", 0x50000000))
         setTextColor(config.getOption("textColor", 0xffffffff))
@@ -29,6 +37,10 @@ class Display() {
         setOrder(config.getOption("order", Order.NORMAL))
         setX(config.getOption("x", 0))
         setY(config.getOption("y", 0))
+        setRenderX(config.getOption<Number>("renderX", x).toFloat())
+        setRenderY(config.getOption<Number>("renderY", y).toFloat())
+        setShouldRender(config.getOption("shouldRender", true))
+        setRegisterType(config.getOption("registerType", DisplayHandler.RegisterType.RENDER_OVERLAY))
         setMinWidth(config.getOption("minWidth", 0))
     }
 
@@ -54,6 +66,7 @@ class Display() {
         this.align = when (align) {
             is CharSequence -> Text.Align.valueOf(align.toString().uppercase())
             is Text.Align -> align
+            is DisplayHandler.Align -> Text.Align.valueOf(align.name)
             else -> Text.Align.LEFT
         }
     }
@@ -62,8 +75,13 @@ class Display() {
 
     fun setOrder(order: Any) = apply {
         this.order = when (order) {
-            is CharSequence -> Order.valueOf(order.toString().uppercase())
+            is CharSequence -> when (order.toString().uppercase()) {
+                "DOWN", "NORMAL" -> Order.NORMAL
+                "UP", "REVERSED" -> Order.REVERSED
+                else -> Order.NORMAL
+            }
             is Order -> order
+            is DisplayHandler.Order -> if (order == DisplayHandler.Order.DOWN) Order.NORMAL else Order.REVERSED
             else -> Order.NORMAL
         }
     }
@@ -74,6 +92,7 @@ class Display() {
         this.background = when (background) {
             is CharSequence -> Background.valueOf(background.toString().uppercase().replace(" ", "_"))
             is Background -> background
+            is DisplayHandler.Background -> Background.valueOf(background.name)
             else -> Background.NONE
         }
     }
@@ -121,11 +140,56 @@ class Display() {
 
     fun getX(): Int = x
 
-    fun setX(x: Int) = apply { this.x = x }
+    fun setX(x: Int) = apply {
+        this.x = x
+        this.renderX = x.toFloat()
+    }
 
     fun getY(): Int = y
 
-    fun setY(y: Int) = apply { this.y = y }
+    fun setY(y: Int) = apply {
+        this.y = y
+        this.renderY = y.toFloat()
+    }
+
+    fun getRenderX(): Float = renderX
+
+    fun setRenderX(renderX: Float) = apply {
+        this.renderX = renderX
+        x = renderX.toInt()
+    }
+
+    fun getRenderY(): Float = renderY
+
+    fun setRenderY(renderY: Float) = apply {
+        this.renderY = renderY
+        y = renderY.toInt()
+    }
+
+    fun setRenderLoc(renderX: Float, renderY: Float) = apply {
+        setRenderX(renderX)
+        setRenderY(renderY)
+    }
+
+    fun getShouldRender() = shouldRender
+
+    fun setShouldRender(shouldRender: Boolean) = apply {
+        this.shouldRender = shouldRender
+    }
+
+    fun show() = setShouldRender(true)
+
+    fun hide() = setShouldRender(false)
+
+    fun getRegisterType() = registerType
+
+    fun setRegisterType(registerType: Any) = apply {
+        this.registerType = when (registerType) {
+            is CharSequence -> DisplayHandler.RegisterType.valueOf(registerType.toString().uppercase().replace(" ", "_"))
+            is DisplayHandler.RegisterType -> registerType
+            else -> DisplayHandler.RegisterType.RENDER_OVERLAY
+        }
+    }
 
     fun getWidth(): Int = width
 
@@ -138,6 +202,8 @@ class Display() {
     }
 
     fun draw(ctx: GuiGraphicsExtractor) {
+        if (!shouldRender) return
+
         width = lines.maxOfOrNull { it.getWidth() }?.coerceAtLeast(minWidth) ?: minWidth
 
         val textBackgroundWidth = when (background) {
@@ -174,6 +240,14 @@ class Display() {
         }
 
         height = currentHeight
+    }
+
+    fun render(ctx: GuiGraphicsExtractor) = draw(ctx)
+
+    fun render() {
+        val context = DisplayHandler.context()
+            ?: throw IllegalStateException("Display.render() must be called from a GUI or overlay render callback")
+        draw(context)
     }
 
     override fun toString() =

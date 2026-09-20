@@ -8,6 +8,7 @@ import com.chattriggers.ctjs.api.inventory.Item
 import com.chattriggers.ctjs.api.inventory.Slot
 import com.chattriggers.ctjs.api.message.TextComponent
 import com.chattriggers.ctjs.api.render.Renderer
+import com.chattriggers.ctjs.api.render.DisplayHandler
 import com.chattriggers.ctjs.api.triggers.CancellableEvent
 import com.chattriggers.ctjs.api.triggers.ChatTrigger
 import com.chattriggers.ctjs.api.triggers.TriggerType
@@ -113,6 +114,7 @@ object ClientListener : Initializer {
             ScreenEvents.afterExtract(screen).register { _, ctx, mouseX, mouseY, partialTicks ->
                 Renderer.withMatrix(UMatrixStack(ctx.pose()).toMC(), partialTicks) {
                     TriggerType.POST_GUI_RENDER.triggerAll(ctx, mouseX, mouseY, screen, partialTicks)
+                    DisplayHandler.renderGui(ctx)
                 }
             }
 
@@ -142,6 +144,7 @@ object ClientListener : Initializer {
         CTEvents.RENDER_OVERLAY.register { ctx, stack, partialTicks ->
             Renderer.withMatrix(stack, partialTicks) {
                 TriggerType.RENDER_OVERLAY.triggerAll(ctx)
+                DisplayHandler.renderOverlay(ctx)
             }
         }
 
