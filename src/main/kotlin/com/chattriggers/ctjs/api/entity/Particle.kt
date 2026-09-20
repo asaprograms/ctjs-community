@@ -3,12 +3,18 @@ package com.chattriggers.ctjs.api.entity
 import com.chattriggers.ctjs.api.CTWrapper
 import com.chattriggers.ctjs.api.render.Renderer
 import com.chattriggers.ctjs.internal.mixins.ParticleAccessor
+import com.chattriggers.ctjs.internal.mixins.SingleQuadParticleAccessor
 import com.chattriggers.ctjs.MCParticle
 import com.chattriggers.ctjs.internal.utils.asMixin
+import net.minecraft.client.particle.SingleQuadParticle
 import java.awt.Color
 
 class Particle(override val mcValue: MCParticle) : CTWrapper<MCParticle> {
     private val mixed: ParticleAccessor = mcValue.asMixin()
+    private fun quad(): SingleQuadParticle = mcValue as? SingleQuadParticle
+        ?: throw UnsupportedOperationException("Color is not available for ${mcValue.javaClass.simpleName} particles")
+
+    private fun mixedQuad(): SingleQuadParticleAccessor = quad().asMixin()
 
     var x by mixed::x
     var y by mixed::y
@@ -38,11 +44,6 @@ class Particle(override val mcValue: MCParticle) : CTWrapper<MCParticle> {
         get() = mixed.zd
         set(value) = mixed.setZd(value)
 
-//    var red by mixed::red
-//    var green by mixed::green
-//    var blue by mixed::blue
-//    var alpha by mixed::alpha
-
     var age by mixed::age
     var dead
         get() = mixed.removed
@@ -65,9 +66,8 @@ class Particle(override val mcValue: MCParticle) : CTWrapper<MCParticle> {
      * @param green the green value between 0 and 1.
      * @param blue the blue value between 0 and 1.
      */
-    @Deprecated("Deprecated since mojang does not have a similar method") // for now perhaps
     fun setColor(red: Float, green: Float, blue: Float) = apply {
-        // mcValue.setColor(red, green, blue)
+        quad().setColor(red, green, blue)
     }
 
     /**
@@ -77,29 +77,26 @@ class Particle(override val mcValue: MCParticle) : CTWrapper<MCParticle> {
      * @param blue the blue value between 0 and 1.
      * @param alpha the alpha value between 0 and 1.
      */
-    @Deprecated("Deprecated since mojang does not have a similar method")
     fun setColor(red: Float, green: Float, blue: Float, alpha: Float) = apply {
-//        setColor(red, green, blue)
-//        setAlpha(alpha)
+        setColor(red, green, blue)
+        setAlpha(alpha)
     }
 
-    @Deprecated("Deprecated since mojang does not have a similar method")
     fun setColor(color: Long) = apply {
-//        val red = (color shr 16 and 255).toFloat() / 255.0f
-//        val blue = (color shr 8 and 255).toFloat() / 255.0f
-//        val green = (color and 255).toFloat() / 255.0f
-//        val alpha = (color shr 24 and 255).toFloat() / 255.0f
-//
-//        setColor(red, green, blue, alpha)
+        val red = (color shr 16 and 255).toFloat() / 255.0f
+        val green = (color shr 8 and 255).toFloat() / 255.0f
+        val blue = (color and 255).toFloat() / 255.0f
+        val alpha = (color shr 24 and 255).toFloat() / 255.0f
+
+        setColor(red, green, blue, alpha)
     }
 
     /**
      * Sets the alpha of the particle.
      * @param alpha the alpha value between 0 and 1.
      */
-    @Deprecated("Deprecated since mojang does not have a similar method")
     fun setAlpha(alpha: Float) = apply {
-//        mixed.alpha = alpha
+        mixedQuad().setAlpha(alpha)
     }
 
     /**
@@ -107,10 +104,7 @@ class Particle(override val mcValue: MCParticle) : CTWrapper<MCParticle> {
      *
      * @return A [Color] with the R, G, B and A values
      */
-    @Deprecated("Deprecated since mojang does not have a similar method")
-    fun getColor() = {
-//        Color(red, green, blue, alpha)
-    }
+    fun getColor(): Color = mixedQuad().let { Color(it.rCol, it.gCol, it.bCol, it.alpha) }
 
     fun setColor(color: Color) = setColor(color.rgb.toLong())
 

@@ -46,6 +46,7 @@
         "ScreenshotAccessor",
         "ScreenshotMixin",
         "ScreenMixin",
+        "SingleQuadParticleAccessor",
         "commands.ClientPacketListenerMixin",
         "commands.ClientSuggestionProviderMixin",
         "sound.ChannelAccessor",
