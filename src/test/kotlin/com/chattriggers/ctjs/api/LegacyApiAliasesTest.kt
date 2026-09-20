@@ -3,6 +3,7 @@ package com.chattriggers.ctjs.api
 import com.chattriggers.ctjs.api.client.Client
 import com.chattriggers.ctjs.api.client.Settings
 import com.chattriggers.ctjs.api.client.Sound
+import com.chattriggers.ctjs.api.client.KeyBind
 import com.chattriggers.ctjs.api.entity.LivingEntity
 import com.chattriggers.ctjs.api.entity.Entity
 import com.chattriggers.ctjs.api.entity.Particle
@@ -31,6 +32,8 @@ class LegacyApiAliasesTest {
         assertStaticMethod(Client::class.java, "getChatGUI")
         assertStaticMethod(ChatLib::class.java, "isPlayer")
         assertStaticMethod(ChatLib::class.java, "getChatMessage")
+        assertStaticMethod(KeyBind::class.java, "removeKeyBind")
+        assertStaticMethod(KeyBind::class.java, "clearKeyBinds")
         for (name in listOf(
             "close", "isControlDown", "isShiftDown", "isAltDown", "getButton",
             "drawString", "drawCreativeTabHoveringString", "drawHoveringString",

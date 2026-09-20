@@ -28,6 +28,7 @@
         "GuiMixin",
         "HudMixin",
         "KeyMappingAccessor",
+        "KeyMappingCategoryAccessor",
         "LevelExtractorMixin",
         "LevelRendererAccessor",
         "LevelRendererMixin",

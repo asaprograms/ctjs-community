@@ -27,6 +27,21 @@ for (const method of [
     }
 }
 
+if (typeof KeyBind.removeKeyBind !== "function" || typeof KeyBind.clearKeyBinds !== "function") {
+    throw new Error("Legacy KeyBind cleanup methods are not exported");
+}
+const legacyKeyBind = new KeyBind("Legacy smoke key", 0);
+for (const callbackTrigger of [
+    legacyKeyBind.registerKeyPress(() => {}),
+    legacyKeyBind.registerKeyRelease(() => {}),
+    legacyKeyBind.registerKeyDown(() => {}),
+]) {
+    if (typeof callbackTrigger.unregister !== "function") {
+        throw new Error("Legacy KeyBind callback registration did not return a trigger");
+    }
+}
+KeyBind.removeKeyBind(legacyKeyBind);
+
 const packetTrigger = register("packetReceived", () => {}).unregister();
 if (typeof packetTrigger.setPacketClass !== "function" || typeof packetTrigger.setPacketClasses !== "function") {
     throw new Error("Legacy packet filter aliases are not exported");
