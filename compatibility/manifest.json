@@ -313,6 +313,13 @@
       "coverage": ["getChatMessage", "unformatted-text", "ampersand-formatted-text"],
       "status": "verified",
       "test": "LegacyApiAliasesTest and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
+    },
+    {
+      "id": "legacy-world-sound-controls",
+      "source": "ChatTriggers 2.2.0 World API",
+      "coverage": ["playSound", "playRecord", "stop-record-by-position", "stopAllSounds", "legacy-record-name"],
+      "status": "verified",
+      "test": "LegacyApiAliasesTest and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
     }
   ]
 }

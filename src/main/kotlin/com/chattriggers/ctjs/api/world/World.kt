@@ -20,6 +20,8 @@ import com.chattriggers.ctjs.internal.utils.toIdentifier
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.client.Minecraft
 import net.minecraft.client.multiplayer.ClientLevel
+import net.minecraft.client.resources.sounds.SimpleSoundInstance
+import net.minecraft.client.resources.sounds.SoundInstance
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.core.particles.BlockParticleOption
@@ -36,9 +38,16 @@ import net.minecraft.core.particles.VibrationParticleOption
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.level.LightLayer
 import net.minecraft.world.level.gameevent.BlockPositionSource
+import net.minecraft.sounds.SoundEvent
+import net.minecraft.sounds.SoundSource
+import net.minecraft.resources.Identifier
+import net.minecraft.world.phys.Vec3
+import java.util.concurrent.ConcurrentHashMap
 import kotlin.math.roundToInt
 
 object World {
+    private val playingRecords = ConcurrentHashMap<MCBlockPos, SoundInstance>()
+
     @JvmStatic
     fun toMC() = Minecraft.getInstance().level
 
@@ -74,6 +83,59 @@ object World {
 
     @JvmStatic
     fun getDifficulty(): Settings.Difficulty? = toMC()?.difficulty?.let(Settings.Difficulty::fromMC)
+
+    /** Plays a client-side sound at the local player's position. */
+    @JvmStatic
+    fun playSound(name: String, volume: Float, pitch: Float) {
+        Client.scheduleTask {
+            val level = toMC() ?: return@scheduleTask
+            val player = Client.getMinecraft().player ?: return@scheduleTask
+            level.playLocalSound(
+                player.x,
+                player.y,
+                player.z,
+                resolveSound(name),
+                SoundSource.MASTER,
+                volume,
+                pitch,
+                false,
+            )
+        }
+    }
+
+    /** Plays a jukebox sound at a position, or stops the record there when [name] is null. */
+    @JvmStatic
+    fun playRecord(name: String?, x: Double, y: Double, z: Double) {
+        Client.scheduleTask {
+            val soundManager = Client.getMinecraft().soundManager
+            val position = MCBlockPos(x.toInt(), y.toInt(), z.toInt())
+            playingRecords.remove(position)?.let(soundManager::stop)
+
+            if (name != null) {
+                val sound = SimpleSoundInstance.forJukeboxSong(resolveSound(name, record = true), Vec3(x, y, z))
+                playingRecords[position] = sound
+                soundManager.play(sound)
+            }
+        }
+    }
+
+    /** Stops all sounds currently managed by the client sound engine. */
+    @JvmStatic
+    fun stopAllSounds() {
+        Client.getMinecraft().soundManager.stop()
+        playingRecords.clear()
+    }
+
+    private fun resolveSound(name: String, record: Boolean = false): SoundEvent {
+        val normalized = when {
+            ':' in name -> name
+            record && name.startsWith("records.") -> "minecraft:music_disc.${name.removePrefix("records.")}"
+            else -> "minecraft:$name"
+        }
+        val identifier = Identifier.parse(normalized)
+        return BuiltInRegistries.SOUND_EVENT.getValue(identifier)
+            ?: SoundEvent.createVariableRangeEvent(identifier)
+    }
 
 //    @JvmStatic
 //    fun getMoonPhase(): Int = toMC()?.moonPhase ?: -1
