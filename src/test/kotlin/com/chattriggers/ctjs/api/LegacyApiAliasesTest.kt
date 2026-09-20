@@ -64,6 +64,9 @@ class LegacyApiAliasesTest {
         }
         assertMethod(Settings.VideoWrapper::class.java, "getGraphics")
         assertMethod(Settings.VideoWrapper::class.java, "setGraphics")
+        assertMethodWithParameter(Settings.VideoWrapper::class.java, "setClouds", Int::class.javaPrimitiveType!!)
+        assertMethodWithParameter(Settings.VideoWrapper::class.java, "setParticles", Int::class.javaPrimitiveType!!)
+        assertMethodWithParameter(Settings.ChatWrapper::class.java, "setVisibility", String::class.java)
         assertStaticMethod(com.chattriggers.ctjs.api.client.Player::class.java, "getRawYaw")
         assertStaticMethod(com.chattriggers.ctjs.api.client.Player::class.java, "getUUIDObj")
         assertStaticMethod(com.chattriggers.ctjs.api.client.Player::class.java, "getOpenedInventory")
@@ -167,6 +170,13 @@ class LegacyApiAliasesTest {
         assertTrue(
             type.methods.any { it.name == name && Modifier.isStatic(it.modifiers) },
             "Expected static ${type.simpleName}.$name to be exported",
+        )
+    }
+
+    private fun assertMethodWithParameter(type: Class<*>, name: String, parameter: Class<*>) {
+        assertTrue(
+            type.methods.any { it.name == name && it.parameterTypes.contentEquals(arrayOf(parameter)) },
+            "Expected ${type.simpleName}.$name(${parameter.simpleName}) to be exported",
         )
     }
 }
