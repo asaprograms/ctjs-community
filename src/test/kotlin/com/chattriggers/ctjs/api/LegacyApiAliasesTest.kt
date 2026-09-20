@@ -29,6 +29,7 @@ class LegacyApiAliasesTest {
     fun `common 1_8_9 method names remain exported`() {
         assertStaticMethod(Client::class.java, "getChatGUI")
         assertStaticMethod(ChatLib::class.java, "isPlayer")
+        assertStaticMethod(ChatLib::class.java, "getChatMessage")
         assertTrue(
             Sound::class.java.methods.any {
                 it.name == "setCategory" && it.parameterTypes.contentEquals(arrayOf(String::class.java))
