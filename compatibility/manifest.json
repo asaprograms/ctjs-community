@@ -341,6 +341,13 @@
       "coverage": ["sky-light", "block-light", "absolute-block-position"],
       "status": "verified",
       "test": "LegacyApiAliasesTest"
+    },
+    {
+      "id": "legacy-block-state-values",
+      "source": "ChatTriggers 2.2.0 Block and BlockType APIs",
+      "coverage": ["state-index-metadata", "default-metadata", "powered", "redstone-strength", "unlocalized-name"],
+      "status": "verified",
+      "test": "LegacyApiAliasesTest and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
     }
   ]
 }
