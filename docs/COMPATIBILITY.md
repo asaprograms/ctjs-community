@@ -46,9 +46,9 @@ The following legacy calls remain unavailable rather than returning invented dat
 - `Settings.video.get3dAnaglyph()`: Minecraft removed the setting.
 - Forge, MCP, LWJGL 2, coremod, and raw ASM entry points listed above.
 
-`BlockType.getHarvestLevel()` and `Item.canDestroy(BlockType)` are still under review. Modern Minecraft represents tool suitability and adventure-mode block predicates through tags, block state, data components, and world context, so a single context-free legacy value would not be reliable.
+`BlockType.getHarvestLevel()` is still under review. Modern Minecraft represents tool suitability through tags and block state, so a single context-free legacy value would not be reliable. `Item.canDestroy(Block)` is supported because the placed block supplies the world context required by the modern adventure-mode predicate.
 
-The project does restore compatible public shapes when modern Minecraft exposes equivalent behavior. This includes legacy block metadata indexing, redstone queries, inventory actions, moon phase, display lines, draw-mode helpers, sound controls, keybind callback lifecycles, and common wrapper aliases. The manifest is the authoritative list of verified surfaces.
+The project does restore compatible public shapes when modern Minecraft exposes equivalent behavior. This includes legacy block metadata indexing, redstone queries, inventory actions, item block predicates, moon phase, boolean graphics settings, display lines, draw-mode helpers, sound controls, keybind callback lifecycles, and common wrapper aliases. The manifest is the authoritative list of verified surfaces.
 
 ## Evidence
 

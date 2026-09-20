@@ -369,6 +369,20 @@
       "coverage": ["eight-phase-cycle", "negative-time-floor-mod", "unloaded-world-default"],
       "status": "verified",
       "test": "WorldCompatibilityTest, LegacyApiAliasesTest, and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
+    },
+    {
+      "id": "legacy-item-destroy-predicate",
+      "source": "ChatTriggers 1.3.2 Item API",
+      "coverage": ["canDestroy", "placed-block-world-context", "unloaded-world-default"],
+      "status": "verified",
+      "test": "LegacyApiAliasesTest"
+    },
+    {
+      "id": "legacy-boolean-graphics-setting",
+      "source": "ChatTriggers 1.3.2 Settings.video API",
+      "coverage": ["getGraphics", "setGraphics", "fast", "fancy", "fabulous-as-fancy"],
+      "status": "verified",
+      "test": "LegacyApiAliasesTest and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
     }
   ]
 }
