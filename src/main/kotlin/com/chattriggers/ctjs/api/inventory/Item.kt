@@ -114,12 +114,18 @@ class Item(override val mcValue: ItemStack) : CTWrapper<ItemStack> {
         mcValue.set(DataComponents.CUSTOM_NAME, name)
     }
 
+    fun setName(name: String) = setName(TextComponent(name))
+
     fun resetName() {
         setName(null)
     }
 
     @JvmOverloads
-    fun getLore(advanced: Boolean = false): List<TextComponent> {
+    fun getLore(advanced: Boolean = false): List<String> =
+        getLoreComponents(advanced).map(TextComponent::formattedText)
+
+    @JvmOverloads
+    fun getLoreComponents(advanced: Boolean = false): List<TextComponent> {
         mcValue.asMixin<Skippable>().ctjs_setShouldSkip(true)
         val tooltip = mcValue.getTooltipLines(
             TooltipContext.EMPTY,
@@ -138,6 +144,8 @@ class Item(override val mcValue: ItemStack) : CTWrapper<ItemStack> {
             ctjs_setShouldOverrideTooltip(true)
         }
     }
+
+    fun setLore(vararg loreLines: String) = setLore(loreLines.map { TextComponent(it) })
 
     fun resetLore() {
         mcValue.asMixin<TooltipOverridable>().ctjs_setShouldOverrideTooltip(false)

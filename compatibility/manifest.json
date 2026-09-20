@@ -245,6 +245,13 @@
       "test": "Compile-time constructor coverage"
     },
     {
+      "id": "legacy-item-text-api",
+      "source": "ChatTriggers 2.2.0 Item name and lore API",
+      "coverage": ["string-name-setter", "string-lore-getter", "vararg-string-lore-setter", "component-api-preservation"],
+      "status": "implemented",
+      "test": "LegacyApiAliasesTest reflection coverage"
+    },
+    {
       "id": "legacy-register-surface",
       "source": "ChatTriggers 2.2.0 IRegister public surface",
       "coverage": ["all-74-registration-entry-points", "static-javascript-export"],
