@@ -1,5 +1,10 @@
 # 3.0.0 Migration Guide
 
+> This is the historical upstream 3.0 migration guide. The community port has
+> restored a number of the legacy methods described below as removed. Use
+> [COMPATIBILITY.md](COMPATIBILITY.md) and `compatibility/manifest.json` for the
+> current, tested compatibility status.
+
 3.0.0 includes a massive list of exciting features and breaking changes. This document will serve as a guide for module authors updating their modules.
 
 ## New Features
