@@ -355,6 +355,20 @@
       "coverage": ["integer-draw-modes", "drawShape", "finishDraw", "setDrawMode", "getDrawMode", "retainTransforms"],
       "status": "verified",
       "test": "LegacyApiAliasesTest and client renderer smoke fixture on Minecraft 26.2 and 26.1.2"
+    },
+    {
+      "id": "legacy-inventory-action-surface",
+      "source": "ChatTriggers 2.2.0 Inventory API",
+      "coverage": ["isContainer", "doAction", "getSize-property-bridge"],
+      "status": "verified",
+      "test": "LegacyApiAliasesTest"
+    },
+    {
+      "id": "legacy-moon-phase",
+      "source": "ChatTriggers 2.2.0 World API",
+      "coverage": ["eight-phase-cycle", "negative-time-floor-mod", "unloaded-world-default"],
+      "status": "verified",
+      "test": "WorldCompatibilityTest, LegacyApiAliasesTest, and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
     }
   ]
 }

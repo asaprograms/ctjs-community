@@ -3,6 +3,7 @@ package com.chattriggers.ctjs.api.inventory
 import com.chattriggers.ctjs.api.inventory.action.ClickAction
 import com.chattriggers.ctjs.api.inventory.action.DragAction
 import com.chattriggers.ctjs.api.inventory.action.DropAction
+import com.chattriggers.ctjs.api.inventory.action.Action
 import com.chattriggers.ctjs.api.message.TextComponent
 import com.chattriggers.ctjs.MCInventory
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
@@ -54,6 +55,11 @@ class Inventory {
      * @return the window id
      */
     fun getWindowId(): Int = screen?.menu?.containerId ?: -1
+
+    /** Completes a prepared legacy inventory action. */
+    fun doAction(action: Action) {
+        action.complete()
+    }
 
     /**
      * Checks if an item can be shift clicked into a certain slot, i.e. coal into the bottom of a furnace.
@@ -110,6 +116,9 @@ class Inventory {
      * @return if this is a container
      */
     fun isScreen(): Boolean = screen != null
+
+    /** Legacy name for an inventory backed by an open container screen. */
+    fun isContainer(): Boolean = isScreen()
 
     /**
      * Shorthand for [ClickAction]
