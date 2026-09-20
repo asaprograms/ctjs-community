@@ -126,6 +126,15 @@ class Display() {
         setLine(this.lines.size, line)
     }
 
+    fun addLine(index: Int, line: Any) = apply {
+        val text = when (line) {
+            is CharSequence -> Text(line.toString())
+            is Text -> line
+            else -> Text("")
+        }
+        if (index < 0 || index >= lines.size) lines.add(text) else lines.add(index, text)
+    }
+
     fun addLines(vararg lines: Any) = apply {
         lines.forEach { addLine(it) }
     }

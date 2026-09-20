@@ -49,14 +49,22 @@ class Text {
 
     fun getString(): String = string
 
+    fun getText(): Text = this
+
     fun setString(string: String) = apply {
         this.string = string
         updateFormatting()
     }
 
+    fun setText(text: String) = setString(text)
+
     fun getColor(): Long = color
 
+    fun getTextColor(): Long = color
+
     fun setColor(color: Long) = apply { this.color = Renderer.fixAlpha(color) }
+
+    fun setTextColor(color: Long) = setColor(color)
 
     fun getFormatted(): Boolean = formatted
 
@@ -112,6 +120,8 @@ class Text {
      * @return the width of the text
      */
     fun getWidth(): Int = width
+
+    fun getTextWidth(): Float = (lines.maxOfOrNull(Renderer::getStringWidth) ?: 0) * scale
 
     fun getLines(): List<String> = lines
 

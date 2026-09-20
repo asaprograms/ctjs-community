@@ -163,6 +163,11 @@ const legacyDisplay = new Display()
     .setLine(0, "&aLegacy display smoke")
     .setRenderLoc(6, 6)
     .setRegisterType("post gui render");
+const legacyDisplayLine = new DisplayLine("initial").setText("legacy line").setTextColor(0xffffffff);
+if (legacyDisplayLine.getText().getString() !== "legacy line" || legacyDisplayLine.getTextWidth() <= 0) {
+    throw new Error("Legacy DisplayLine text contract failed");
+}
+legacyDisplay.addLine(0, legacyDisplayLine);
 register("guiRender", () => {
     displayFrameCount++;
     if (displayFrameCount === 2) {
