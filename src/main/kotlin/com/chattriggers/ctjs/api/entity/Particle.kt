@@ -22,7 +22,7 @@ class Particle(override val mcValue: MCParticle) : CTWrapper<MCParticle> {
         set(value) = mixed.setYo(value)
     var lastZ
         get() = mixed.zo
-        set(value) = mixed.setXo(value)
+        set(value) = mixed.setZo(value)
 
     val renderX get() = lastX + (x - lastX) * Renderer.partialTicks
     val renderY get() = lastY + (y - lastY) * Renderer.partialTicks
@@ -50,6 +50,13 @@ class Particle(override val mcValue: MCParticle) : CTWrapper<MCParticle> {
 
     fun scale(scale: Float) = apply {
         mcValue.scale(scale)
+    }
+
+    /** Multiplies all three particle velocity components. */
+    fun multiplyVelocity(multiplier: Float) = apply {
+        motionX *= multiplier
+        motionY *= multiplier
+        motionZ *= multiplier
     }
 
     /**

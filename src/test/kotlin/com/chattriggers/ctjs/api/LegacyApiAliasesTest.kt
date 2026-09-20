@@ -4,6 +4,7 @@ import com.chattriggers.ctjs.api.client.Client
 import com.chattriggers.ctjs.api.client.Settings
 import com.chattriggers.ctjs.api.entity.LivingEntity
 import com.chattriggers.ctjs.api.entity.Entity
+import com.chattriggers.ctjs.api.entity.Particle
 import com.chattriggers.ctjs.api.inventory.Inventory
 import com.chattriggers.ctjs.api.inventory.Item
 import com.chattriggers.ctjs.api.message.ChatLib
@@ -38,6 +39,9 @@ class LegacyApiAliasesTest {
         assertStaticMethod(com.chattriggers.ctjs.api.client.Player::class.java, "getUUIDObj")
         assertStaticMethod(com.chattriggers.ctjs.api.client.Player::class.java, "getOpenedInventory")
         assertMethod(Entity::class.java, "getRider")
+        for (name in listOf("setX", "setY", "setZ", "multiplyVelocity")) {
+            assertMethod(Particle::class.java, name)
+        }
         assertMethod(LivingEntity::class.java, "getItemInSlot")
         assertMethod(Inventory::class.java, "getItemInSlot")
         assertMethod(Item::class.java, "isDamagable")
