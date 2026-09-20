@@ -5,10 +5,12 @@ import com.chattriggers.ctjs.api.client.Client
 import com.chattriggers.ctjs.api.client.Player
 import com.chattriggers.ctjs.api.entity.Entity
 import com.chattriggers.ctjs.api.message.TextComponent
+import com.chattriggers.ctjs.api.inventory.nbt.NBTTagCompound
 import com.chattriggers.ctjs.api.render.Renderer
 import com.chattriggers.ctjs.api.world.World
 import com.chattriggers.ctjs.api.world.block.Block
 import com.chattriggers.ctjs.api.world.block.BlockPos
+import com.chattriggers.ctjs.api.world.block.BlockType
 import com.chattriggers.ctjs.internal.Skippable
 import com.chattriggers.ctjs.internal.TooltipOverridable
 import com.chattriggers.ctjs.internal.mixins.GameRendererAccessor
@@ -17,11 +19,17 @@ import net.minecraft.world.level.block.state.pattern.BlockInWorld
 import net.minecraft.client.renderer.texture.OverlayTexture
 import net.minecraft.client.renderer.item.ItemStackRenderState
 import net.minecraft.core.component.DataComponents
+import net.minecraft.core.RegistryAccess
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.NbtOps
+import net.minecraft.resources.RegistryOps
 import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.item.Item.TooltipContext
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.ReportedException
 import net.minecraft.CrashReport
 import kotlin.jvm.optionals.getOrNull
@@ -36,6 +44,17 @@ class Item(override val mcValue: ItemStack) : CTWrapper<ItemStack> {
     }
 
     constructor(type: ItemType) : this(type.toMC().defaultInstance)
+
+    constructor(itemName: String) : this(ItemType(itemName))
+
+    constructor(itemId: Int) : this(ItemType(itemId))
+
+    constructor(blockType: BlockType) : this(ItemType(blockType))
+
+    constructor(entity: Entity) : this(
+        (entity.toMC() as? ItemEntity)?.item
+            ?: throw IllegalArgumentException("Entity is not a dropped item"),
+    )
 
 //    fun getHolder(): Entity? = mcValue.entityRepresentation?.let(Entity::fromMC)
 
@@ -125,8 +144,24 @@ class Item(override val mcValue: ItemStack) : CTWrapper<ItemStack> {
         mcValue.asMixin<TooltipOverridable>().ctjs_setShouldOverrideTooltip(false)
     }
 
-    // TODO: make a component wrapper?
-    fun getNBT() = mcValue.components
+    /** Returns the complete encoded item stack using the current data-component format. */
+    fun getNBT(): NBTTagCompound = NBTTagCompound(serializeToNbt())
+
+    /** Legacy alias retained for 1.8.9 modules. */
+    fun getItemNBT(): NBTTagCompound = getNBT()
+
+    /** Returns the encoded item stack as SNBT text. */
+    fun getRawNBT(): String = serializeToNbt().toString()
+
+    /** Direct access to the modern item data-component map. */
+    fun getComponents() = mcValue.components
+
+    private fun serializeToNbt(): CompoundTag {
+        val registries = World.toMC()?.registryAccess()
+            ?: RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY)
+        val ops = RegistryOps.create(NbtOps.INSTANCE, registries)
+        return ItemStack.CODEC.encodeStart(ops, mcValue).getOrThrow() as CompoundTag
+    }
 
     /**
      * Renders the item icon to the client's overlay, with customizable overlay information.

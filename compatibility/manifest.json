@@ -230,6 +230,21 @@
       "test": "Client mixin validation and LegacyApiAliasesTest reflection coverage"
     },
     {
+      "id": "legacy-item-nbt",
+      "source": "ChatTriggers 2.2.0 Item API",
+      "coverage": ["registry-aware-item-serialization", "compound-wrapper", "raw-snbt", "getItemNBT-alias", "modern-component-access"],
+      "status": "implemented",
+      "test": "LegacyApiAliasesTest reflection coverage and codec compilation"
+    },
+    {
+      "id": "legacy-item-constructors",
+      "source": "ChatTriggers 2.2.0 Item constructors",
+      "coverage": ["registry-name", "numeric-item-id", "block-type", "dropped-item-entity"],
+      "status": "implemented",
+      "limitation": "Registry-name, numeric-id, and block-type construction requires Minecraft's item component registry to be bound, which occurs after early title-screen module loading.",
+      "test": "Compile-time constructor coverage"
+    },
+    {
       "id": "legacy-register-surface",
       "source": "ChatTriggers 2.2.0 IRegister public surface",
       "coverage": ["all-74-registration-entry-points", "static-javascript-export"],

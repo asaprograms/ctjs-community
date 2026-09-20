@@ -14,6 +14,7 @@ import com.chattriggers.ctjs.api.world.Scoreboard
 import com.chattriggers.ctjs.api.world.TabList
 import com.chattriggers.ctjs.api.world.World
 import com.chattriggers.ctjs.api.world.block.BlockFace
+import com.chattriggers.ctjs.api.world.block.BlockType
 import com.chattriggers.ctjs.engine.Register
 import kotlin.test.Test
 import kotlin.test.assertTrue
@@ -45,8 +46,17 @@ class LegacyApiAliasesTest {
         assertMethod(LivingEntity::class.java, "getItemInSlot")
         assertMethod(Inventory::class.java, "getItemInSlot")
         assertMethod(Item::class.java, "isDamagable")
-        for (name in listOf("getID", "getMetadata", "getRegistryName", "getUnlocalizedName", "getTextComponent", "setDamage")) {
+        for (name in listOf(
+            "getID", "getMetadata", "getRegistryName", "getUnlocalizedName", "getTextComponent", "setDamage",
+            "getNBT", "getItemNBT", "getRawNBT", "getComponents",
+        )) {
             assertMethod(Item::class.java, name)
+        }
+        for (parameter in listOf<Class<*>>(String::class.java, Int::class.javaPrimitiveType!!, BlockType::class.java, Entity::class.java)) {
+            assertTrue(
+                Item::class.java.constructors.any { it.parameterTypes.contentEquals(arrayOf(parameter)) },
+                "Expected Item constructor accepting ${parameter.simpleName}",
+            )
         }
         assertMethod(Scoreboard.Score::class.java, "getPoints")
         assertMethod(Scoreboard.Score::class.java, "setPoints")
