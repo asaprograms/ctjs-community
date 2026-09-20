@@ -81,6 +81,9 @@ class Item(override val mcValue: ItemStack) : CTWrapper<ItemStack> {
 
     fun canHarvest(block: Block) = canHarvest(block.pos)
 
+    /** Legacy adventure-mode block predicate name. */
+    fun canDestroy(block: Block) = canHarvest(block)
+
     fun getDurability() = getMaxDamage() - getDamage()
 
     fun getMaxDamage() = mcValue.maxDamage

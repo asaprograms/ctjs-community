@@ -186,6 +186,14 @@ object Settings {
             toMC().graphicsPreset().set(mode.toMC())
         }
 
+        /** Legacy boolean graphics setting. Fabulous graphics counts as fancy. */
+        fun getGraphics(): Boolean = getGraphicsMode() != GraphicsMode.FAST
+
+        /** Legacy boolean graphics setting. */
+        fun setGraphics(fancy: Boolean) {
+            setGraphicsMode(if (fancy) GraphicsMode.FANCY else GraphicsMode.FAST)
+        }
+
         fun getRenderDistance() = toMC().renderDistance().get()
 
         fun setRenderDistance(distance: Int) {

@@ -62,6 +62,8 @@ class LegacyApiAliasesTest {
             assertMethod(Settings.SkinWrapper::class.java, "get$part")
             assertMethod(Settings.SkinWrapper::class.java, "set$part")
         }
+        assertMethod(Settings.VideoWrapper::class.java, "getGraphics")
+        assertMethod(Settings.VideoWrapper::class.java, "setGraphics")
         assertStaticMethod(com.chattriggers.ctjs.api.client.Player::class.java, "getRawYaw")
         assertStaticMethod(com.chattriggers.ctjs.api.client.Player::class.java, "getUUIDObj")
         assertStaticMethod(com.chattriggers.ctjs.api.client.Player::class.java, "getOpenedInventory")
@@ -80,6 +82,12 @@ class LegacyApiAliasesTest {
         assertMethod(Inventory::class.java, "isContainer")
         assertMethod(Inventory::class.java, "doAction")
         assertMethod(Item::class.java, "isDamagable")
+        assertTrue(
+            Item::class.java.methods.any {
+                it.name == "canDestroy" && it.parameterTypes.contentEquals(arrayOf(Block::class.java))
+            },
+            "Expected Item.canDestroy(Block) to be exported",
+        )
         for (name in listOf(
             "getID", "getMetadata", "getRegistryName", "getUnlocalizedName", "getTextComponent", "setDamage",
             "getNBT", "getItemNBT", "getRawNBT", "getComponents",

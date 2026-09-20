@@ -16,6 +16,14 @@ for (const method of ["playSound", "playRecord", "stopAllSounds"]) {
 if (typeof World.getMoonPhase !== "function" || World.getMoonPhase() !== -1) {
     throw new Error("Legacy World.getMoonPhase unloaded-world contract failed");
 }
+
+for (const method of ["getGraphics", "setGraphics"]) {
+    if (typeof Settings.video[method] !== "function") {
+        throw new Error(`Legacy Settings.video.${method} is not exported`);
+    }
+}
+const legacyFancyGraphics = Settings.video.getGraphics();
+Settings.video.setGraphics(legacyFancyGraphics);
 World.playSound("minecraft:ui.button.click", 0, 1);
 World.playRecord(null, 0, 0, 0);
 World.stopAllSounds();
