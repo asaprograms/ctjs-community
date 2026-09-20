@@ -42,6 +42,20 @@ for (const callbackTrigger of [
 }
 KeyBind.removeKeyBind(legacyKeyBind);
 
+const legacyBlockType = new BlockType("minecraft:stone");
+if (typeof legacyBlockType.getDefaultMetadata !== "function" ||
+    typeof legacyBlockType.getUnlocalizedName !== "function" ||
+    legacyBlockType.getDefaultMetadata() < 0 ||
+    legacyBlockType.getUnlocalizedName() !== "block.minecraft.stone") {
+    throw new Error("Legacy BlockType state API failed");
+}
+const legacyBlock = legacyBlockType.withBlockPos(new BlockPos(0, 0, 0));
+for (const method of ["getMetadata", "isPowered", "getRedstoneStrength"]) {
+    if (typeof legacyBlock[method] !== "function") {
+        throw new Error(`Legacy Block.${method} is not exported`);
+    }
+}
+
 const packetTrigger = register("packetReceived", () => {}).unregister();
 if (typeof packetTrigger.setPacketClass !== "function" || typeof packetTrigger.setPacketClasses !== "function") {
     throw new Error("Legacy packet filter aliases are not exported");

@@ -51,6 +51,12 @@ class BlockType(override val mcValue: MCBlock) : CTWrapper<MCBlock> {
      */
     fun getTranslationKey(): String = mcValue.descriptionId
 
+    /** Legacy 1.8.9 name for the block translation key. */
+    fun getUnlocalizedName(): String = getTranslationKey()
+
+    /** The state index used as metadata when no placed state is available. */
+    fun getDefaultMetadata(): Int = mcValue.stateDefinition.possibleStates.indexOf(getDefaultState()).coerceAtLeast(0)
+
     /**
      * Gets the block's localized name.
      * Example: Wooden Planks

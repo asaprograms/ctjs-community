@@ -20,6 +20,7 @@ import com.chattriggers.ctjs.api.world.PotionEffect
 import com.chattriggers.ctjs.api.world.TabList
 import com.chattriggers.ctjs.api.world.World
 import com.chattriggers.ctjs.api.world.block.BlockFace
+import com.chattriggers.ctjs.api.world.block.Block
 import com.chattriggers.ctjs.api.world.block.BlockType
 import com.chattriggers.ctjs.engine.Register
 import kotlin.test.Test
@@ -96,6 +97,11 @@ class LegacyApiAliasesTest {
         assertMethod(Scoreboard.Score::class.java, "setPoints")
         assertStaticMethod(BlockFace::class.java, "fromMCEnumFacing")
         assertMethod(BlockFace::class.java, "getName")
+        for (name in listOf("getMetadata", "isPowered", "getRedstoneStrength")) {
+            assertMethod(Block::class.java, name)
+        }
+        assertMethod(BlockType::class.java, "getDefaultMetadata")
+        assertMethod(BlockType::class.java, "getUnlocalizedName")
         assertStaticMethod(Scoreboard::class.java, "getScoreboardTitle")
         assertStaticMethod(TabList::class.java, "getFooterMessage")
         assertStaticMethod(TabList::class.java, "getHeaderMessage")

@@ -30,6 +30,21 @@ open class Block(
 
     fun getState() = World.toMC()?.getBlockState(pos.toMC())
 
+    /**
+     * Returns the placed state's stable index within this block type's state definition.
+     * This is the modern equivalent of the 1.8.9 metadata value.
+     */
+    fun getMetadata(): Int {
+        val state = getState() ?: return 0
+        return type.mcValue.stateDefinition.possibleStates.indexOf(state).coerceAtLeast(0)
+    }
+
+    /** Legacy name for whether this position receives redstone power. */
+    fun isPowered(): Boolean = isReceivingPower()
+
+    /** Legacy name for the strongest neighboring redstone signal. */
+    fun getRedstoneStrength(): Int = getReceivingPower()
+
     @JvmOverloads
     fun isEmittingPower(face: BlockFace? = null): Boolean {
         if (face != null)
