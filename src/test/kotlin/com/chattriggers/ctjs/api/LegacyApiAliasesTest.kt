@@ -49,6 +49,7 @@ class LegacyApiAliasesTest {
         for (name in listOf(
             "getID", "getMetadata", "getRegistryName", "getUnlocalizedName", "getTextComponent", "setDamage",
             "getNBT", "getItemNBT", "getRawNBT", "getComponents",
+            "getLore", "getLoreComponents", "setLore", "setName",
         )) {
             assertMethod(Item::class.java, name)
         }
