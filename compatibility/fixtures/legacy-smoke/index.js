@@ -24,6 +24,14 @@ for (const method of ["getGraphics", "setGraphics"]) {
 }
 const legacyFancyGraphics = Settings.video.getGraphics();
 Settings.video.setGraphics(legacyFancyGraphics);
+for (const method of ["setClouds", "setParticles"]) {
+    if (typeof Settings.video[method] !== "function") {
+        throw new Error(`Legacy Settings.video.${method} is not exported`);
+    }
+}
+if (typeof Settings.chat.setVisibility !== "function") {
+    throw new Error("Legacy Settings.chat.setVisibility is not exported");
+}
 World.playSound("minecraft:ui.button.click", 0, 1);
 World.playRecord(null, 0, 0, 0);
 World.stopAllSounds();

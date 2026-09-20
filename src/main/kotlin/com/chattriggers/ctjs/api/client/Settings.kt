@@ -236,10 +236,27 @@ object Settings {
             toMC().cloudStatus().set(clouds.toMC())
         }
 
+        /** Legacy cloud mode: 0 follows graphics, 1 is fast, 2 is fancy, and 3 is off. */
+        fun setClouds(clouds: Int) {
+            val mode = when (clouds) {
+                0 -> if (getGraphics()) CloudRenderMode.FANCY else CloudRenderMode.FAST
+                1 -> CloudRenderMode.FAST
+                2 -> CloudRenderMode.FANCY
+                3 -> CloudRenderMode.OFF
+                else -> throw IllegalArgumentException("Invalid legacy cloud mode: $clouds")
+            }
+            setClouds(mode)
+        }
+
         fun getParticles() = ParticlesMode.fromMC(toMC().particles().get())
 
         fun setParticles(particles: ParticlesMode) {
             toMC().particles().set(particles.toMC())
+        }
+
+        /** Legacy particle mode: 0 is all, 1 is decreased, and 2 is minimal. */
+        fun setParticles(particles: Int) {
+            setParticles(ParticlesMode.fromLegacy(particles))
         }
 
         fun getFullscreen() = toMC().fullscreen().get()
@@ -272,6 +289,11 @@ object Settings {
 
         fun setVisibility(visibility: ChatVisibility) {
             toMC().chatVisibility().set(visibility.toMC())
+        }
+
+        /** Legacy string chat visibility. */
+        fun setVisibility(visibility: String) {
+            setVisibility(ChatVisibility.fromLegacy(visibility))
         }
 
         fun getColors() = toMC().chatColors().get()
@@ -357,6 +379,13 @@ object Settings {
             @JvmStatic
             fun fromMC(mcValue: MCParticlesMode) = entries.first { it.mcValue == mcValue }
 
+            internal fun fromLegacy(value: Int) = when (value) {
+                0 -> ALL
+                1 -> DECREASED
+                2 -> MINIMAL
+                else -> throw IllegalArgumentException("Invalid legacy particle mode: $value")
+            }
+
             @JvmStatic
             fun from(value: Any) = when (value) {
                 is CharSequence -> valueOf(value.toString())
@@ -375,6 +404,12 @@ object Settings {
         companion object {
             @JvmStatic
             fun fromMC(mcValue: MCChatVisibility) = entries.first { it.mcValue == mcValue }
+
+            internal fun fromLegacy(value: String) = when (value.lowercase()) {
+                "hidden" -> HIDDEN
+                "commands", "system" -> SYSTEM
+                else -> FULL
+            }
 
             @JvmStatic
             fun from(value: Any) = when (value) {
