@@ -7,6 +7,7 @@ import com.chattriggers.ctjs.api.entity.Entity
 import com.chattriggers.ctjs.api.inventory.Inventory
 import com.chattriggers.ctjs.api.inventory.Item
 import com.chattriggers.ctjs.api.message.ChatLib
+import com.chattriggers.ctjs.api.message.TextComponent
 import com.chattriggers.ctjs.api.world.Chunk
 import com.chattriggers.ctjs.api.world.Scoreboard
 import com.chattriggers.ctjs.api.world.TabList
@@ -22,6 +23,13 @@ class LegacyApiAliasesTest {
     fun `common 1_8_9 method names remain exported`() {
         assertStaticMethod(Client::class.java, "getChatGUI")
         assertStaticMethod(ChatLib::class.java, "isPlayer")
+        for (name in listOf(
+            "getText", "setText", "isFormatted", "setFormatted",
+            "setClick", "getClickAction", "setClickAction", "getClickValue", "setClickValue",
+            "setHover", "getHoverAction", "setHoverAction", "getHoverValue", "setHoverValue",
+        )) {
+            assertMethod(TextComponent::class.java, name)
+        }
         for (part in listOf("Cape", "Jacket", "LeftSleeve", "RightSleeve", "LeftPantsLeg", "RightPantsLeg", "Hat")) {
             assertMethod(Settings.SkinWrapper::class.java, "get$part")
             assertMethod(Settings.SkinWrapper::class.java, "set$part")

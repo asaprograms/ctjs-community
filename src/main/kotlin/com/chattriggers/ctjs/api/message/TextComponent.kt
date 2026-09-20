@@ -42,9 +42,8 @@ import kotlin.streams.toList
  * to work with. It implements [List]<[NativeObject]>, so it can be iterated
  * over.
  *
- * Importantly, instances of [TextComponent] are immutable. Methods for
- * "mutation" exist, but they return new instances of [TextComponent]. See
- * [withText] for an example.
+ * Modern `with...` methods return new instances of [TextComponent]. The legacy
+ * setters mutate this instance to preserve the ChatTriggers 2.2 API.
  *
  * @see Text
  */
@@ -55,6 +54,12 @@ class TextComponent private constructor(
     private val parts: MutableList<Part>,
     private val chatLineId: Int = -1,
     private val isRecursive: Boolean = false,
+    private var legacyText: String? = null,
+    private var legacyFormatted: Boolean = true,
+    private var legacyClickAction: String? = parts.firstOrNull()?.style_?.clickEvent?.action()?.serializedName,
+    private var legacyClickValue: String? = parts.firstOrNull()?.style_?.clickEvent?.let(::getEventValue)?.toString(),
+    private var legacyHoverAction: String? = parts.firstOrNull()?.style_?.hoverEvent?.action()?.serializedName ?: "show_text",
+    private var legacyHoverValue: String? = parts.firstOrNull()?.style_?.hoverEvent?.let(::getEventValue)?.toString(),
 ) : Component, Iterable<NativeObject> {
     /**
      * Creates an empty [TextComponent] with a single, unstyled, empty part.
@@ -86,20 +91,82 @@ class TextComponent private constructor(
      */
     constructor(vararg parts: Any) : this(parts.flatMap(Part::of).toMutableList().let {
         if (it.isEmpty()) mutableListOf(Part("", Style.EMPTY)) else it
-    })
+    }) {
+        legacyText = if (parts.size == 1 && parts[0] is CharSequence) {
+            parts[0].toString()
+        } else {
+            formattedText
+        }
+    }
 
     /**
      * Returns the text of all parts concatenated without formatting codes.
      */
-    val unformattedText by lazy {
-        parts.fold("") { prev, curr -> prev + curr.text }
-    }
+    val unformattedText
+        get() = parts.fold("") { prev, curr -> prev + curr.text }
 
     /**
      * Returns the text of all parts concatenated with formatting codes.
      */
-    val formattedText by lazy {
-        parts.fold("") { prev, curr -> prev + curr.style_.formatCodes() + curr.text }
+    val formattedText
+        get() = parts.fold("") { prev, curr -> prev + curr.style_.formatCodes() + curr.text }
+
+    /** Returns the source text used by the legacy mutable API. */
+    fun getText(): String = legacyText ?: formattedText
+
+    /** Replaces this component's text while preserving its click and hover events. */
+    fun setText(text: String) = apply {
+        legacyText = text
+        rebuildLegacyText()
+    }
+
+    /** Returns whether ampersand formatting codes are interpreted by legacy setters. */
+    fun isFormatted(): Boolean = legacyFormatted
+
+    /** Controls whether ampersand formatting codes are interpreted by legacy setters. */
+    fun setFormatted(formatted: Boolean) = apply {
+        legacyFormatted = formatted
+        rebuildLegacyText()
+    }
+
+    fun setClick(action: String, value: String) = apply {
+        legacyClickAction = action
+        legacyClickValue = value
+        rebuildLegacyEvents()
+    }
+
+    fun getClickAction(): String? = legacyClickAction
+
+    fun setClickAction(action: String) = apply {
+        legacyClickAction = action
+        rebuildLegacyEvents()
+    }
+
+    fun getClickValue(): String? = legacyClickValue
+
+    fun setClickValue(value: String) = apply {
+        legacyClickValue = value
+        rebuildLegacyEvents()
+    }
+
+    fun setHover(action: String, value: String) = apply {
+        legacyHoverAction = action
+        legacyHoverValue = value
+        rebuildLegacyEvents()
+    }
+
+    fun getHoverAction(): String? = legacyHoverAction
+
+    fun setHoverAction(action: String) = apply {
+        legacyHoverAction = action
+        rebuildLegacyEvents()
+    }
+
+    fun getHoverValue(): String? = legacyHoverValue
+
+    fun setHoverValue(value: String) = apply {
+        legacyHoverValue = value
+        rebuildLegacyEvents()
     }
 
     /**
@@ -139,20 +206,20 @@ class TextComponent private constructor(
      * @return a new [TextComponent] with the specified [value] appended to the end.
      *         This accepts all types of objects that the vararg constructor does.
      */
-    fun withText(value: Any) = copy(parts = (parts + Part.of(value)).toMutableList())
+    fun withText(value: Any) = copy(parts = (parts + Part.of(value)).toMutableList(), legacyText = null)
 
     /**
      * @return a new [TextComponent] with the specified [value] inserted at [index].
      *         This accepts all types of objects that the vararg constructor does.
      */
     fun withTextAt(index: Int, value: Any) =
-        copy(parts = (parts.take(index) + Part.of(value) + parts.drop(index)).toMutableList())
+        copy(parts = (parts.take(index) + Part.of(value) + parts.drop(index)).toMutableList(), legacyText = null)
 
     /**
      * @return a new [TextComponent] without the part at [index]
      */
     fun withoutTextAt(index: Int) =
-        copy(parts = (parts.take(index) + parts.drop(index + 1)).toMutableList())
+        copy(parts = (parts.take(index) + parts.drop(index + 1)).toMutableList(), legacyText = null)
 
     /**
      * Edits this text component, replacing it with the given [newText]. Note that
@@ -233,12 +300,55 @@ class TextComponent private constructor(
         parts.forEach(::append)
     }
 
+    private fun rebuildLegacyText() {
+        val text = legacyText.orEmpty()
+        val rebuilt = if (legacyFormatted) {
+            Part.of(text)
+        } else {
+            listOf(Part(text, Style.EMPTY))
+        }
+
+        parts.clear()
+        parts.addAll(rebuilt.ifEmpty { listOf(Part("", Style.EMPTY)) })
+        rebuildLegacyEvents()
+    }
+
+    private fun rebuildLegacyEvents() {
+        val clickEvent = legacyEventObject(legacyClickAction, legacyClickValue)?.let(::makeClickEvent)
+        val hoverEvent = legacyEventObject(legacyHoverAction, legacyHoverValue)?.let(::makeHoverEvent)
+
+        parts.replaceAll { part ->
+            Part(part.text, part.style_.withClickEvent(clickEvent).withHoverEvent(hoverEvent))
+        }
+    }
+
+    private fun legacyEventObject(action: String?, value: String?): NativeObject? {
+        if (action == null || value == null)
+            return null
+
+        return NativeObject().also {
+            it.put("action", it, action)
+            it.put("value", it, if (legacyFormatted) ChatLib.addColor(value) else value)
+        }
+    }
+
     // Make this method manually to avoid exposing it as a public API
     private fun copy(
         parts: MutableList<Part> = this.parts,
         chatLineId: Int = this.chatLineId,
-        isRecursive: Boolean = this.isRecursive
-    ) = TextComponent(parts, chatLineId, isRecursive)
+        isRecursive: Boolean = this.isRecursive,
+        legacyText: String? = this.legacyText,
+    ) = TextComponent(
+        parts.toMutableList(),
+        chatLineId,
+        isRecursive,
+        legacyText,
+        legacyFormatted,
+        legacyClickAction,
+        legacyClickValue,
+        legacyHoverAction,
+        legacyHoverValue,
+    )
 
     //////////
     // Text //
