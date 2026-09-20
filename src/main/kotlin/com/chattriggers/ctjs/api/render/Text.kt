@@ -1,6 +1,9 @@
 package com.chattriggers.ctjs.api.render
 
 import com.chattriggers.ctjs.api.message.ChatLib
+import com.chattriggers.ctjs.api.client.Client
+import com.chattriggers.ctjs.api.triggers.RegularTrigger
+import com.chattriggers.ctjs.api.triggers.TriggerType
 import com.chattriggers.ctjs.internal.utils.getOption
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.network.chat.Style
@@ -24,6 +27,17 @@ class Text {
     private var maxWidth = 0
     private var maxLines = Int.MAX_VALUE
     private var scale = 1f
+
+    private var onClicked: RegularTrigger? = null
+    private var onHovered: RegularTrigger? = null
+    private var onDragged: RegularTrigger? = null
+    private var onMouseLeave: RegularTrigger? = null
+    private var hovered = false
+    private var interactionX = 0.0
+    private var interactionY = 0.0
+    private var interactionWidth = 0.0
+    private var interactionHeight = 0.0
+    private var interactionActive = false
 
     @JvmOverloads
     constructor(string: String, x: Int = 0, y: Int = 0) {
@@ -65,6 +79,63 @@ class Text {
     fun setColor(color: Long) = apply { this.color = Renderer.fixAlpha(color) }
 
     fun setTextColor(color: Long) = setColor(color)
+
+    fun registerClicked(method: Any): RegularTrigger {
+        unregisterClicked()
+        return RegularTrigger(method, TriggerType.OTHER).also { onClicked = it }
+    }
+
+    fun registerHovered(method: Any): RegularTrigger {
+        unregisterHovered()
+        return RegularTrigger(method, TriggerType.OTHER).also { onHovered = it }
+    }
+
+    fun registerMouseLeave(method: Any): RegularTrigger {
+        unregisterMouseLeave()
+        return RegularTrigger(method, TriggerType.OTHER).also { onMouseLeave = it }
+    }
+
+    fun registerDragged(method: Any): RegularTrigger {
+        unregisterDragged()
+        return RegularTrigger(method, TriggerType.OTHER).also { onDragged = it }
+    }
+
+    fun unregisterClicked() = apply { onClicked?.unregister(); onClicked = null }
+    fun unregisterHovered() = apply { onHovered?.unregister(); onHovered = null }
+    fun unregisterMouseLeave() = apply { onMouseLeave?.unregister(); onMouseLeave = null }
+    fun unregisterDragged() = apply { onDragged?.unregister(); onDragged = null }
+
+    internal fun updateInteractionBounds(x: Double, y: Double, width: Double, height: Double) {
+        interactionX = x
+        interactionY = y
+        interactionWidth = width
+        interactionHeight = height
+        interactionActive = true
+
+        val mouseX = Client.getMouseX()
+        val mouseY = Client.getMouseY()
+        val nowHovered = contains(mouseX, mouseY)
+        if (nowHovered) onHovered?.trigger(arrayOf(mouseX, mouseY))
+        else if (hovered) onMouseLeave?.trigger(arrayOf(mouseX, mouseY))
+        hovered = nowHovered
+    }
+
+    internal fun clearInteractionBounds() {
+        interactionActive = false
+        hovered = false
+    }
+
+    internal fun handleClick(x: Double, y: Double, button: Int, pressed: Boolean) {
+        if (contains(x, y)) onClicked?.trigger(arrayOf<Any>(x, y, button, pressed))
+    }
+
+    internal fun handleDrag(deltaX: Double, deltaY: Double, x: Double, y: Double, button: Int) {
+        if (interactionActive) onDragged?.trigger(arrayOf<Any>(deltaX, deltaY, x, y, button))
+    }
+
+    private fun contains(x: Double, y: Double) = interactionActive &&
+        x >= interactionX && x <= interactionX + interactionWidth &&
+        y >= interactionY && y <= interactionY + interactionHeight
 
     fun getFormatted(): Boolean = formatted
 

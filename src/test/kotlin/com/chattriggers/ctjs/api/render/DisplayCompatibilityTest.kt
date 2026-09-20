@@ -48,4 +48,14 @@ class DisplayCompatibilityTest {
         val display = Display().addLine("last").addLine(0, line)
         assertEquals(line, display.getLine(0))
     }
+
+    @Test
+    fun `display line interaction methods remain exported`() {
+        for (name in listOf(
+            "registerClicked", "registerHovered", "registerMouseLeave", "registerDragged",
+            "unregisterClicked", "unregisterHovered", "unregisterMouseLeave", "unregisterDragged",
+        )) {
+            assertTrue(Text::class.java.methods.any { it.name == name }, "Expected DisplayLine.$name")
+        }
+    }
 }

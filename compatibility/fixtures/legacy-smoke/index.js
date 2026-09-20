@@ -176,6 +176,20 @@ const legacyDisplayLine = new DisplayLine("initial").setText("legacy line").setT
 if (legacyDisplayLine.getText().getString() !== "legacy line" || legacyDisplayLine.getTextWidth() <= 0) {
     throw new Error("Legacy DisplayLine text contract failed");
 }
+for (const callbackTrigger of [
+    legacyDisplayLine.registerClicked(() => {}),
+    legacyDisplayLine.registerHovered(() => {}),
+    legacyDisplayLine.registerMouseLeave(() => {}),
+    legacyDisplayLine.registerDragged(() => {}),
+]) {
+    if (typeof callbackTrigger.unregister !== "function") {
+        throw new Error("Legacy DisplayLine callback registration did not return a trigger");
+    }
+}
+legacyDisplayLine.unregisterClicked();
+legacyDisplayLine.unregisterHovered();
+legacyDisplayLine.unregisterMouseLeave();
+legacyDisplayLine.unregisterDragged();
 legacyDisplay.addLine(0, legacyDisplayLine);
 register("guiRender", () => {
     displayFrameCount++;

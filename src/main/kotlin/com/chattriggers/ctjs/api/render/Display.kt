@@ -245,10 +245,25 @@ class Display() {
                 .setAlign(align)
                 .draw(ctx, linesX, y + currentHeight, x, textBackgroundWidth)
 
+            it.updateInteractionBounds(
+                x - 1.0,
+                y + currentHeight - 2.0,
+                width + 1.0,
+                it.getHeight() + 1.0,
+            )
+
             currentHeight += it.getHeight().toInt()
         }
 
         height = currentHeight
+    }
+
+    internal fun handleClick(x: Double, y: Double, button: Int, pressed: Boolean) {
+        if (shouldRender) lines.forEach { it.handleClick(x, y, button, pressed) }
+    }
+
+    internal fun handleDrag(deltaX: Double, deltaY: Double, x: Double, y: Double, button: Int) {
+        if (shouldRender) lines.forEach { it.handleDrag(deltaX, deltaY, x, y, button) }
     }
 
     fun render(ctx: GuiGraphicsExtractor) = draw(ctx)

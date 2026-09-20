@@ -22,6 +22,14 @@ object DisplayHandler {
 
     internal fun registeredDisplayCount() = displays.size
 
+    internal fun handleMouseClick(x: Double, y: Double, button: Int, pressed: Boolean) {
+        displays.forEach { it.handleClick(x, y, button, pressed) }
+    }
+
+    internal fun handleMouseDrag(deltaX: Double, deltaY: Double, x: Double, y: Double, button: Int) {
+        displays.forEach { it.handleDrag(deltaX, deltaY, x, y, button) }
+    }
+
     private fun render(context: GuiGraphicsExtractor, type: RegisterType) {
         currentContext.set(context)
         try {

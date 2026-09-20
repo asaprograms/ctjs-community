@@ -3,6 +3,7 @@ package com.chattriggers.ctjs.internal.listeners
 import com.chattriggers.ctjs.api.client.Client
 import com.chattriggers.ctjs.api.triggers.CancellableEvent
 import com.chattriggers.ctjs.api.triggers.TriggerType
+import com.chattriggers.ctjs.api.render.DisplayHandler
 import com.chattriggers.ctjs.api.world.World
 import com.chattriggers.ctjs.internal.engine.CTEvents
 import com.chattriggers.ctjs.internal.utils.Initializer
@@ -44,9 +45,15 @@ internal object MouseListener : Initializer {
             }
         }
 
-        CTEvents.MOUSE_CLICKED.register(TriggerType.CLICKED::triggerAll)
+        CTEvents.MOUSE_CLICKED.register { x, y, button, pressed ->
+            TriggerType.CLICKED.triggerAll(x, y, button, pressed)
+            DisplayHandler.handleMouseClick(x, y, button, pressed)
+        }
         CTEvents.MOUSE_SCROLLED.register(TriggerType.SCROLLED::triggerAll)
-        CTEvents.MOUSE_DRAGGED.register(TriggerType.DRAGGED::triggerAll)
+        CTEvents.MOUSE_DRAGGED.register { deltaX, deltaY, x, y, button ->
+            TriggerType.DRAGGED.triggerAll(deltaX, deltaY, x, y, button)
+            DisplayHandler.handleMouseDrag(deltaX, deltaY, x, y, button)
+        }
         CTEvents.GUI_MOUSE_DRAG.register(TriggerType.GUI_MOUSE_DRAG::triggerAll)
 
         ScreenEvents.BEFORE_INIT.register { _, screen, _, _ ->
