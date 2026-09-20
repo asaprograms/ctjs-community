@@ -36,4 +36,16 @@ class DisplayCompatibilityTest {
         assertEquals(Display.Order.REVERSED, display.getOrder())
         assertEquals(DisplayHandler.RegisterType.POST_GUI_RENDER, display.getRegisterType())
     }
+
+    @Test
+    fun `modern text retains the legacy display line text contract`() {
+        val line = Text("hello").setText("legacy").setTextColor(0xff336699)
+
+        assertEquals(line, line.getText())
+        assertEquals("legacy", line.getString())
+        assertEquals(0xff336699L, line.getTextColor())
+
+        val display = Display().addLine("last").addLine(0, line)
+        assertEquals(line, display.getLine(0))
+    }
 }
