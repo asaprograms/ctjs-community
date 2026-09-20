@@ -2,6 +2,7 @@ package com.chattriggers.ctjs.api.message
 
 import com.chattriggers.ctjs.api.client.Client
 import com.chattriggers.ctjs.api.render.Renderer
+import com.chattriggers.ctjs.api.triggers.ChatTrigger
 import com.chattriggers.ctjs.engine.printToConsole
 import com.chattriggers.ctjs.internal.listeners.ClientListener
 import com.chattriggers.ctjs.internal.mixins.ChatComponentAccessor
@@ -79,6 +80,13 @@ object ChatLib {
             is CharSequence -> TextComponent(text)
             else -> TextComponent(text.toString())
         }.withRecursive().chat()
+    }
+
+    /** Returns the text carried by a chat trigger event. */
+    @JvmStatic
+    @JvmOverloads
+    fun getChatMessage(event: ChatTrigger.Event, formatted: Boolean = false): String {
+        return if (formatted) replaceFormatting(event.message.formattedText) else event.message.unformattedText
     }
 
 

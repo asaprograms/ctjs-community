@@ -153,6 +153,15 @@ if (legacyText.getUnformattedText() !== "Second" || copiedText.getUnformattedTex
     throw new Error("TextComponent copy isolation failed");
 }
 
+const ChatTriggerEvent = Java.type("com.chattriggers.ctjs.api.triggers.ChatTrigger$Event");
+const chatEvent = new ChatTriggerEvent(new TextComponent("&aLegacy chat"));
+const unformattedChatMessage = String(ChatLib.getChatMessage(chatEvent));
+const formattedChatMessage = String(ChatLib.getChatMessage(chatEvent, true));
+const expectedFormattedChatMessage = String(chatEvent.message.formattedText).replace(/\u00a7/g, "&");
+if (unformattedChatMessage !== "Legacy chat" || formattedChatMessage !== expectedFormattedChatMessage) {
+    throw new Error(`Legacy ChatLib.getChatMessage contract failed: ${unformattedChatMessage} / ${formattedChatMessage}`);
+}
+
 register("command", () => {
     ChatLib.chat("&aLegacy module smoke test passed");
 }).setName("ctlegacytest");
