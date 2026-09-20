@@ -84,6 +84,15 @@ object World {
     @JvmStatic
     fun getDifficulty(): Settings.Difficulty? = toMC()?.difficulty?.let(Settings.Difficulty::fromMC)
 
+    /** Returns the current lunar phase, from 0 through 7. */
+    @JvmStatic
+    fun getMoonPhase(): Int {
+        val time = toMC()?.overworldClockTime ?: return -1
+        return moonPhaseAt(time)
+    }
+
+    internal fun moonPhaseAt(time: Long): Int = Math.floorMod(Math.floorDiv(time, 24000L), 8L).toInt()
+
     /** Plays a client-side sound at the local player's position. */
     @JvmStatic
     fun playSound(name: String, volume: Float, pitch: Float) {
@@ -397,7 +406,7 @@ object World {
             ySpeed: Double,
             zSpeed: Double,
         ): Particle? {
-            val particleType = BuiltInRegistries.PARTICLE_TYPE.getValue(particle.toIdentifier()) as? ParticleType<*>?
+            val particleType = BuiltInRegistries.PARTICLE_TYPE.getValue(particle.toIdentifier())
 
             requireNotNull(particleType) {
                 "Invalid particle parameter"

@@ -77,6 +77,8 @@ class LegacyApiAliasesTest {
         }
         assertMethod(LivingEntity::class.java, "getItemInSlot")
         assertMethod(Inventory::class.java, "getItemInSlot")
+        assertMethod(Inventory::class.java, "isContainer")
+        assertMethod(Inventory::class.java, "doAction")
         assertMethod(Item::class.java, "isDamagable")
         for (name in listOf(
             "getID", "getMetadata", "getRegistryName", "getUnlocalizedName", "getTextComponent", "setDamage",
@@ -111,6 +113,7 @@ class LegacyApiAliasesTest {
         assertStaticMethod(TabList::class.java, "getHeaderMessage")
         assertStaticMethod(World::class.java, "getAllTileEntities")
         assertStaticMethod(World::class.java, "getAllTileEntitiesOfType")
+        assertStaticMethod(World::class.java, "getMoonPhase")
         assertStaticMethod(World::class.java, "playSound")
         assertStaticMethod(World::class.java, "playRecord")
         assertStaticMethod(World::class.java, "stopAllSounds")

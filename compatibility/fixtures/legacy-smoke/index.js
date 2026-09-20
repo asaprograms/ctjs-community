@@ -13,6 +13,9 @@ for (const method of ["playSound", "playRecord", "stopAllSounds"]) {
         throw new Error(`Legacy World.${method} is not exported`);
     }
 }
+if (typeof World.getMoonPhase !== "function" || World.getMoonPhase() !== -1) {
+    throw new Error("Legacy World.getMoonPhase unloaded-world contract failed");
+}
 World.playSound("minecraft:ui.button.click", 0, 1);
 World.playRecord(null, 0, 0, 0);
 World.stopAllSounds();
