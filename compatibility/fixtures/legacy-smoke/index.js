@@ -122,6 +122,37 @@ for (const triggerName of ["playerJoined", "playerLeft"]) {
     }
 }
 
+const legacyText = new TextComponent("&aFirst");
+if (legacyText.getText() !== "&aFirst" || legacyText.getUnformattedText() !== "First") {
+    throw new Error("Legacy TextComponent initial text contract failed");
+}
+
+if (legacyText.setText("&bSecond") !== legacyText || legacyText.getUnformattedText() !== "Second") {
+    throw new Error("Legacy TextComponent.setText did not mutate and return the component");
+}
+
+legacyText.setFormatted(false);
+if (legacyText.isFormatted() !== false || legacyText.getUnformattedText() !== "&bSecond") {
+    throw new Error("Legacy TextComponent formatting toggle failed");
+}
+
+legacyText.setFormatted(true)
+    .setClick("run_command", "/ctlegacytest")
+    .setHover("show_text", "&eDetails");
+if (legacyText.getUnformattedText() !== "Second" ||
+    legacyText.getClickAction() !== "run_command" ||
+    legacyText.getClickValue() !== "/ctlegacytest" ||
+    legacyText.getHoverAction() !== "show_text" ||
+    legacyText.getHoverValue() !== "&eDetails") {
+    throw new Error("Legacy TextComponent click or hover contract failed");
+}
+
+const copiedText = legacyText.withChatLineId(12);
+copiedText.setText("Changed");
+if (legacyText.getUnformattedText() !== "Second" || copiedText.getUnformattedText() !== "Changed") {
+    throw new Error("TextComponent copy isolation failed");
+}
+
 register("command", () => {
     ChatLib.chat("&aLegacy module smoke test passed");
 }).setName("ctlegacytest");

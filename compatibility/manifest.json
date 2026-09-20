@@ -209,6 +209,13 @@
       "test": "LegacyApiAliasesTest reflection coverage"
     },
     {
+      "id": "legacy-mutable-text-component",
+      "source": "ChatTriggers 2.2.0 TextComponent API",
+      "coverage": ["mutable-text", "formatting-toggle", "click-action-and-value", "hover-action-and-value", "copy-isolation"],
+      "status": "implemented",
+      "test": "Legacy client smoke fixture and LegacyApiAliasesTest"
+    },
+    {
       "id": "legacy-register-surface",
       "source": "ChatTriggers 2.2.0 IRegister public surface",
       "coverage": ["all-74-registration-entry-points", "static-javascript-export"],
