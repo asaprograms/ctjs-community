@@ -29,15 +29,15 @@ class NBTTagList(override val mcValue: MCNbtList) : NBTBase(mcValue) {
 
     fun removeTag(index: Int) = fromMC(mcValue.removeAt(index))
 
-    fun getShortAt(index: Int) = mcValue.getShort(index)
+    fun getShortAt(index: Int): Short = mcValue.getShort(index).orElse(0)
 
-    fun getIntAt(index: Int) = mcValue.getInt(index)
+    fun getIntAt(index: Int): Int = mcValue.getInt(index).orElse(0)
 
-    fun getFloatAt(index: Int) = mcValue.getFloat(index)
+    fun getFloatAt(index: Int): Float = mcValue.getFloat(index).orElse(0f)
 
-    fun getDoubleAt(index: Int) = mcValue.getDouble(index)
+    fun getDoubleAt(index: Int): Double = mcValue.getDouble(index).orElse(0.0)
 
-    fun getStringTagAt(index: Int): String = mcValue.getString(index).get()
+    fun getStringTagAt(index: Int): String = mcValue.getString(index).orElse("")
 
     fun getListAt(index: Int) = NBTTagList(mcValue.getList(index).get())
 
@@ -59,6 +59,17 @@ class NBTTagList(override val mcValue: MCNbtList) : NBTBase(mcValue) {
         Tag.TAG_COMPOUND -> getCompoundTagAt(index)
         Tag.TAG_INT_ARRAY -> getIntArrayAt(index)
         Tag.TAG_LONG_ARRAY -> getLongArrayAt(index)
+        else -> get(index)
+    }
+
+    fun get(index: Int, type: NBTTagCompound.NBTDataType): Any = when (type) {
+        NBTTagCompound.NBTDataType.FLOAT -> getFloatAt(index)
+        NBTTagCompound.NBTDataType.DOUBLE -> getDoubleAt(index)
+        NBTTagCompound.NBTDataType.STRING -> getStringTagAt(index)
+        NBTTagCompound.NBTDataType.INT_ARRAY -> getIntArrayAt(index)
+        NBTTagCompound.NBTDataType.LONG_ARRAY -> getLongArrayAt(index)
+        NBTTagCompound.NBTDataType.COMPOUND_TAG -> getCompoundTagAt(index)
+        NBTTagCompound.NBTDataType.TAG_LIST -> getListAt(index)
         else -> get(index)
     }
 

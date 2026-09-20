@@ -252,6 +252,13 @@
       "test": "LegacyApiAliasesTest reflection coverage"
     },
     {
+      "id": "legacy-nbt-wrapper-values",
+      "source": "ChatTriggers 2.2.0 NBT wrapper API",
+      "coverage": ["primitive-value-unwrapping", "missing-value-defaults", "typed-list-access", "long-array-setter", "tag-list-type-validation"],
+      "status": "verified",
+      "test": "NBTCompatibilityTest and LegacyApiAliasesTest"
+    },
+    {
       "id": "legacy-register-surface",
       "source": "ChatTriggers 2.2.0 IRegister public surface",
       "coverage": ["all-74-registration-entry-points", "static-javascript-export"],
