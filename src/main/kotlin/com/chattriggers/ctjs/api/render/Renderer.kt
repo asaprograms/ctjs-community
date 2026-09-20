@@ -42,6 +42,8 @@ object Renderer {
     // The currently-active matrix stack
     internal lateinit var matrixStack: UMatrixStack
     private val matrixStackStack = ArrayDeque<UMatrixStack>()
+    private var legacyDrawMode: Int? = null
+    private var retainLegacyTransforms = false
 
     private lateinit var slimCTRenderPlayer: CTPlayerRenderer
     private lateinit var normalCTRenderPlayer: CTPlayerRenderer
@@ -167,6 +169,30 @@ object Renderer {
         val blue = ((sin(step / speed + 4 * PI / 3) + 0.75) * 170).toInt()
         return intArrayOf(red, green, blue)
     }
+
+    @JvmStatic
+    fun retainTransforms(retain: Boolean) {
+        retainLegacyTransforms = retain
+        finishDraw()
+    }
+
+    @JvmStatic
+    fun setDrawMode(drawMode: Int) = apply { legacyDrawMode = drawMode }
+
+    @JvmStatic
+    fun getDrawMode(): Int? = legacyDrawMode
+
+    @JvmStatic
+    fun finishDraw() {
+        if (!retainLegacyTransforms) {
+            colorized = null
+            legacyDrawMode = null
+        }
+    }
+
+    internal fun shouldRetainTransforms() = retainLegacyTransforms
+
+    internal fun legacyMode(default: DrawMode): DrawMode = legacyDrawMode?.let(DrawMode::fromLegacy) ?: default
 
     @JvmStatic
     fun disableCull() = apply { LegacyPipelineBuilder.disableCull() }
@@ -439,12 +465,13 @@ object Renderer {
         if (pos[1] > pos[3])
             Collections.swap(pos, 1, 3)
 
-        begin(vertexFormat = VertexFormat.POSITION_COLOR)
+        begin(legacyMode(DrawMode.QUADS), VertexFormat.POSITION_COLOR)
         pos(pos[0], pos[3], 0f).color(color)
         pos(pos[2], pos[3], 0f).color(color)
         pos(pos[2], pos[1], 0f).color(color)
         pos(pos[0], pos[1], 0f).color(color)
         draw()
+        finishDraw()
     }
 
     @JvmStatic
@@ -497,6 +524,33 @@ object Renderer {
         }
 
         draw()
+        finishDraw()
+    }
+
+    @JvmStatic
+    @JvmOverloads
+    fun drawShape(color: Long, vararg vertices: List<Float>, drawMode: Int = 9) {
+        if (vertices.size < 3) return
+
+        val ordered = if (area(vertices) >= 0f) vertices.reversed() else vertices.toList()
+        begin(legacyDrawMode?.let(DrawMode::fromLegacy) ?: DrawMode.fromLegacy(drawMode), VertexFormat.POSITION_COLOR)
+        ordered.forEach { vertex ->
+            require(vertex.size >= 2) { "Shape vertices require x and y coordinates" }
+            pos(vertex[0], vertex[1], 0f).color(color)
+        }
+        draw()
+        finishDraw()
+    }
+
+    private fun area(points: Array<out List<Float>>): Float {
+        var area = 0f
+        for (index in points.indices) {
+            val current = points[index]
+            val next = points[(index + 1) % points.size]
+            require(current.size >= 2 && next.size >= 2) { "Shape vertices require x and y coordinates" }
+            area += current[0] * next[1] - next[0] * current[1]
+        }
+        return area / 2f
     }
 
     @JvmStatic
@@ -755,6 +809,17 @@ object Renderer {
         companion object {
             @JvmStatic
             fun fromUC(ucValue: UGraphics.DrawMode) = entries.first { it.ucValue == ucValue }
+
+            @JvmStatic
+            fun fromLegacy(drawMode: Int) = when (drawMode) {
+                1 -> LINES
+                3 -> LINE_STRIP
+                4 -> TRIANGLES
+                5 -> TRIANGLE_STRIP
+                6, 9 -> TRIANGLE_FAN
+                7 -> QUADS
+                else -> throw IllegalArgumentException("Unsupported legacy draw mode: $drawMode")
+            }
         }
     }
 

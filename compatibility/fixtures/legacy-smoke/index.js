@@ -253,6 +253,21 @@ register("guiRender", () => {
     Renderer.pos(4, 2).color(255, 255, 255, 255);
     Renderer.draw();
 
+    Renderer.setDrawMode(7);
+    if (Renderer.getDrawMode() !== 7) {
+        throw new Error("Legacy Renderer draw mode state failed");
+    }
+    Renderer.retainTransforms(true);
+    Renderer.translate(0, 0);
+    Renderer.drawShape(
+        Renderer.color(255, 255, 255, 255),
+        [6, 6], [6, 8], [8, 8], [8, 6]
+    );
+    Renderer.retainTransforms(false);
+    if (Renderer.getDrawMode() !== null) {
+        throw new Error("Legacy Renderer.finishDraw did not clear draw mode");
+    }
+
     rendererSmokeDrawn = true;
     console.log("CTJS_RENDERER_SMOKE_DRAWN");
 });

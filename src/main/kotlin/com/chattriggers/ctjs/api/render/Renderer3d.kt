@@ -38,9 +38,8 @@ object Renderer3d {
         vertexFormat: Renderer.VertexFormat = Renderer.VertexFormat.POSITION,
         snippet: Renderer.RenderSnippet = Renderer.RenderSnippet.POSITION_COLOR_SNIPPET
     ) = apply {
-        Renderer.pushMatrix()
-            .enableBlend()
-            .disableCull()
+        if (!Renderer.shouldRetainTransforms()) Renderer.pushMatrix()
+        Renderer.enableBlend().disableCull()
         LegacyPipelineBuilder.begin(drawMode, vertexFormat, snippet)
         worldRenderer = UBufferBuilder.create(drawMode.toUC(), vertexFormat.toMC())
 
@@ -184,7 +183,7 @@ object Renderer3d {
         Renderer.colorize(1f, 1f, 1f, 1f)
             .disableBlend()
             .enableCull()
-            .popMatrix()
+        if (!Renderer.shouldRetainTransforms()) Renderer.popMatrix()
     }
 
     /**

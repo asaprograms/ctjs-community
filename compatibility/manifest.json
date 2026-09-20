@@ -348,6 +348,13 @@
       "coverage": ["state-index-metadata", "default-metadata", "powered", "redstone-strength", "unlocalized-name"],
       "status": "verified",
       "test": "LegacyApiAliasesTest and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
+    },
+    {
+      "id": "legacy-renderer-state",
+      "source": "ChatTriggers 2.2.0 Renderer API",
+      "coverage": ["integer-draw-modes", "drawShape", "finishDraw", "setDrawMode", "getDrawMode", "retainTransforms"],
+      "status": "verified",
+      "test": "LegacyApiAliasesTest and client renderer smoke fixture on Minecraft 26.2 and 26.1.2"
     }
   ]
 }
