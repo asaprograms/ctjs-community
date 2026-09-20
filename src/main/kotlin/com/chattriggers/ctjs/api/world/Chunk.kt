@@ -9,6 +9,7 @@ import com.chattriggers.ctjs.MCChunk
 import com.chattriggers.ctjs.MCEntity
 import com.chattriggers.ctjs.internal.utils.asMixin
 import net.minecraft.world.phys.AABB
+import net.minecraft.world.level.LightLayer
 
 // TODO: Add more methods here?
 class Chunk(override val mcValue: MCChunk) : CTWrapper<MCChunk> {
@@ -35,6 +36,16 @@ class Chunk(override val mcValue: MCChunk) : CTWrapper<MCChunk> {
      * @return the minimum z coordinate
      */
     fun getMinBlockZ() = getZ() * 16
+
+    /** Gets the sky light level at an absolute block position in this chunk. */
+    fun getSkyLightLevel(x: Int, y: Int, z: Int): Int {
+        return World.toMC()?.getBrightness(LightLayer.SKY, MCBlockPos(x, y, z)) ?: 0
+    }
+
+    /** Gets the block light level at an absolute block position in this chunk. */
+    fun getBlockLightLevel(x: Int, y: Int, z: Int): Int {
+        return World.toMC()?.getBrightness(LightLayer.BLOCK, MCBlockPos(x, y, z)) ?: 0
+    }
 
     /**
      * Gets every entity in this chunk

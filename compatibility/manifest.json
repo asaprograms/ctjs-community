@@ -334,6 +334,13 @@
       "coverage": ["default-category", "callback-trigger-return", "removeKeyBind", "clearKeyBinds"],
       "status": "verified",
       "test": "LegacyApiAliasesTest and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
+    },
+    {
+      "id": "legacy-chunk-light-levels",
+      "source": "ChatTriggers 2.2.0 Chunk API",
+      "coverage": ["sky-light", "block-light", "absolute-block-position"],
+      "status": "verified",
+      "test": "LegacyApiAliasesTest"
     }
   ]
 }
