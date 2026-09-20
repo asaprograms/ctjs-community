@@ -4,7 +4,7 @@ import com.chattriggers.ctjs.api.CTWrapper
 import com.chattriggers.ctjs.MCSlot
 
 class Slot(override val mcValue: MCSlot) : CTWrapper<MCSlot> {
-    val index get() = mcValue::getContainerSlot
+    val index get() = mcValue.containerSlot
 
     val displayX by mcValue::x
 

@@ -14,6 +14,7 @@ import com.chattriggers.ctjs.api.message.ChatLib
 import com.chattriggers.ctjs.api.message.TextComponent
 import com.chattriggers.ctjs.api.world.Chunk
 import com.chattriggers.ctjs.api.world.Scoreboard
+import com.chattriggers.ctjs.api.world.PotionEffect
 import com.chattriggers.ctjs.api.world.TabList
 import com.chattriggers.ctjs.api.world.World
 import com.chattriggers.ctjs.api.world.block.BlockFace
@@ -79,6 +80,8 @@ class LegacyApiAliasesTest {
             )
         }
         assertMethod(Scoreboard.Score::class.java, "getPoints")
+        assertMethod(PotionEffect::class.java, "isAmbient")
+        assertMethod(PotionEffect::class.java, "isDurationMax")
         assertMethod(Scoreboard.Score::class.java, "setPoints")
         assertStaticMethod(BlockFace::class.java, "fromMCEnumFacing")
         assertMethod(BlockFace::class.java, "getName")
