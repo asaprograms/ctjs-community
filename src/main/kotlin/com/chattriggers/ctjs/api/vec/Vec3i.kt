@@ -6,7 +6,9 @@ import kotlin.math.sqrt
 
 open class Vec3i @JvmOverloads constructor(
     val x: Int = 0, val y: Int = 0, val z: Int = 0,
-) {
+) : Comparable<Vec3i> {
+    constructor(x: Number, y: Number, z: Number) : this(x.toInt(), y.toInt(), z.toInt())
+
     fun magnitudeSquared() = x * x + y * y + z * z
 
     fun magnitude() = sqrt(magnitudeSquared().toFloat())
@@ -23,6 +25,22 @@ open class Vec3i @JvmOverloads constructor(
         x * other.y - y * other.x,
     )
 
+    fun distanceSq(other: Vec3i): Double {
+        val dx = (x - other.x).toDouble()
+        val dy = (y - other.y).toDouble()
+        val dz = (z - other.z).toDouble()
+        return dx * dx + dy * dy + dz * dz
+    }
+
+    fun distance(other: Vec3i) = sqrt(distanceSq(other))
+
+    fun distanceSqToCenter(x: Double, y: Double, z: Double): Double {
+        val dx = this.x + 0.5 - x
+        val dy = this.y + 0.5 - y
+        val dz = this.z + 0.5 - z
+        return dx * dx + dy * dy + dz * dz
+    }
+
     fun dotProduct(other: Vec3i) = x * other.x + y * other.y + z * other.z
 
     fun angleTo(other: Vec3i): Float {
@@ -38,6 +56,8 @@ open class Vec3i @JvmOverloads constructor(
     open operator fun plus(other: Vec3i) = Vec3i(x + other.x, y + other.y, z + other.z)
 
     open operator fun minus(other: Vec3i) = this + (-other)
+
+    override fun compareTo(other: Vec3i): Int = compareValuesBy(this, other, Vec3i::y, Vec3i::z, Vec3i::x)
 
     override fun hashCode() = Objects.hash(x, y, z)
 
