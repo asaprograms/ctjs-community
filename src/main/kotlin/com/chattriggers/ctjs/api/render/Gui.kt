@@ -12,6 +12,7 @@ import gg.essential.universal.UScreen
 import net.fabricmc.fabric.api.client.screen.v1.ScreenMouseEvents
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.gui.components.Button
+import net.minecraft.network.chat.Component
 
 class Gui @JvmOverloads constructor(
     title: TextComponent = TextComponent(""),
@@ -37,12 +38,22 @@ class Gui @JvmOverloads constructor(
         Client.currentGui.set(this)
     }
 
+    fun close() {
+        if (isOpen()) Client.currentGui.set(null)
+    }
+
     override fun onClose() {
         Client.currentGui.set(null)
 
     }
 
     fun isOpen(): Boolean = Client.getMinecraft().screen === this
+
+    fun isControlDown(): Boolean = Client.isControlDown()
+
+    fun isShiftDown(): Boolean = Client.isShiftDown()
+
+    fun isAltDown(): Boolean = Client.isAltDown()
 
     /**
      * Registers a method to be run while gui is open.
@@ -369,6 +380,8 @@ class Gui @JvmOverloads constructor(
         buttons.clear()
     }
 
+    fun getButton(buttonId: Int): Button? = buttons[buttonId]
+
     fun getButtonVisibility(buttonId: Int): Boolean = buttons[buttonId]?.visible ?: false
 
     /**
@@ -480,6 +493,23 @@ class Gui @JvmOverloads constructor(
      */
     fun setButtonText(buttonId: Int, text: String) = setButtonText(buttonId, TextComponent(text))
 
+    fun drawString(text: String, x: Int, y: Int, color: Int) {
+        Renderer.drawString(currentDrawContext(), text, x.toFloat(), y.toFloat(), color.toLong())
+    }
+
+    fun drawCreativeTabHoveringString(text: String, mouseX: Int, mouseY: Int) {
+        currentDrawContext().setTooltipForNextFrame(Component.literal(text), mouseX, mouseY)
+    }
+
+    fun drawHoveringString(text: List<String>, x: Int, y: Int) {
+        currentDrawContext().setComponentTooltipForNextFrame(
+            Renderer.getFontRenderer(),
+            text.map(Component::literal),
+            x,
+            y,
+        )
+    }
+
     /**
      * Sets the gui's tooltip, this will be visible on top of the cursor
      * when the gui is open.
@@ -504,5 +534,12 @@ class Gui @JvmOverloads constructor(
         private val drawContextsField = UScreen::class.java.getDeclaredField("drawContexts").also {
             it.isAccessible = true
         }
+    }
+
+    private fun currentDrawContext(): GuiGraphicsExtractor {
+        @Suppress("UNCHECKED_CAST")
+        val contexts = drawContextsField.get(this) as List<GuiGraphicsExtractor>
+        return contexts.lastOrNull()
+            ?: throw IllegalStateException("Gui drawing helpers must be called from this Gui's draw callback")
     }
 }

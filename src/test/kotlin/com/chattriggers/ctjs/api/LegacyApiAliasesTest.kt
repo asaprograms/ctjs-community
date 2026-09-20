@@ -12,6 +12,7 @@ import com.chattriggers.ctjs.api.inventory.nbt.NBTTagCompound
 import com.chattriggers.ctjs.api.inventory.nbt.NBTTagList
 import com.chattriggers.ctjs.api.message.ChatLib
 import com.chattriggers.ctjs.api.message.TextComponent
+import com.chattriggers.ctjs.api.render.Gui
 import com.chattriggers.ctjs.api.world.Chunk
 import com.chattriggers.ctjs.api.world.Scoreboard
 import com.chattriggers.ctjs.api.world.PotionEffect
@@ -30,6 +31,12 @@ class LegacyApiAliasesTest {
         assertStaticMethod(Client::class.java, "getChatGUI")
         assertStaticMethod(ChatLib::class.java, "isPlayer")
         assertStaticMethod(ChatLib::class.java, "getChatMessage")
+        for (name in listOf(
+            "close", "isControlDown", "isShiftDown", "isAltDown", "getButton",
+            "drawString", "drawCreativeTabHoveringString", "drawHoveringString",
+        )) {
+            assertMethod(Gui::class.java, name)
+        }
         assertTrue(
             Sound::class.java.methods.any {
                 it.name == "setCategory" && it.parameterTypes.contentEquals(arrayOf(String::class.java))

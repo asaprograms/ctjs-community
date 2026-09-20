@@ -320,6 +320,13 @@
       "coverage": ["playSound", "playRecord", "stop-record-by-position", "stopAllSounds", "legacy-record-name"],
       "status": "verified",
       "test": "LegacyApiAliasesTest and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
+    },
+    {
+      "id": "legacy-gui-utilities",
+      "source": "ChatTriggers 2.2.0 Gui API",
+      "coverage": ["close", "modifier-keys", "getButton", "drawString", "creative-tooltip", "hovering-text"],
+      "status": "verified",
+      "test": "LegacyApiAliasesTest and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
     }
   ]
 }
