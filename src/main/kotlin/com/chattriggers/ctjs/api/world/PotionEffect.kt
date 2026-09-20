@@ -34,7 +34,12 @@ class PotionEffect(val effect: MobEffectInstance) {
 
     val ambient get() = effect.isAmbient
 
+    fun isAmbient() = ambient
+
     val isInfinite get() = effect.isInfiniteDuration
+
+    @Deprecated("Modern effects use an infinite-duration flag", ReplaceWith("isInfinite"))
+    fun isDurationMax() = isInfinite
 
     val showsParticles get() = effect.isVisible
 
