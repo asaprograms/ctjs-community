@@ -401,7 +401,7 @@
     {
       "id": "legacy-player-render-and-tab-name",
       "source": "ChatTriggers 1.3.2 Player and PlayerMP APIs",
-      "coverage": ["Player-positional-draw", "PlayerMP-positional-draw", "legacy-rotate-defaults", "tab-display-name-mutation"],
+      "coverage": ["Player-positional-draw", "PlayerMP-positional-draw", "legacy-rotate-defaults", "tab-display-name-mutation", "Player-asEntity"],
       "status": "verified",
       "test": "PlayerMPCompatibilityTest, LegacyApiAliasesTest, mixin application, and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
     }

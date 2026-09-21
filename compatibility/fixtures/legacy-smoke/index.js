@@ -8,6 +8,9 @@ if (typeof packedColor !== "number" || packedColor !== Renderer.getColor(12, 34,
 if (typeof Client.getChatGUI !== "function") {
     throw new Error("Client.getChatGUI legacy alias is not exported");
 }
+if (typeof Player.asEntity !== "function" || Player.asEntity() !== null) {
+    throw new Error("Legacy Player.asEntity unloaded-player contract failed");
+}
 for (const method of ["playSound", "playRecord", "stopAllSounds"]) {
     if (typeof World[method] !== "function") {
         throw new Error(`Legacy World.${method} is not exported`);
