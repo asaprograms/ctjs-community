@@ -817,6 +817,7 @@ object Renderer {
         }
     }
 
+
     enum class DrawMode(private val ucValue: UGraphics.DrawMode) {
         LINES(UGraphics.DrawMode.LINES),
         LINE_STRIP(UGraphics.DrawMode.LINE_STRIP),
