@@ -7,6 +7,7 @@ import com.chattriggers.ctjs.api.client.KeyBind
 import com.chattriggers.ctjs.api.entity.LivingEntity
 import com.chattriggers.ctjs.api.entity.Entity
 import com.chattriggers.ctjs.api.entity.Particle
+import com.chattriggers.ctjs.api.entity.PlayerMP
 import com.chattriggers.ctjs.api.inventory.Inventory
 import com.chattriggers.ctjs.api.inventory.Item
 import com.chattriggers.ctjs.api.inventory.nbt.NBTTagCompound
@@ -70,6 +71,20 @@ class LegacyApiAliasesTest {
         assertStaticMethod(com.chattriggers.ctjs.api.client.Player::class.java, "getRawYaw")
         assertStaticMethod(com.chattriggers.ctjs.api.client.Player::class.java, "getUUIDObj")
         assertStaticMethod(com.chattriggers.ctjs.api.client.Player::class.java, "getOpenedInventory")
+        assertTrue(
+            com.chattriggers.ctjs.api.client.Player::class.java.methods.any {
+                it.name == "draw" && Modifier.isStatic(it.modifiers) &&
+                    it.parameterTypes.contentEquals(arrayOf(Int::class.javaPrimitiveType!!, Int::class.javaPrimitiveType!!, Boolean::class.javaPrimitiveType!!))
+            },
+            "Expected Player.draw(Int, Int, Boolean) to be exported",
+        )
+        assertTrue(
+            PlayerMP::class.java.methods.any {
+                it.name == "draw" &&
+                    it.parameterTypes.contentEquals(arrayOf(Int::class.javaPrimitiveType!!, Int::class.javaPrimitiveType!!, Boolean::class.javaPrimitiveType!!))
+            },
+            "Expected PlayerMP.draw(Int, Int, Boolean) to be exported",
+        )
         assertMethod(Entity::class.java, "getRider")
         for (name in listOf(
             "setAir", "setPosition", "setAngles", "setOnFire", "extinguish", "move", "setIsSilent",
