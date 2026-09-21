@@ -35,6 +35,9 @@ class LegacyApiAliasesTest {
     @Test
     fun `common 1_8_9 method names remain exported`() {
         assertStaticMethod(Client::class.java, "getChatGUI")
+        for (name in listOf("cancel", "getMessage", "getType")) {
+            assertStaticMethod(EventLib::class.java, name)
+        }
         assertStaticMethod(ChatLib::class.java, "isPlayer")
         assertStaticMethod(ChatLib::class.java, "getChatMessage")
         assertStaticMethod(ChatLib::class.java, "test")

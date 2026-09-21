@@ -17,6 +17,11 @@ Tessellator.disableAlpha().enableAlpha().enableTexture2D().disableTexture2D();
 if (typeof Client.getChatGUI !== "function") {
     throw new Error("Client.getChatGUI legacy alias is not exported");
 }
+for (const method of ["cancel", "getMessage", "getType"]) {
+    if (typeof EventLib[method] !== "function") {
+        throw new Error(`Legacy EventLib.${method} is not exported`);
+    }
+}
 if (typeof ChatLib.test !== "function" || typeof ChatLib.clearChat !== "function") {
     throw new Error("Legacy ChatLib diagnostic or targeted clear API is not exported");
 }

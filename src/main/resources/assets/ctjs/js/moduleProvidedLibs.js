@@ -40,6 +40,7 @@
 //    loadClass("net.minecraft.util.Hand");
 
     loadClass("com.chattriggers.ctjs.api.client.Client");
+    loadClass("com.chattriggers.ctjs.api.EventLib");
     loadClass("com.chattriggers.ctjs.api.client.CPS");
     loadClass("com.chattriggers.ctjs.api.client.FileLib");
     loadClass("com.chattriggers.ctjs.api.client.KeyBind");
