@@ -52,6 +52,12 @@ object ChatLib {
         }.chat()
     }
 
+    /** Legacy console diagnostic helper. */
+    @JvmStatic
+    fun test(value: Any?) {
+        println(value)
+    }
+
     /**
      * Shows text in the action bar.
      * The text can be a String or a [TextComponent]
@@ -134,6 +140,12 @@ object ChatLib {
     fun clearChat() {
         Client.getChatGui()?.clearMessages(false)
         chatLineIds.clear()
+    }
+
+    /** Clears the chat lines associated with the supplied legacy IDs. */
+    @JvmStatic
+    fun clearChat(vararg chatLineIds: Int) {
+        chatLineIds.forEach(::deleteChat)
     }
 
     /**
