@@ -74,6 +74,7 @@
 
     loadClass("com.chattriggers.ctjs.api.message.ChatLib");
     loadClass("com.chattriggers.ctjs.api.message.TextComponent");
+    loadClass("com.chattriggers.ctjs.api.message.Message");
 
     loadClass("com.chattriggers.ctjs.api.render.Book");
     loadClass("com.chattriggers.ctjs.api.render.Display");

@@ -385,6 +385,13 @@
       "test": "LegacyApiAliasesTest and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
     },
     {
+      "id": "legacy-message-global",
+      "source": "ChatTriggers 1.3.2 Message API",
+      "coverage": ["historical-global-name", "mutable-parts", "chat-line-id", "recursive-state", "copying"],
+      "status": "verified",
+      "test": "LegacyApiAliasesTest and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
+    },
+    {
       "id": "legacy-inventory-action-surface",
       "source": "ChatTriggers 2.2.0 Inventory API",
       "coverage": ["isContainer", "doAction", "getSize-property-bridge"],

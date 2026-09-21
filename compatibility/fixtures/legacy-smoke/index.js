@@ -227,6 +227,14 @@ if (legacyText.getText() !== "&aFirst" || legacyText.getUnformattedText() !== "F
 if (legacyText.setText("&bSecond") !== legacyText || legacyText.getUnformattedText() !== "Second") {
     throw new Error("Legacy TextComponent.setText did not mutate and return the component");
 }
+const legacyMessage = new Message("first");
+const legacyMessageResult = legacyMessage.addTextComponent(" second").setChatLineId(42).setRecursive(true);
+const legacyMessageParts = legacyMessage.getMessageParts();
+const legacyMessageClone = legacyMessage.clone();
+if (legacyMessageResult !== legacyMessage || legacyMessageParts.length !== 2 || legacyMessage.getChatLineId() !== 42 ||
+    !legacyMessage.isRecursive() || legacyMessageClone.getFormattedText() !== "first second") {
+    throw new Error("Legacy Message compatibility contract failed");
+}
 
 legacyText.setFormatted(false);
 if (legacyText.isFormatted() !== false || legacyText.getUnformattedText() !== "&bSecond") {

@@ -13,6 +13,7 @@ import com.chattriggers.ctjs.api.inventory.Item
 import com.chattriggers.ctjs.api.inventory.nbt.NBTTagCompound
 import com.chattriggers.ctjs.api.inventory.nbt.NBTTagList
 import com.chattriggers.ctjs.api.message.ChatLib
+import com.chattriggers.ctjs.api.message.Message
 import com.chattriggers.ctjs.api.message.TextComponent
 import com.chattriggers.ctjs.api.render.Gui
 import com.chattriggers.ctjs.api.render.Renderer
@@ -96,6 +97,13 @@ class LegacyApiAliasesTest {
             "setHover", "getHoverAction", "setHoverAction", "getHoverValue", "setHoverValue",
         )) {
             assertMethod(TextComponent::class.java, name)
+        }
+        for (name in listOf(
+            "getChatMessage", "getFormattedText", "getUnformattedText", "getMessageParts", "getChatLineId", "setChatLineId",
+            "isRecursive", "setRecursive", "isFormatted", "setFormatted", "setTextComponent", "addTextComponent", "clone", "copy",
+            "edit", "chat", "actionBar",
+        )) {
+            assertMethod(Message::class.java, name)
         }
         for (part in listOf("Cape", "Jacket", "LeftSleeve", "RightSleeve", "LeftPantsLeg", "RightPantsLeg", "Hat")) {
             assertMethod(Settings.SkinWrapper::class.java, "get$part")
