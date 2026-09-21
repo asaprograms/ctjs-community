@@ -775,6 +775,24 @@ object Renderer {
         matrixStack.pop()
     }
 
+    /**
+     * Legacy positional overload for rendering a player model.
+     *
+     * The 1.8.9 API only used a supplied player when it was a [PlayerMP]; other
+     * values used the local client player. The options overload preserves that
+     * behavior, so this bridge intentionally delegates to it.
+     */
+    @JvmStatic
+    @JvmOverloads
+    fun drawPlayer(player: Any?, x: Int, y: Int, rotate: Boolean = false) {
+        val options = NativeObject()
+        options.put("player", options, player)
+        options.put("x", options, x)
+        options.put("y", options, y)
+        options.put("rotate", options, rotate)
+        drawPlayer(options)
+    }
+
     internal fun withMatrix(stack: PoseStack?, partialTicks: Float = Renderer.partialTicks, block: () -> Unit) {
         Renderer.partialTicks = partialTicks
         matrixPushCounter = 0
