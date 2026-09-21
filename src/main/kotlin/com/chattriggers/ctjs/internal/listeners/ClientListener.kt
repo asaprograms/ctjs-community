@@ -106,15 +106,19 @@ object ClientListener : Initializer {
             // TODO: Why does Renderer.drawString not work in here?
             ScreenEvents.beforeExtract(screen).register { _, ctx, mouseX, mouseY, partialTicks ->
                 Renderer.withMatrix(UMatrixStack(ctx.pose()).toMC(), partialTicks) {
-                    TriggerType.GUI_RENDER.triggerAll(ctx, mouseX, mouseY, screen)
+                    Renderer.withGuiContext(ctx) {
+                        TriggerType.GUI_RENDER.triggerAll(ctx, mouseX, mouseY, screen)
+                    }
                 }
             }
 
             // TODO: Why does Renderer.drawString not work in here?
             ScreenEvents.afterExtract(screen).register { _, ctx, mouseX, mouseY, partialTicks ->
                 Renderer.withMatrix(UMatrixStack(ctx.pose()).toMC(), partialTicks) {
-                    TriggerType.POST_GUI_RENDER.triggerAll(ctx, mouseX, mouseY, screen, partialTicks)
-                    DisplayHandler.renderGui(ctx)
+                    Renderer.withGuiContext(ctx) {
+                        TriggerType.POST_GUI_RENDER.triggerAll(ctx, mouseX, mouseY, screen, partialTicks)
+                        DisplayHandler.renderGui(ctx)
+                    }
                 }
             }
 
@@ -143,8 +147,10 @@ object ClientListener : Initializer {
 
         CTEvents.RENDER_OVERLAY.register { ctx, stack, partialTicks ->
             Renderer.withMatrix(stack, partialTicks) {
-                TriggerType.RENDER_OVERLAY.triggerAll(ctx)
-                DisplayHandler.renderOverlay(ctx)
+                Renderer.withGuiContext(ctx) {
+                    TriggerType.RENDER_OVERLAY.triggerAll(ctx)
+                    DisplayHandler.renderOverlay(ctx)
+                }
             }
         }
 

@@ -35,6 +35,7 @@ import kotlin.math.*
 
 object Renderer {
     private val NEWLINE_REGEX = """\n|\r\n?""".toRegex()
+    private val guiContext = ThreadLocal<GuiGraphicsExtractor?>()
 
     @JvmField
     var colorized: Long? = null
@@ -595,6 +596,22 @@ object Renderer {
     fun drawStringWithShadow(ctx: GuiGraphicsExtractor, text: String, x: Float, y: Float, color: Long = colorized ?: WHITE) =
         drawString(ctx, text, x, y, color, shadow = true)
 
+    /**
+     * Draws text from the legacy renderer API during a GUI or HUD render callback.
+     */
+    @JvmStatic
+    @JvmOverloads
+    fun drawString(text: String, x: Float, y: Float, color: Long = colorized ?: WHITE) =
+        drawString(requireGuiContext(), text, x, y, color)
+
+    /**
+     * Draws shadowed text from the legacy renderer API during a GUI or HUD render callback.
+     */
+    @JvmStatic
+    @JvmOverloads
+    fun drawStringWithShadow(text: String, x: Float, y: Float, color: Long = colorized ?: WHITE) =
+        drawStringWithShadow(requireGuiContext(), text, x, y, color)
+
     internal data class TextLines(val lines: List<String>, val width: Float, val height: Float)
 
     internal fun splitText(text: String): TextLines {
@@ -817,6 +834,18 @@ object Renderer {
             "Warning: Render function has too many calls to Renderer.popMatrix()".printToConsole(LogType.WARN)
         }
     }
+
+    internal fun <T> withGuiContext(context: GuiGraphicsExtractor, block: () -> T): T {
+        guiContext.set(context)
+        return try {
+            block()
+        } finally {
+            guiContext.remove()
+        }
+    }
+
+    private fun requireGuiContext(): GuiGraphicsExtractor =
+        guiContext.get() ?: error("Renderer text drawing is only available during a GUI or renderOverlay callback")
 
     enum class DrawMode(private val ucValue: UGraphics.DrawMode) {
         LINES(UGraphics.DrawMode.LINES),

@@ -287,6 +287,8 @@ register("guiRender", () => {
     if (displayFrameCount === 1) {
         Player.draw(0, 0, false);
         Renderer.drawPlayer(null, 0, 0, false);
+        Renderer.drawString("legacy renderer text", 0, 0);
+        Renderer.drawStringWithShadow("legacy renderer shadow text", 0, 10);
     }
     if (displayFrameCount === 2) {
         console.log("CTJS_DISPLAY_SMOKE_RENDERED");

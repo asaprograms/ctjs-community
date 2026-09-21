@@ -56,6 +56,20 @@ class LegacyApiAliasesTest {
         assertStaticMethod(Renderer::class.java, "getColor")
         assertTrue(
             Renderer::class.java.methods.any {
+                it.name == "drawString" && Modifier.isStatic(it.modifiers) &&
+                    it.parameterTypes.contentEquals(arrayOf(String::class.java, Float::class.javaPrimitiveType!!, Float::class.javaPrimitiveType!!))
+            },
+            "Expected legacy Renderer.drawString(String, Float, Float) to be exported",
+        )
+        assertTrue(
+            Renderer::class.java.methods.any {
+                it.name == "drawStringWithShadow" && Modifier.isStatic(it.modifiers) &&
+                    it.parameterTypes.contentEquals(arrayOf(String::class.java, Float::class.javaPrimitiveType!!, Float::class.javaPrimitiveType!!))
+            },
+            "Expected legacy Renderer.drawStringWithShadow(String, Float, Float) to be exported",
+        )
+        assertTrue(
+            Renderer::class.java.methods.any {
                 it.name == "drawPlayer" && Modifier.isStatic(it.modifiers) &&
                     it.parameterTypes.contentEquals(arrayOf(Any::class.java, Int::class.javaPrimitiveType!!, Int::class.javaPrimitiveType!!, Boolean::class.javaPrimitiveType!!))
             },
