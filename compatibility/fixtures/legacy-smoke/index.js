@@ -90,6 +90,12 @@ if (typeof legacyBlockType.getDefaultMetadata !== "function" ||
     throw new Error("Legacy BlockType state API failed");
 }
 const legacyBlock = legacyBlockType.withBlockPos(new BlockPos(0, 0, 0));
+const legacySign = new Sign(legacyBlock);
+for (const method of ["getLines", "getFormattedLines", "getUnformattedLines"]) {
+    if (typeof legacySign[method] !== "function") {
+        throw new Error(`Legacy Sign.${method} is not exported`);
+    }
+}
 for (const method of ["getMetadata", "isPowered", "getRedstoneStrength"]) {
     if (typeof legacyBlock[method] !== "function") {
         throw new Error(`Legacy Block.${method} is not exported`);

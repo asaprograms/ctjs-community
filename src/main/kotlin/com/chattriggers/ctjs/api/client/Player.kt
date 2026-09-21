@@ -12,6 +12,7 @@ import com.chattriggers.ctjs.api.world.Scoreboard
 import com.chattriggers.ctjs.api.world.World
 import com.chattriggers.ctjs.api.world.block.BlockFace
 import com.chattriggers.ctjs.api.world.block.BlockPos
+import com.chattriggers.ctjs.api.world.block.Sign
 import gg.essential.universal.UMath
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
 import net.minecraft.world.InteractionHand
@@ -265,7 +266,8 @@ object Player {
             HitResult.Type.MISS -> null
             HitResult.Type.BLOCK -> {
                 val block = target as BlockHitResult
-                World.getBlockAt(BlockPos(block.blockPos)).withFace(BlockFace.fromMC(block.direction))
+                val wrapped = World.getBlockAt(BlockPos(block.blockPos)).withFace(BlockFace.fromMC(block.direction))
+                if (World.toMC()?.getBlockEntity(block.blockPos) is net.minecraft.world.level.block.entity.SignBlockEntity) Sign(wrapped) else wrapped
             }
             HitResult.Type.ENTITY -> {
                 Entity.fromMC((target as EntityHitResult).entity)
