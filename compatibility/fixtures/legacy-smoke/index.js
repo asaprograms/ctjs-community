@@ -274,6 +274,9 @@ legacyDisplayLine.unregisterDragged();
 legacyDisplay.addLine(0, legacyDisplayLine);
 register("guiRender", () => {
     displayFrameCount++;
+    if (displayFrameCount === 1) {
+        Player.draw(0, 0, false);
+    }
     if (displayFrameCount === 2) {
         console.log("CTJS_DISPLAY_SMOKE_RENDERED");
     }

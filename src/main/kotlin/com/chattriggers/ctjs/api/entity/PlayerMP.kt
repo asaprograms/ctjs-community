@@ -4,6 +4,7 @@ import com.chattriggers.ctjs.api.client.Client
 import com.chattriggers.ctjs.api.message.TextComponent
 import com.chattriggers.ctjs.api.render.Renderer
 import com.chattriggers.ctjs.internal.NameTagOverridable
+import com.chattriggers.ctjs.internal.mixins.PlayerInfoAccessor
 import com.chattriggers.ctjs.MCTeam
 import com.chattriggers.ctjs.internal.utils.asMixin
 import net.minecraft.client.multiplayer.PlayerInfo
@@ -30,7 +31,7 @@ class PlayerMP(override val mcValue: Player) : LivingEntity(mcValue) {
     fun getDisplayName() = getPlayerName(getPlayerInfo())
 
     fun setTabDisplayName(textComponent: TextComponent) {
-        setTabDisplayName(textComponent)
+        getPlayerInfo()?.asMixin<PlayerInfoAccessor>()?.ctjs_setTabListDisplayName(textComponent)
     }
 
     /**
@@ -50,9 +51,17 @@ class PlayerMP(override val mcValue: Player) : LivingEntity(mcValue) {
      * @see Renderer.drawPlayer
      */
     fun draw(obj: NativeObject) = apply {
-        obj["player"] = this
+        obj.put("player", obj, this)
         Renderer.drawPlayer(obj)
     }
+
+    /** Legacy positional player renderer. */
+    @JvmOverloads
+    fun draw(x: Int, y: Int, rotate: Boolean = false) = draw(NativeObject().also {
+        it.put("x", it, x)
+        it.put("y", it, y)
+        it.put("rotate", it, rotate)
+    })
 
     private fun getPlayerName(playerListEntry: PlayerInfo?): TextComponent {
         return playerListEntry?.tabListDisplayName?.let { TextComponent(it) }

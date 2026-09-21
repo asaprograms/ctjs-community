@@ -397,6 +397,13 @@
       "coverage": ["legacy-constructors", "block-property", "blockPos-property", "mutating-position", "mutating-face", "type-method-delegation"],
       "status": "verified",
       "test": "BlockCompatibilityTest, LegacyApiAliasesTest, and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
+    },
+    {
+      "id": "legacy-player-render-and-tab-name",
+      "source": "ChatTriggers 1.3.2 Player and PlayerMP APIs",
+      "coverage": ["Player-positional-draw", "PlayerMP-positional-draw", "legacy-rotate-defaults", "tab-display-name-mutation"],
+      "status": "verified",
+      "test": "PlayerMPCompatibilityTest, LegacyApiAliasesTest, mixin application, and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
     }
   ]
 }

@@ -357,9 +357,18 @@ object Player {
      */
     @JvmStatic
     fun draw(obj: NativeObject) = apply {
-        obj["player"] = this
+        obj.put("player", obj, this)
         Renderer.drawPlayer(obj)
     }
+
+    /** Legacy positional player renderer. */
+    @JvmStatic
+    @JvmOverloads
+    fun draw(x: Int, y: Int, rotate: Boolean = true) = draw(NativeObject().also {
+        it.put("x", it, x)
+        it.put("y", it, y)
+        it.put("rotate", it, rotate)
+    })
 
     class ArmorWrapper {
         /**
