@@ -16,6 +16,7 @@ import com.chattriggers.ctjs.api.message.ChatLib
 import com.chattriggers.ctjs.api.message.TextComponent
 import com.chattriggers.ctjs.api.render.Gui
 import com.chattriggers.ctjs.api.render.Renderer
+import com.chattriggers.ctjs.api.render.Tessellator
 import com.chattriggers.ctjs.api.world.Chunk
 import com.chattriggers.ctjs.api.world.Scoreboard
 import com.chattriggers.ctjs.api.world.PotionEffect
@@ -54,6 +55,14 @@ class LegacyApiAliasesTest {
             assertStaticMethod(Renderer::class.java, name)
         }
         assertStaticMethod(Renderer::class.java, "getColor")
+        for (name in listOf(
+            "disableAlpha", "enableAlpha", "alphaFunc", "enableLighting", "disableLighting", "disableDepth", "enableDepth",
+            "depthFunc", "depthMask", "disableBlend", "enableBlend", "blendFunc", "tryBlendFuncSeparate",
+            "enableTexture2D", "disableTexture2D", "bindTexture", "deleteTexture", "pushMatrix", "popMatrix",
+            "begin", "colorize", "rotate", "translate", "scale", "pos", "tex", "draw", "getRenderPos", "drawString",
+        )) {
+            assertStaticMethod(Tessellator::class.java, name)
+        }
         assertTrue(
             Renderer::class.java.methods.any {
                 it.name == "drawString" && Modifier.isStatic(it.modifiers) &&
