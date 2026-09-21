@@ -35,6 +35,13 @@ class LegacyApiAliasesTest {
         assertStaticMethod(Client::class.java, "getChatGUI")
         assertStaticMethod(ChatLib::class.java, "isPlayer")
         assertStaticMethod(ChatLib::class.java, "getChatMessage")
+        assertStaticMethod(ChatLib::class.java, "test")
+        assertTrue(
+            ChatLib::class.java.methods.any {
+                it.name == "clearChat" && it.parameterTypes.contentEquals(arrayOf(IntArray::class.java))
+            },
+            "Expected ChatLib.clearChat(IntArray) to be exported",
+        )
         assertStaticMethod(KeyBind::class.java, "removeKeyBind")
         assertStaticMethod(KeyBind::class.java, "clearKeyBinds")
         for (name in listOf(

@@ -310,7 +310,7 @@
     {
       "id": "legacy-chat-message-extraction",
       "source": "ChatTriggers 2.2.0 ChatLib API",
-      "coverage": ["getChatMessage", "unformatted-text", "ampersand-formatted-text"],
+      "coverage": ["getChatMessage", "unformatted-text", "ampersand-formatted-text", "targeted-clearChat", "test-diagnostic"],
       "status": "verified",
       "test": "LegacyApiAliasesTest and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
     },
