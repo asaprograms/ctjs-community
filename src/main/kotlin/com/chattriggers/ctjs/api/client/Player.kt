@@ -38,6 +38,10 @@ object Player {
     @JvmStatic
     fun getPlayer() = toMC()
 
+    /** Legacy bridge to the generic entity wrapper. */
+    @JvmStatic
+    fun asEntity(): Entity? = toMC()?.let(Entity::fromMC)
+
     @JvmStatic
     fun getTeam(): Team? = Scoreboard.toMC()?.getPlayerTeam(getName())?.let(::Team)
 

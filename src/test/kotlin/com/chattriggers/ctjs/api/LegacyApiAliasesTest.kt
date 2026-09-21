@@ -71,6 +71,7 @@ class LegacyApiAliasesTest {
         assertStaticMethod(com.chattriggers.ctjs.api.client.Player::class.java, "getRawYaw")
         assertStaticMethod(com.chattriggers.ctjs.api.client.Player::class.java, "getUUIDObj")
         assertStaticMethod(com.chattriggers.ctjs.api.client.Player::class.java, "getOpenedInventory")
+        assertStaticMethod(com.chattriggers.ctjs.api.client.Player::class.java, "asEntity")
         assertTrue(
             com.chattriggers.ctjs.api.client.Player::class.java.methods.any {
                 it.name == "draw" && Modifier.isStatic(it.modifiers) &&
