@@ -53,6 +53,7 @@ class LegacyApiAliasesTest {
         for (name in listOf("drawShape", "finishDraw", "getDrawMode", "setDrawMode", "retainTransforms")) {
             assertStaticMethod(Renderer::class.java, name)
         }
+        assertStaticMethod(Renderer::class.java, "getColor")
         assertTrue(
             Renderer::class.java.methods.any {
                 it.name == "drawPlayer" && Modifier.isStatic(it.modifiers) &&

@@ -128,6 +128,10 @@ object Renderer {
         }
     }
 
+    /** Legacy name for the named-color lookup used by 1.8.9 modules. */
+    @JvmStatic
+    fun getColor(color: Int): Long = color(color)
+
     @JvmStatic
     internal fun initializePlayerRenderers(context: EntityRendererProvider.Context) {
         normalCTRenderPlayer = CTPlayerRenderer(context, slim = false)
