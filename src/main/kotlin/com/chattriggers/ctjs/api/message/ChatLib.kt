@@ -273,6 +273,10 @@ object ChatLib {
         }
     }
 
+    @JvmStatic
+    fun editChat(toReplace: Message, vararg replacements: Message) =
+        editChat(toReplace.toTextComponent(), *replacements.map(Message::toTextComponent).toTypedArray())
+
     /**
      * Edits an already sent chat message by its chat line id
      *
@@ -311,7 +315,11 @@ object ChatLib {
                 it.remove()
                 chatLineIds.remove(next)
                 for (replacement in replacements) {
-                    val message = replacement as? TextComponent ?: TextComponent(replacement)
+                    val message = when (replacement) {
+                        is TextComponent -> replacement
+                        is Message -> replacement.toTextComponent()
+                        else -> TextComponent(replacement)
+                    }
                     val line = GuiMessage(next.addedTime, message, null, GuiMessageSource.SYSTEM_CLIENT, indicator)
                     if (message.getChatLineId() != -1)
                         chatLineIds[line] = message.getChatLineId()

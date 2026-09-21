@@ -52,8 +52,8 @@ import kotlin.streams.toList
 //       a container of individual parts
 class TextComponent private constructor(
     private val parts: MutableList<Part>,
-    private val chatLineId: Int = -1,
-    private val isRecursive: Boolean = false,
+    private var chatLineId: Int = -1,
+    private var isRecursive: Boolean = false,
     private var legacyText: String? = null,
     private var legacyFormatted: Boolean = true,
     private var legacyClickAction: String? = parts.firstOrNull()?.style_?.clickEvent?.action()?.serializedName,
@@ -179,11 +179,13 @@ class TextComponent private constructor(
      */
     fun getChatLineId() = chatLineId
 
+    fun setChatLineId(id: Int) = apply { chatLineId = id }
+
     /**
      * @return a new [TextComponent] with the given chat line id
      */
     @JvmOverloads
-    fun withChatLineId(id: Int = ThreadLocalRandom.current().nextInt()) = copy(chatLineId = id)
+    fun withChatLineId(id: Int = ThreadLocalRandom.current().nextInt()) = duplicate(chatLineId = id)
 
     /**
      * If this [TextComponent] is recursive, sending this instance (via [chat] or
@@ -194,32 +196,54 @@ class TextComponent private constructor(
      */
     fun isRecursive(): Boolean = isRecursive
 
+    fun setRecursive(recursive: Boolean) = apply { isRecursive = recursive }
+
+    fun getMessageParts(): List<TextComponent> = parts.map { part -> TextComponent(mutableListOf(part)) }
+
+    fun setTextComponent(index: Int, component: Any) = apply {
+        val replacement = Part.of(component)
+        require(replacement.isNotEmpty()) { "Text component cannot be empty" }
+        parts.removeAt(index)
+        parts.addAll(index, replacement)
+        legacyText = null
+    }
+
+    fun addTextComponent(component: Any) = apply {
+        parts.addAll(Part.of(component))
+        legacyText = null
+    }
+
+    fun addTextComponent(index: Int, component: Any) = apply {
+        parts.addAll(index, Part.of(component))
+        legacyText = null
+    }
+
     /**
      * Sets whether the message can trigger other triggers.
      *
      * @param recursive true if message can trigger other triggers.
      */
     @JvmOverloads
-    fun withRecursive(recursive: Boolean = true) = copy(isRecursive = recursive)
+    fun withRecursive(recursive: Boolean = true) = duplicate(isRecursive = recursive)
 
     /**
      * @return a new [TextComponent] with the specified [value] appended to the end.
      *         This accepts all types of objects that the vararg constructor does.
      */
-    fun withText(value: Any) = copy(parts = (parts + Part.of(value)).toMutableList(), legacyText = null)
+    fun withText(value: Any) = duplicate(parts = (parts + Part.of(value)).toMutableList(), legacyText = null)
 
     /**
      * @return a new [TextComponent] with the specified [value] inserted at [index].
      *         This accepts all types of objects that the vararg constructor does.
      */
     fun withTextAt(index: Int, value: Any) =
-        copy(parts = (parts.take(index) + Part.of(value) + parts.drop(index)).toMutableList(), legacyText = null)
+        duplicate(parts = (parts.take(index) + Part.of(value) + parts.drop(index)).toMutableList(), legacyText = null)
 
     /**
      * @return a new [TextComponent] without the part at [index]
      */
     fun withoutTextAt(index: Int) =
-        copy(parts = (parts.take(index) + parts.drop(index + 1)).toMutableList(), legacyText = null)
+        duplicate(parts = (parts.take(index) + parts.drop(index + 1)).toMutableList(), legacyText = null)
 
     /**
      * Edits this text component, replacing it with the given [newText]. Note that
@@ -333,7 +357,7 @@ class TextComponent private constructor(
     }
 
     // Make this method manually to avoid exposing it as a public API
-    private fun copy(
+    private fun duplicate(
         parts: MutableList<Part> = this.parts,
         chatLineId: Int = this.chatLineId,
         isRecursive: Boolean = this.isRecursive,
