@@ -54,6 +54,13 @@ class LegacyApiAliasesTest {
             assertStaticMethod(Renderer::class.java, name)
         }
         assertTrue(
+            Renderer::class.java.methods.any {
+                it.name == "drawPlayer" && Modifier.isStatic(it.modifiers) &&
+                    it.parameterTypes.contentEquals(arrayOf(Any::class.java, Int::class.javaPrimitiveType!!, Int::class.javaPrimitiveType!!, Boolean::class.javaPrimitiveType!!))
+            },
+            "Expected Renderer.drawPlayer(Object, Int, Int, Boolean) to be exported",
+        )
+        assertTrue(
             Sound::class.java.methods.any {
                 it.name == "setCategory" && it.parameterTypes.contentEquals(arrayOf(String::class.java))
             },
