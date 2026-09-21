@@ -7,6 +7,12 @@ if (typeof packedColor !== "number" || packedColor !== Renderer.getColor(12, 34,
 if (Renderer.getColor(12) !== Renderer.RED) {
     throw new Error("Legacy Renderer.getColor named-color lookup failed");
 }
+for (const method of ["begin", "colorize", "pos", "tex", "draw", "drawString", "disableAlpha", "enableAlpha"]) {
+    if (typeof Tessellator[method] !== "function") {
+        throw new Error(`Legacy Tessellator.${method} is not exported`);
+    }
+}
+Tessellator.disableAlpha().enableAlpha().enableTexture2D().disableTexture2D();
 
 if (typeof Client.getChatGUI !== "function") {
     throw new Error("Client.getChatGUI legacy alias is not exported");

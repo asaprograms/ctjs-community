@@ -83,6 +83,7 @@
     loadClass("com.chattriggers.ctjs.api.render.Rectangle");
     loadClass("com.chattriggers.ctjs.api.render.Renderer");
     loadClass("com.chattriggers.ctjs.api.render.Renderer3d");
+    loadClass("com.chattriggers.ctjs.api.render.Tessellator");
     loadClass("com.chattriggers.ctjs.api.render.Shape");
     loadClass("com.chattriggers.ctjs.api.render.Text");
     loadClass("com.chattriggers.ctjs.api.render.Text", "DisplayLine");
