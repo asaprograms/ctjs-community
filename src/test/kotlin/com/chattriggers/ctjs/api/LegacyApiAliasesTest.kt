@@ -26,6 +26,7 @@ import com.chattriggers.ctjs.api.world.World
 import com.chattriggers.ctjs.api.world.block.BlockFace
 import com.chattriggers.ctjs.api.world.block.Block
 import com.chattriggers.ctjs.api.world.block.BlockType
+import com.chattriggers.ctjs.api.world.block.Sign
 import com.chattriggers.ctjs.engine.Register
 import kotlin.test.Test
 import kotlin.test.assertTrue
@@ -199,6 +200,9 @@ class LegacyApiAliasesTest {
             )
         }
         assertMethod(BlockType::class.java, "getDefaultMetadata")
+        for (name in listOf("getLines", "getFormattedLines", "getUnformattedLines")) {
+            assertMethod(Sign::class.java, name)
+        }
         assertMethod(BlockType::class.java, "getUnlocalizedName")
         assertStaticMethod(Scoreboard::class.java, "getScoreboardTitle")
         assertStaticMethod(TabList::class.java, "getFooterMessage")

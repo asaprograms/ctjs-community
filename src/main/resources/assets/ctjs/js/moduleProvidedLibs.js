@@ -99,6 +99,7 @@
     loadClass("com.chattriggers.ctjs.api.vec.Vec3i");
 
     loadClass("com.chattriggers.ctjs.api.world.block.Block");
+    loadClass("com.chattriggers.ctjs.api.world.block.Sign");
     loadClass("com.chattriggers.ctjs.api.world.block.BlockFace");
     loadClass("com.chattriggers.ctjs.api.world.block.BlockPos");
     loadClass("com.chattriggers.ctjs.api.world.block.BlockType");
