@@ -7,6 +7,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
 import kotlin.test.assertSame
+import kotlin.test.assertTrue
 
 class RendererCompatibilityTest {
     @Test
@@ -16,6 +17,14 @@ class RendererCompatibilityTest {
         assertSame(rectangle, rectangle.setShadowOffsetY(9f))
         assertEquals(3f, rectangle.getShadowOffsetX())
         assertEquals(9f, rectangle.getShadowOffsetY())
+    }
+
+    @Test
+    fun `legacy drawShape default retains quad mode`() {
+        assertTrue(
+            Renderer::class.java.methods.any { it.name == "drawShape" && it.parameterCount == 2 },
+            "Expected a legacy drawShape overload without an explicit draw mode",
+        )
     }
 
     @Test
