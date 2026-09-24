@@ -108,6 +108,9 @@ if (typeof legacyBlockType.getDefaultMetadata !== "function" ||
     throw new Error("Legacy BlockType state API failed");
 }
 const legacyBlock = legacyBlockType.withBlockPos(new BlockPos(0, 0, 0));
+if (BlockFace.WEST.getXOffset() !== -1 || BlockFace.UP.getYOffset() !== 1 || BlockFace.SOUTH.getZOffset() !== 1) {
+    throw new Error("Legacy BlockFace offset aliases failed");
+}
 const legacySign = new Sign(legacyBlock);
 for (const method of ["getLines", "getFormattedLines", "getUnformattedLines"]) {
     if (typeof legacySign[method] !== "function") {

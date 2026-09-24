@@ -35,4 +35,11 @@ class BlockCompatibilityTest {
         assertEquals("block.minecraft.stone", block.getUnlocalizedName())
         assertEquals(block.type.getDefaultMetadata(), block.getDefaultMetadata())
     }
+
+    @Test
+    fun `legacy block face offset names remain available`() {
+        assertEquals(-1, BlockFace.WEST.getXOffset())
+        assertEquals(1, BlockFace.UP.getYOffset())
+        assertEquals(1, BlockFace.SOUTH.getZOffset())
+    }
 }
