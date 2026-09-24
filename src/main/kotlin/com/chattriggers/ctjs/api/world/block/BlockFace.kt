@@ -28,6 +28,13 @@ enum class BlockFace(
 
     fun getOffsetZ() = directionVec.z
 
+    /** Historical 1.8.9 axis-offset names. */
+    fun getXOffset() = getOffsetX()
+
+    fun getYOffset() = getOffsetY()
+
+    fun getZOffset() = getOffsetZ()
+
     fun getName(): String = serializedName
 
     fun rotateAround(axis: Axis): BlockFace {
