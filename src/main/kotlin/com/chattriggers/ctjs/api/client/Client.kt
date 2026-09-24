@@ -167,10 +167,22 @@ object Client {
     fun getSystemTime(): Long = (System.nanoTime() - referenceSystemTime) / 1_000_000
 
     @JvmStatic
-    fun getMouseX() = getMinecraft().mouseHandler.xpos() * getMinecraft().window.guiScaledWidth / max(1, getMinecraft().window.guiScaledWidth)
+    fun getMouseX() = scaleMouseCoordinate(
+        getMinecraft().mouseHandler.xpos(),
+        getMinecraft().window.guiScaledWidth,
+        getMinecraft().window.screenWidth,
+    )
 
     @JvmStatic
-    fun getMouseY() = getMinecraft().mouseHandler.ypos() * getMinecraft().window.guiScaledHeight / max(1, getMinecraft().window.guiScaledHeight)
+    fun getMouseY() = scaleMouseCoordinate(
+        getMinecraft().mouseHandler.ypos(),
+        getMinecraft().window.guiScaledHeight,
+        getMinecraft().window.screenHeight,
+    )
+
+    /** Converts physical window coordinates to the current GUI coordinate space. */
+    internal fun scaleMouseCoordinate(rawCoordinate: Double, guiSize: Int, screenSize: Int): Double =
+        rawCoordinate * guiSize / max(1, screenSize)
 
     @JvmStatic
     fun isInGui(): Boolean = currentGui.get() != null
