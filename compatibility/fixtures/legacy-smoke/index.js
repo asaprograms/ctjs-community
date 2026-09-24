@@ -19,6 +19,16 @@ if (legacyShape.getDrawMode() !== 9 || legacyShape.setDrawMode(7) !== legacyShap
     throw new Error("Legacy Shape draw-mode integer contract failed");
 }
 
+const legacyThread = new Thread(function () {});
+for (const method of ["start", "run", "stop", "interrupt", "destroy", "isInterrupted", "isAlive", "suspend", "resume", "getId"]) {
+    if (typeof legacyThread[method] !== "function") {
+        throw new Error(`Legacy Thread.${method} is not exported`);
+    }
+}
+if (typeof Thread.sleep !== "function" || typeof Thread.currentThread !== "function") {
+    throw new Error("Legacy Thread static helpers are not exported");
+}
+
 if (typeof Client.getChatGUI !== "function") {
     throw new Error("Client.getChatGUI legacy alias is not exported");
 }

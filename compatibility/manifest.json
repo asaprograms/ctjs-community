@@ -54,6 +54,13 @@
       "test": "runClient on Minecraft 26.2 and 26.1.2"
     },
     {
+      "id": "legacy-thread-wrapper",
+      "source": "ChatTriggers 1.3.2 WrappedThread API",
+      "coverage": ["Thread-global", "constructor", "legacy-instance-methods", "sleep", "currentThread"],
+      "status": "verified",
+      "test": "WrappedThreadCompatibilityTest and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
+    },
+    {
       "id": "legacy-render-slot",
       "source": "ChatTriggers 2.2.0 renderSlot contract",
       "coverage": ["slot-wrapper", "container-screen", "render-cancellation"],
