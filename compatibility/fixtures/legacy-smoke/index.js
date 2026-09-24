@@ -259,6 +259,14 @@ if (legacyMessageResult !== legacyMessage || legacyMessageParts.length !== 2 || 
     !legacyMessage.isRecursive() || legacyMessageClone.getFormattedText() !== "first second") {
     throw new Error("Legacy Message compatibility contract failed");
 }
+const legacyBook = new Book();
+if (legacyBook.addPage(legacyMessage) !== legacyBook) {
+    throw new Error("Legacy Book.addPage(Message) did not return the book");
+}
+legacyBook.addPage("second page");
+if (legacyBook.setPage(0, new Message("replacement")) !== legacyBook) {
+    throw new Error("Legacy Book.setPage(Int, Message) did not return the book");
+}
 
 legacyText.setFormatted(false);
 if (legacyText.isFormatted() !== false || legacyText.getUnformattedText() !== "&bSecond") {
