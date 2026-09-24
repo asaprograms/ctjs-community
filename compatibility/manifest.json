@@ -413,6 +413,13 @@
       "test": "LegacyApiAliasesTest and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
     },
     {
+      "id": "legacy-trigger-constructor-globals",
+      "source": "ChatTriggers 1.3.2 module globals",
+      "coverage": ["OnChatTrigger", "OnCommandTrigger", "OnRegularTrigger", "OnRenderTrigger", "OnSoundPlayTrigger", "OnStepTrigger", "OnTrigger", "Priority"],
+      "status": "verified",
+      "test": "client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
+    },
+    {
       "id": "legacy-inventory-action-surface",
       "source": "ChatTriggers 2.2.0 Inventory API",
       "coverage": ["isContainer", "doAction", "getSize-property-bridge"],
