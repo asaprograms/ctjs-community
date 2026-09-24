@@ -113,6 +113,9 @@ enum class BlockFace(
 
         fun isVertical() = plane == Plane.VERTICAL
 
+        /** Historical name accessor used by 1.8.9 modules. */
+        fun getName(): String = serializedName
+
         override fun test(t: BlockFace) = t.axis == this
 
         override fun getSerializedName() = name.lowercase()
