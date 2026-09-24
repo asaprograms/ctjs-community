@@ -47,7 +47,6 @@ internal object Migration {
     private val renderEntityRegex = """register\(['"`]renderEntity['"`]""".toRegex(RegexOption.IGNORE_CASE)
     private val spawnParticleRegex = """register\(['"`]spawnParticle['"`]""".toRegex(RegexOption.IGNORE_CASE)
     private val ctCopyRegex = """(ChatLib\.command\(['"`]ct copy|ChatLib\.say\(['"`]/ct copy)""".toRegex()
-    private val getRiderRegex = """\.getRider\(\)""".toRegex()
     private val isAirborneRegex = """\.isAirborne\(\)""".toRegex()
     private val getDimensionRegex = """\.getDimension\(\)""".toRegex()
 
@@ -151,8 +150,6 @@ internal object Migration {
         }
 
         ctCopyRegex.error { "`/ct copy` no longer exists. Use Client.copy() instead" }
-
-        getRiderRegex.error { "`Entity.getRider()` no longer exists. Replace with `Entity.getRiders()`" }
 
         isAirborneRegex.error { "`Entity.isAirborne()` no longer exists" }
 
