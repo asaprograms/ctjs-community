@@ -24,7 +24,7 @@ jobs:
       - run: ./gradlew --no-daemon build -Pfull
       - name: Create checksums
         run: sha256sum build/libs/*.jar > build/libs/SHA256SUMS.txt
-      - uses: actions/attest-build-provenance@v2
+      - uses: actions/attest-build-provenance@v4
         with:
           subject-path: build/libs/*.jar
       - uses: softprops/action-gh-release@v2
