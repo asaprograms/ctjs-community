@@ -16,6 +16,7 @@ import com.chattriggers.ctjs.api.inventory.nbt.NBTTagList
 import com.chattriggers.ctjs.api.message.ChatLib
 import com.chattriggers.ctjs.api.message.Message
 import com.chattriggers.ctjs.api.message.TextComponent
+import com.chattriggers.ctjs.api.render.Book
 import com.chattriggers.ctjs.api.render.Gui
 import com.chattriggers.ctjs.api.render.Renderer
 import com.chattriggers.ctjs.api.render.Tessellator
@@ -110,6 +111,18 @@ class LegacyApiAliasesTest {
         )) {
             assertMethod(Message::class.java, name)
         }
+        assertTrue(
+            Book::class.java.methods.any {
+                it.name == "addPage" && it.parameterTypes.contentEquals(arrayOf(Message::class.java))
+            },
+            "Expected Book.addPage(Message) to be exported",
+        )
+        assertTrue(
+            Book::class.java.methods.any {
+                it.name == "setPage" && it.parameterTypes.contentEquals(arrayOf(Int::class.javaPrimitiveType!!, Message::class.java))
+            },
+            "Expected Book.setPage(Int, Message) to be exported",
+        )
         for (part in listOf("Cape", "Jacket", "LeftSleeve", "RightSleeve", "LeftPantsLeg", "RightPantsLeg", "Hat")) {
             assertMethod(Settings.SkinWrapper::class.java, "get$part")
             assertMethod(Settings.SkinWrapper::class.java, "set$part")

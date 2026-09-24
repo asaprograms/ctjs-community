@@ -1,6 +1,7 @@
 package com.chattriggers.ctjs.api.render
 
 import com.chattriggers.ctjs.api.client.Client
+import com.chattriggers.ctjs.api.message.Message
 import com.chattriggers.ctjs.api.message.TextComponent
 import com.chattriggers.ctjs.internal.mixins.BookViewScreenAccessor
 import com.chattriggers.ctjs.internal.utils.asMixin
@@ -29,6 +30,9 @@ class Book {
     fun addPage(message: String) = apply {
         addPage(TextComponent(message))
     }
+
+    /** Legacy overload for the mutable Message wrapper used by 1.8.9 modules. */
+    fun addPage(message: Message) = addPage(message.toTextComponent())
 
     /**
      * Inserts a page at the specified index of the book
@@ -65,6 +69,9 @@ class Book {
     }
 
     fun setPage(pageIndex: Int, message: String) = setPage(pageIndex, TextComponent(message))
+
+    /** Legacy overload for the mutable Message wrapper used by 1.8.9 modules. */
+    fun setPage(pageIndex: Int, message: Message) = setPage(pageIndex, message.toTextComponent())
 
     @JvmOverloads
     fun display(pageIndex: Int = 0) {
