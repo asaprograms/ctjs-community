@@ -534,7 +534,7 @@ object Renderer {
 
     @JvmStatic
     @JvmOverloads
-    fun drawShape(color: Long, vararg vertices: List<Float>, drawMode: Int = 9) {
+    fun drawShape(color: Long, vararg vertices: List<Float>, drawMode: Int = 7) {
         if (vertices.size < 3) return
 
         val ordered = if (area(vertices) >= 0f) vertices.reversed() else vertices.toList()

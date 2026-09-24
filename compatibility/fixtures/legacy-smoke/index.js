@@ -362,6 +362,10 @@ register("guiRender", () => {
         Renderer.color(255, 255, 255, 255),
         [6, 6], [6, 8], [8, 8], [8, 6]
     );
+    Renderer.drawShape(
+        Renderer.color(255, 255, 255, 255),
+        [10, 10], [10, 12], [12, 12], [12, 10]
+    );
     Renderer.retainTransforms(false);
     if (Renderer.getDrawMode() !== null) {
         throw new Error("Legacy Renderer.finishDraw did not clear draw mode");
