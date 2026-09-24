@@ -28,6 +28,17 @@ class RendererCompatibilityTest {
     }
 
     @Test
+    fun `legacy Shape draw modes remain raw integers`() {
+        val shape = Shape(0xff000000L)
+
+        assertEquals(9, shape.getDrawMode())
+        assertSame(shape, shape.setDrawMode(7))
+        assertEquals(7, shape.getDrawMode())
+        assertSame(shape, shape.setDrawMode(Renderer.DrawMode.TRIANGLE_STRIP))
+        assertEquals(5, shape.getDrawMode())
+    }
+
+    @Test
     fun `legacy integer color call creates packed color outside a manual draw`() {
         val color = Renderer.color(12, 34, 56, 78)
 

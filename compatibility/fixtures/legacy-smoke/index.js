@@ -14,6 +14,11 @@ for (const method of ["begin", "colorize", "pos", "tex", "draw", "drawString", "
 }
 Tessellator.disableAlpha().enableAlpha().enableTexture2D().disableTexture2D();
 
+const legacyShape = new Shape(Renderer.WHITE);
+if (legacyShape.getDrawMode() !== 9 || legacyShape.setDrawMode(7) !== legacyShape || legacyShape.getDrawMode() !== 7) {
+    throw new Error("Legacy Shape draw-mode integer contract failed");
+}
+
 if (typeof Client.getChatGUI !== "function") {
     throw new Error("Client.getChatGUI legacy alias is not exported");
 }
