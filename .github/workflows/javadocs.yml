@@ -15,7 +15,7 @@ jobs:
       - uses: actions/setup-java@v6
         with:
           distribution: microsoft
-          java-version: "25"
+          java-version: "26"
       - uses: gradle/actions/setup-gradle@v6
       - run: ./gradlew --no-daemon dokkaGeneratePublicationHtml
       - uses: actions/upload-pages-artifact@v5

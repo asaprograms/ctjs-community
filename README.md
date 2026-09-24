@@ -8,7 +8,7 @@ This is an independent community continuation. It is not operated or endorsed by
 
 | Branch | Minecraft | Java | Status |
 | --- | --- | --- | --- |
-| `main` | 26.2 | 25 or newer | Active |
+| `main` | 26.2 | 26 or newer | Active |
 | `26.1.2` | 26.1.2 | 25 or newer | Maintained |
 
 Fabric Loader, Fabric API, and Fabric Language Kotlin are required. Release artifacts are built by GitHub Actions from the tagged source.
@@ -27,7 +27,7 @@ The project uses the included Gradle wrapper.
 ./gradlew build
 ```
 
-The distributable jar is written to `build/libs`. Development requires JDK 25 or newer.
+The distributable jar is written to `build/libs`. Development on the 26.2 branch requires JDK 26 or newer.
 
 ## Security
 
