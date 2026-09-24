@@ -8,6 +8,7 @@ import com.chattriggers.ctjs.api.entity.LivingEntity
 import com.chattriggers.ctjs.api.entity.Entity
 import com.chattriggers.ctjs.api.entity.Particle
 import com.chattriggers.ctjs.api.entity.PlayerMP
+import com.chattriggers.ctjs.api.entity.InteractAction
 import com.chattriggers.ctjs.api.inventory.Inventory
 import com.chattriggers.ctjs.api.inventory.Item
 import com.chattriggers.ctjs.api.inventory.nbt.NBTTagCompound
@@ -137,6 +138,9 @@ class LegacyApiAliasesTest {
             "Expected PlayerMP.draw(Int, Int, Boolean) to be exported",
         )
         assertMethod(Entity::class.java, "getRider")
+        for (name in listOf("LEFT_CLICK_BLOCK", "RIGHT_CLICK_BLOCK", "RIGHT_CLICK_AIR")) {
+            assertTrue(InteractAction::class.java.fields.any { it.name == name }, "Expected InteractAction.$name to be exported")
+        }
         for (name in listOf(
             "setAir", "setPosition", "setAngles", "setOnFire", "extinguish", "move", "setIsSilent",
             "addVelocity", "setIsSneaking", "setIsSprinting", "setIsInvisible", "isEating", "setIsEating",
