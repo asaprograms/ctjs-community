@@ -9,7 +9,9 @@ import kotlin.math.sin
 class Shape(private var color: Long) {
     private val vertexes = mutableListOf<Vec2f>()
     private val reversedVertexes = vertexes.asReversed()
-    private var drawMode = Renderer.DrawMode.QUADS
+    // 1.8.9 exposed raw GL draw-mode integers on Shape. Preserve that public
+    // contract and translate only at the modern renderer boundary.
+    private var drawMode = 9
     private var area = 0f
 
     fun copy(): Shape = clone()
@@ -25,12 +27,15 @@ class Shape(private var color: Long) {
 
     fun setColor(color: Long) = apply { this.color = Renderer.fixAlpha(color) }
 
-    fun getDrawMode(): Renderer.DrawMode = drawMode
+    fun getDrawMode(): Int = drawMode
 
     /**
      * Sets the GL draw mode of the shape
      */
-    fun setDrawMode(drawMode: Renderer.DrawMode) = apply { this.drawMode = drawMode }
+    fun setDrawMode(drawMode: Int) = apply { this.drawMode = drawMode }
+
+    /** Convenience overload for code using the modern renderer enum. */
+    fun setDrawMode(drawMode: Renderer.DrawMode) = setDrawMode(drawMode.toLegacy())
 
     fun getVertexes(): List<Vec2f> = vertexes
 
@@ -69,7 +74,7 @@ class Shape(private var color: Long) {
         addVertex(x2 - i, y2 - j)
         addVertex(x1 - i, y1 - j)
 
-        drawMode = Renderer.DrawMode.QUADS
+        drawMode = 7
     }
 
     /**
@@ -96,12 +101,12 @@ class Shape(private var color: Long) {
             addVertex(circleX * radius + x, circleY * radius + y)
         }
 
-        drawMode = Renderer.DrawMode.TRIANGLE_STRIP
+        drawMode = 5
     }
 
     fun draw() = apply {
         Renderer.apply {
-            begin(drawMode, Renderer.VertexFormat.POSITION_COLOR)
+            begin(Renderer.DrawMode.fromLegacy(drawMode), Renderer.VertexFormat.POSITION_COLOR)
 
             if (area < 0) {
                 vertexes.forEach { pos(it.x, it.y).color(color) }
@@ -124,5 +129,14 @@ class Shape(private var color: Long) {
         }
 
         area /= 2
+    }
+
+    private fun Renderer.DrawMode.toLegacy() = when (this) {
+        Renderer.DrawMode.LINES -> 1
+        Renderer.DrawMode.LINE_STRIP -> 3
+        Renderer.DrawMode.TRIANGLES -> 4
+        Renderer.DrawMode.TRIANGLE_STRIP -> 5
+        Renderer.DrawMode.TRIANGLE_FAN -> 6
+        Renderer.DrawMode.QUADS -> 7
     }
 }
