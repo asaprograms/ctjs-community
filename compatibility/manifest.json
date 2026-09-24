@@ -464,7 +464,7 @@
     {
       "id": "legacy-block-face-offsets",
       "source": "ChatTriggers 1.3.2 BlockFace API",
-      "coverage": ["getXOffset", "getYOffset", "getZOffset", "cardinal-axis-values"],
+      "coverage": ["getXOffset", "getYOffset", "getZOffset", "Axis.getName", "cardinal-axis-values"],
       "status": "verified",
       "test": "BlockCompatibilityTest and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
     },

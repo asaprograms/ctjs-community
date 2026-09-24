@@ -108,7 +108,8 @@ if (typeof legacyBlockType.getDefaultMetadata !== "function" ||
     throw new Error("Legacy BlockType state API failed");
 }
 const legacyBlock = legacyBlockType.withBlockPos(new BlockPos(0, 0, 0));
-if (BlockFace.WEST.getXOffset() !== -1 || BlockFace.UP.getYOffset() !== 1 || BlockFace.SOUTH.getZOffset() !== 1) {
+if (BlockFace.WEST.getXOffset() !== -1 || BlockFace.UP.getYOffset() !== 1 || BlockFace.SOUTH.getZOffset() !== 1 ||
+    BlockFace.Axis.X.getName() !== "x") {
     throw new Error("Legacy BlockFace offset aliases failed");
 }
 const legacySign = new Sign(legacyBlock);

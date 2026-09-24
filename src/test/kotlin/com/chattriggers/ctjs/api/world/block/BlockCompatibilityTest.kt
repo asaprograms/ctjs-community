@@ -41,5 +41,6 @@ class BlockCompatibilityTest {
         assertEquals(-1, BlockFace.WEST.getXOffset())
         assertEquals(1, BlockFace.UP.getYOffset())
         assertEquals(1, BlockFace.SOUTH.getZOffset())
+        assertEquals("x", BlockFace.Axis.X.getName())
     }
 }
