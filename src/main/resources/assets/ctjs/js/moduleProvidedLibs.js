@@ -94,6 +94,15 @@
 
     // For module authors to use with custom triggers
     loadClass("com.chattriggers.ctjs.api.triggers.CancellableEvent");
+    // Historical constructor names kept for modules that instantiate trigger
+    // objects directly instead of using register(...).
+    loadClass("com.chattriggers.ctjs.api.triggers.ChatTrigger", "OnChatTrigger");
+    loadClass("com.chattriggers.ctjs.api.triggers.CommandTrigger", "OnCommandTrigger");
+    loadClass("com.chattriggers.ctjs.api.triggers.RegularTrigger", "OnRegularTrigger");
+    loadClass("com.chattriggers.ctjs.api.triggers.RegularTrigger", "OnRenderTrigger");
+    loadClass("com.chattriggers.ctjs.api.triggers.SoundPlayTrigger", "OnSoundPlayTrigger");
+    loadClass("com.chattriggers.ctjs.api.triggers.StepTrigger", "OnStepTrigger");
+    loadClass("com.chattriggers.ctjs.api.triggers.Trigger", "OnTrigger");
 
     loadClass("com.chattriggers.ctjs.api.vec.Vec2f");
     loadClass("com.chattriggers.ctjs.api.vec.Vec3f");

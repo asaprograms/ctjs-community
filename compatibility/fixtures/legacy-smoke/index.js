@@ -27,6 +27,14 @@ for (const action of ["LEFT_CLICK_BLOCK", "RIGHT_CLICK_BLOCK", "RIGHT_CLICK_AIR"
         throw new Error(`Legacy InteractAction.${action} is not exported`);
     }
 }
+for (const triggerConstructor of [
+    "OnChatTrigger", "OnCommandTrigger", "OnRegularTrigger", "OnRenderTrigger",
+    "OnSoundPlayTrigger", "OnStepTrigger", "OnTrigger"
+]) {
+    if (typeof this[triggerConstructor] !== "function") {
+        throw new Error(`Legacy ${triggerConstructor} constructor is not exported`);
+    }
+}
 if (typeof ChatLib.test !== "function" || typeof ChatLib.clearChat !== "function") {
     throw new Error("Legacy ChatLib diagnostic or targeted clear API is not exported");
 }
