@@ -4,7 +4,7 @@
 
 - Search existing issues and pull requests.
 - Keep a change focused on one problem.
-- Add or update a compatibility fixture when changing public module behavior.
+- Add or update the legacy smoke fixture under `compatibility/fixtures/legacy-smoke` when changing public module behavior.
 - Test both maintained branches when the change touches shared APIs.
 - Do not include generated build output, local run files, or credentials.
 
@@ -16,7 +16,7 @@ Run the project build before submitting a pull request:
 ./gradlew build
 ```
 
-Changes to triggers, wrappers, module loading, or JavaScript behavior should also include a fixture under `compatibility/modules` and an entry in the compatibility manifest.
+Changes to triggers, wrappers, module loading, or JavaScript behavior should also update the fixture under `compatibility/fixtures/legacy-smoke` and its entry in `compatibility/manifest.json`. When a change needs a separate focused fixture, document how it is staged and exercised in the manifest.
 
 ## Commit messages
 
