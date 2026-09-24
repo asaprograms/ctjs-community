@@ -476,6 +476,13 @@
       "test": "LegacyApiAliasesTest"
     },
     {
+      "id": "legacy-inventory-name",
+      "source": "ChatTriggers 1.3.2 Inventory API",
+      "coverage": ["getName-string-return", "getNameComponent-modern-bridge", "fallback-inventory-name"],
+      "status": "verified",
+      "test": "InventoryCompatibilityTest and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
+    },
+    {
       "id": "legacy-moon-phase",
       "source": "ChatTriggers 2.2.0 World API",
       "coverage": ["eight-phase-cycle", "negative-time-floor-mod", "unloaded-world-default"],

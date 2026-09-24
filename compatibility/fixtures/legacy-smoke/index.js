@@ -299,6 +299,12 @@ if (legacyText.getUnformattedText() !== "Second" || copiedText.getUnformattedTex
     throw new Error("TextComponent copy isolation failed");
 }
 
+const SimpleContainer = Java.type("net.minecraft.world.SimpleContainer");
+const legacyInventory = new Inventory(new SimpleContainer(1));
+if (legacyInventory.getName() !== "inventory" || legacyInventory.getNameComponent().getString() !== "inventory") {
+    throw new Error("Legacy Inventory.getName string contract failed");
+}
+
 const ChatTriggerEvent = Java.type("com.chattriggers.ctjs.api.triggers.ChatTrigger$Event");
 const chatEvent = new ChatTriggerEvent(new TextComponent("&aLegacy chat"));
 const unformattedChatMessage = String(ChatLib.getChatMessage(chatEvent));

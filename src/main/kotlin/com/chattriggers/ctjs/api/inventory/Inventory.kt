@@ -176,7 +176,16 @@ class Inventory {
      *
      * @return the name of the inventory
      */
-    fun getName(): TextComponent {
+    /**
+     * Gets the legacy string name of this inventory.
+     *
+     * ChatTriggers 1.8.9 modules receive a string here. Use
+     * [getNameComponent] when a modern rich-text value is needed.
+     */
+    fun getName(): String = getNameComponent().unformattedText
+
+    /** Gets this inventory's title as a rich text component. */
+    fun getNameComponent(): TextComponent {
         return when {
             inventory is Nameable -> TextComponent(inventory.name)
             inventory != null -> TextComponent("inventory")
