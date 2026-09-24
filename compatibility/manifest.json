@@ -406,6 +406,13 @@
       "test": "LegacyApiAliasesTest and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
     },
     {
+      "id": "legacy-interact-action",
+      "source": "ChatTriggers 1.3.2 module globals",
+      "coverage": ["left-click-block", "right-click-block", "right-click-air", "value-comparison"],
+      "status": "verified",
+      "test": "LegacyApiAliasesTest and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
+    },
+    {
       "id": "legacy-inventory-action-surface",
       "source": "ChatTriggers 2.2.0 Inventory API",
       "coverage": ["isContainer", "doAction", "getSize-property-bridge"],

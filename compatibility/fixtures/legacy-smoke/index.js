@@ -22,6 +22,11 @@ for (const method of ["cancel", "getMessage", "getType"]) {
         throw new Error(`Legacy EventLib.${method} is not exported`);
     }
 }
+for (const action of ["LEFT_CLICK_BLOCK", "RIGHT_CLICK_BLOCK", "RIGHT_CLICK_AIR"]) {
+    if (InteractAction[action] === undefined) {
+        throw new Error(`Legacy InteractAction.${action} is not exported`);
+    }
+}
 if (typeof ChatLib.test !== "function" || typeof ChatLib.clearChat !== "function") {
     throw new Error("Legacy ChatLib diagnostic or targeted clear API is not exported");
 }

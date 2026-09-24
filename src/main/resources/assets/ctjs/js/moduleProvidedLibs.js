@@ -56,6 +56,7 @@
     loadClass("com.chattriggers.ctjs.api.entity.LivingEntity");
     loadClass("com.chattriggers.ctjs.api.entity.Particle");
     loadClass("com.chattriggers.ctjs.api.entity.PlayerInteraction");
+    loadClass("com.chattriggers.ctjs.api.entity.InteractAction");
     loadClass("com.chattriggers.ctjs.api.entity.PlayerMP");
     loadClass("com.chattriggers.ctjs.api.entity.Team");
 
