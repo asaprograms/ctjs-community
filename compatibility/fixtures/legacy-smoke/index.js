@@ -313,6 +313,9 @@ const legacyDisplayLine = new DisplayLine("initial").setText("legacy line").setT
 if (legacyDisplayLine.getText().getString() !== "legacy line" || legacyDisplayLine.getTextWidth() <= 0) {
     throw new Error("Legacy DisplayLine text contract failed");
 }
+if (legacyDisplayLine.setWidth(24) !== legacyDisplayLine || legacyDisplayLine.getMaxWidth() !== 24) {
+    throw new Error("Legacy DisplayLine.setWidth alias failed");
+}
 for (const callbackTrigger of [
     legacyDisplayLine.registerClicked(() => {}),
     legacyDisplayLine.registerHovered(() => {}),
