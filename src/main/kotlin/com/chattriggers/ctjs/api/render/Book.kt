@@ -9,7 +9,9 @@ import net.minecraft.client.gui.screens.inventory.BookViewScreen
 
 class Book {
     private var screen: BookViewScreen? = null
-    private val customContents = BookViewScreen.BookAccess(emptyList())
+    // BookAccess retains the supplied list. Keep ownership here because pages
+    // are intentionally mutable through addPage, insertPage, and setPage.
+    private val customContents = BookViewScreen.BookAccess(mutableListOf())
 
     /**
      * Add a page to the book.
