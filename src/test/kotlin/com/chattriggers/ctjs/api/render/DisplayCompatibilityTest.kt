@@ -50,6 +50,16 @@ class DisplayCompatibilityTest {
     }
 
     @Test
+    fun `legacy text width setter retains wrapping semantics`() {
+        assertTrue(
+            Text::class.java.methods.any {
+                it.name == "setWidth" && it.parameterTypes.contentEquals(arrayOf(Int::class.javaPrimitiveType!!))
+            },
+            "Expected DisplayLine.setWidth(Int) to be exported",
+        )
+    }
+
+    @Test
     fun `display line interaction methods remain exported`() {
         for (name in listOf(
             "registerClicked", "registerHovered", "registerMouseLeave", "registerDragged",

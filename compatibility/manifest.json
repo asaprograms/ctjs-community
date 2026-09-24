@@ -441,6 +441,13 @@
       "test": "RendererCompatibilityTest on Minecraft 26.2 and 26.1.2"
     },
     {
+      "id": "legacy-display-line-width",
+      "source": "ChatTriggers 1.3.2 Text API",
+      "coverage": ["setWidth", "max-width-alias", "line-wrapping", "fluent-return"],
+      "status": "verified",
+      "test": "DisplayCompatibilityTest and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
+    },
+    {
       "id": "legacy-inventory-action-surface",
       "source": "ChatTriggers 2.2.0 Inventory API",
       "coverage": ["isContainer", "doAction", "getSize-property-bridge"],

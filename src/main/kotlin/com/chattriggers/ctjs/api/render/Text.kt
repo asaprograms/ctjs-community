@@ -192,6 +192,17 @@ class Text {
      */
     fun getWidth(): Int = width
 
+    /**
+     * Historical name for setting the line-wrapping width.
+     *
+     * Newer CTJS calls this [setMaxWidth]. Keeping both names matters for
+     * display modules written against the 1.8.9 renderer API.
+     */
+    fun setWidth(width: Int) = apply {
+        this.width = width
+        setMaxWidth(width)
+    }
+
     fun getTextWidth(): Float = (lines.maxOfOrNull(Renderer::getStringWidth) ?: 0) * scale
 
     fun getLines(): List<String> = lines
