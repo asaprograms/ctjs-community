@@ -66,6 +66,9 @@ if (Player.lookingAt() === null) {
 if (typeof Player.getUUID() !== "string" || String(Player.getUUIDObj()) !== Player.getUUID()) {
     throw new Error("Legacy Player.getUUID string contract failed");
 }
+if (typeof Scoreboard.getTitle() !== "string" || typeof Scoreboard.getScoreboardTitle() !== "string") {
+    throw new Error("Legacy Scoreboard title string contract failed");
+}
 for (const method of ["playSound", "playRecord", "stopAllSounds"]) {
     if (typeof World[method] !== "function") {
         throw new Error(`Legacy World.${method} is not exported`);
