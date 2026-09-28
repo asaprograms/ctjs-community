@@ -46,7 +46,7 @@ class CTJS : ClientModInitializer {
     private fun reportHashedUUID() {
         if (!Config.sendStatistics) return
 
-        val uuid = Player.getUUID().toString().encodeToByteArray()
+        val uuid = Player.getUUID().encodeToByteArray()
         val salt = (System.getProperty("user.name") ?: "").encodeToByteArray()
         val md = MessageDigest.getInstance("SHA-256")
         md.update(salt)
