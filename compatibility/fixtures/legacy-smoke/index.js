@@ -28,6 +28,9 @@ for (const method of ["start", "run", "stop", "interrupt", "destroy", "isInterru
 if (typeof Thread.sleep !== "function" || typeof Thread.currentThread !== "function") {
     throw new Error("Legacy Thread static helpers are not exported");
 }
+if (Config.modulesFolder !== ChatTriggers.MODULES_FOLDER) {
+    throw new Error("Legacy Config.modulesFolder does not match the runtime module directory");
+}
 
 if (typeof Client.getChatGUI !== "function") {
     throw new Error("Client.getChatGUI legacy alias is not exported");

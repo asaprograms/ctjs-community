@@ -215,7 +215,7 @@ Here is a list of targeted changes for various different APIs:
 - `Client`
   - `getChatGUI` was renamed to `getChatGui` to match the naming of `getTabGui`
 - `Server.getPing()` now returns -1 if not in a world
-- Removed `Config.modulesFolder`. Use `ChatTriggers.MODULES_FOLDER` or the string `"./config/ChatTriggers/modules"`
+- `Config.modulesFolder` is retained as a read-only alias for the runtime module directory. New code can use `ChatTriggers.MODULES_FOLDER`.
 - Renamed `ChatTriggers.loadCT()` and `ChatTriggers.unloadCT()` to `load()` and `unload()`
 - Provided JS API: 
   - Split `print` into `print` and `println`. `print` will no longer emit a trailing newline

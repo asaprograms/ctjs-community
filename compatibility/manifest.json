@@ -61,6 +61,13 @@
       "test": "WrappedThreadCompatibilityTest and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
     },
     {
+      "id": "legacy-config-modules-folder",
+      "source": "ChatTriggers 1.3.2 Config API",
+      "coverage": ["Config.modulesFolder", "canonical-runtime-directory", "read-only-alias"],
+      "status": "verified",
+      "test": "ConfigCompatibilityTest and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
+    },
+    {
       "id": "legacy-render-slot",
       "source": "ChatTriggers 2.2.0 renderSlot contract",
       "coverage": ["slot-wrapper", "container-screen", "render-cancellation"],
