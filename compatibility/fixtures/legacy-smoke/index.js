@@ -97,6 +97,19 @@ for (const method of [
         throw new Error(`Legacy Gui.${method} is not exported`);
     }
 }
+for (const callbackTrigger of [
+    legacyGui.registerDraw(() => {}),
+    legacyGui.registerClicked(() => {}),
+    legacyGui.registerScrolled(() => {}),
+    legacyGui.registerKeyTyped(() => {}),
+    legacyGui.registerMouseDragged(() => {}),
+    legacyGui.registerMouseReleased(() => {}),
+    legacyGui.registerActionPerformed(() => {}),
+]) {
+    if (typeof callbackTrigger.unregister !== "function") {
+        throw new Error("Legacy Gui callback registration did not return a trigger");
+    }
+}
 
 if (typeof KeyBind.removeKeyBind !== "function" || typeof KeyBind.clearKeyBinds !== "function") {
     throw new Error("Legacy KeyBind cleanup methods are not exported");
