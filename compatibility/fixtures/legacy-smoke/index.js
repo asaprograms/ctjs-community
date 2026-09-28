@@ -60,6 +60,9 @@ ChatLib.clearChat(2147483647);
 if (typeof Player.asEntity !== "function" || Player.asEntity() !== null) {
     throw new Error("Legacy Player.asEntity unloaded-player contract failed");
 }
+if (typeof Player.getUUID() !== "string" || String(Player.getUUIDObj()) !== Player.getUUID()) {
+    throw new Error("Legacy Player.getUUID string contract failed");
+}
 for (const method of ["playSound", "playRecord", "stopAllSounds"]) {
     if (typeof World[method] !== "function") {
         throw new Error(`Legacy World.${method} is not exported`);

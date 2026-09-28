@@ -159,7 +159,7 @@ Here is a list of targeted changes for various different APIs:
   - Removed `getChatMessage()`. Instead, you can access the entire message as a `TextComponent` via `event.message`
 - `Player`
   - Removed `getRawYaw()` as it provided no extra value
-  - `getUUID()` now returns the `UUID` object instead of a `string`
+  - `getUUID()` retains the legacy string return. Use `getUUIDObj()` when a Java `UUID` object is required.
   - `lookingAt()` now returns `null` when looking at nothing instead of a `BlockType`
   - `draw()` now takes an object to align with `Renderer.drawPlayer()`
 - `PlayerMP.draw()` now takes an object to align with `Renderer.drawPlayer()`

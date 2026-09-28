@@ -137,18 +137,13 @@ object Player {
     @JvmStatic
     fun getName(): String = Client.getMinecraft().user.name
 
-    /**
-     * Gets the Java UUID object of the player.
-     * Use of [UUID.toString] in conjunction is recommended.
-     *
-     * @return the player's uuid
-     */
+    /** Legacy player UUID string. Use [getUUIDObj] for the Java UUID object. */
     @JvmStatic
-    fun getUUID(): UUID = Client.getMinecraft().gameProfile.id
+    fun getUUID(): String = getUUIDObj().toString()
 
-    /** Legacy name retained now that getUUID also returns a UUID object. */
+    /** Gets the Java UUID object of the player. */
     @JvmStatic
-    fun getUUIDObj(): UUID = getUUID()
+    fun getUUIDObj(): UUID = Client.getMinecraft().gameProfile.id
 
     @JvmStatic
     fun getHP(): Float = toMC()?.health ?: 0f

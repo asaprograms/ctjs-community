@@ -134,6 +134,10 @@ class LegacyApiAliasesTest {
         assertMethodWithParameter(Settings.ChatWrapper::class.java, "setVisibility", String::class.java)
         assertStaticMethod(com.chattriggers.ctjs.api.client.Player::class.java, "getRawYaw")
         assertStaticMethod(com.chattriggers.ctjs.api.client.Player::class.java, "getUUIDObj")
+        assertTrue(
+            com.chattriggers.ctjs.api.client.Player::class.java.getMethod("getUUID").returnType == String::class.java,
+            "Expected legacy Player.getUUID() to return String",
+        )
         assertStaticMethod(com.chattriggers.ctjs.api.client.Player::class.java, "getOpenedInventory")
         assertStaticMethod(com.chattriggers.ctjs.api.client.Player::class.java, "asEntity")
         assertTrue(
