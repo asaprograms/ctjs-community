@@ -44,13 +44,14 @@ The following legacy calls remain unavailable rather than returning invented dat
 - `Entity.dropItem()` and `Entity.setIsOutsideBorder()`: these mutate server-owned entity state.
 - `Entity.isAirborne()`: the old state flag no longer has a stable client-side equivalent.
 - `Settings.video.get3dAnaglyph()`: Minecraft removed the setting.
+- `ParticleEffect` construction: 1.8.9 allowed direct construction of the particle base class; the modern base class is abstract and requires a registered particle implementation. Use `World.particle.spawnParticle()` and configure the returned `Particle` instead.
 - Forge, MCP, LWJGL 2, coremod, and raw ASM entry points listed above.
 
 `EventLib` retains cancellation and chat-event helpers. Its Forge mouse, sound, and config event helpers have no Fabric event-object equivalent and are intentionally not exposed.
 
 `BlockType.getHarvestLevel()` is still under review. Modern Minecraft represents tool suitability through tags and block state, so a single context-free legacy value would not be reliable. `Item.canDestroy(Block)` is supported because the placed block supplies the world context required by the modern adventure-mode predicate.
 
-The project does restore compatible public shapes when modern Minecraft exposes equivalent behavior. This includes legacy block metadata indexing, redstone queries, inventory actions, item block predicates, moon phase, boolean graphics settings, display lines, draw-mode helpers, sound controls, keybind callback lifecycles, and common wrapper aliases. The manifest is the authoritative list of verified surfaces.
+The project does restore compatible public shapes when modern Minecraft exposes equivalent behavior. This includes legacy block metadata indexing, redstone queries, inventory actions, item block predicates, moon phase, boolean graphics settings, display lines, draw-mode helpers, sound controls, keybind callback lifecycles, `GuiHandler`, and common wrapper aliases. The manifest is the authoritative list of verified surfaces.
 
 ## Evidence
 
