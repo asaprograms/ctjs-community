@@ -230,7 +230,14 @@ object Settings {
             toMC().gamma().set(brightness)
         }
 
-        fun getClouds() = CloudRenderMode.fromMC(toMC().cloudStatus().get())
+        fun getCloudsMode() = CloudRenderMode.fromMC(toMC().cloudStatus().get())
+
+        /** Legacy cloud mode: 1 is fast, 2 is fancy, and 3 is off. */
+        fun getClouds(): Int = when (getCloudsMode()) {
+            CloudRenderMode.FAST -> 1
+            CloudRenderMode.FANCY -> 2
+            CloudRenderMode.OFF -> 3
+        }
 
         fun setClouds(clouds: CloudRenderMode) {
             toMC().cloudStatus().set(clouds.toMC())
@@ -248,7 +255,14 @@ object Settings {
             setClouds(mode)
         }
 
-        fun getParticles() = ParticlesMode.fromMC(toMC().particles().get())
+        fun getParticlesMode() = ParticlesMode.fromMC(toMC().particles().get())
+
+        /** Legacy particle mode: 0 is all, 1 is decreased, and 2 is minimal. */
+        fun getParticles(): Int = when (getParticlesMode()) {
+            ParticlesMode.ALL -> 0
+            ParticlesMode.DECREASED -> 1
+            ParticlesMode.MINIMAL -> 2
+        }
 
         fun setParticles(particles: ParticlesMode) {
             toMC().particles().set(particles.toMC())
@@ -285,7 +299,10 @@ object Settings {
     }
 
     class ChatWrapper {
-        fun getVisibility() = ChatVisibility.fromMC(toMC().chatVisibility().get())
+        fun getVisibilityMode() = ChatVisibility.fromMC(toMC().chatVisibility().get())
+
+        /** Legacy chat visibility string. */
+        fun getVisibility(): String = getVisibilityMode().name.lowercase()
 
         fun setVisibility(visibility: ChatVisibility) {
             toMC().chatVisibility().set(visibility.toMC())
