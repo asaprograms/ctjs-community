@@ -24,6 +24,7 @@ class SettingsCompatibilityTest {
 
     @Test
     fun `legacy settings getters retain primitive returns`() {
+        assertEquals(Int::class.javaPrimitiveType, Settings::class.java.getMethod("getDifficulty").returnType)
         assertEquals(Int::class.javaPrimitiveType, Settings.VideoWrapper::class.java.getMethod("getClouds").returnType)
         assertEquals(Int::class.javaPrimitiveType, Settings.VideoWrapper::class.java.getMethod("getParticles").returnType)
         assertEquals(String::class.java, Settings.ChatWrapper::class.java.getMethod("getVisibility").returnType)

@@ -164,7 +164,7 @@ Here is a list of targeted changes for various different APIs:
 - `PlayerMP.draw()` now takes an object to align with `Renderer.drawPlayer()`
 - `World`
   - Removed all `Sound`-related methods. Instead, use the `Sound` class
-  - `getDifficulty()` now returns `Settings.Difficulty?`
+  - `getDifficulty()` retains the legacy difficulty string. Use `getDifficultyMode()` for `Settings.Difficulty`.
   - Renamed `getAllTileEntities()` to `getAllBlockEntities()`
   - Renamed `getAllTilesEntitiesOfType()` to `getAllBlockEntitiesOfType()`
 - `Sound`
