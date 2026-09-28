@@ -76,14 +76,14 @@ Here is a list of targeted changes for various different APIs:
 - Triggers
   - `chatComponentClicked` and `chatComponentHovered` receive a styled component that preserves the click or hover metadata. Minecraft's current text hit-testing exposes the selected style but not the source component text, so the wrapper's text is empty.
     - All of these triggers had less than 10 uses over all releases on our website. If you maintain one of the few releases who used one of these triggers, they can be replaced with a custom Mixin.
-  - The following triggers have been removed in favor of other triggers: `attackEntity`, `hitBlock`, and `blockBreak` (replaced by `playerInteract`); `guiMouseRelease` (replaced by a parameter in `guiMouseClick`)
+  - `attackEntity`, `hitBlock`, `blockBreak`, and `guiMouseRelease` remain available as legacy trigger names.
   - `playerInteract` now passes the interacted-with object as the second argument instead of the object's position (which can be retrieved via a method on the object wrapper, which is either an `Entity`, `Block`, or `Item`). The list of events has also changed.
   - `guiMouseClick` now takes a boolean after the mouse button which indicates if the mouse button was pressed (`true`) or released (`false`)
   - `guiMouseDrag` now takes two mouse deltas as its first two arguments. The rest of the arguments are unchanged.
   - `guiOpened` now takes the opened `Screen` as its first argument.
   - `renderTileEntity` has been renamed to `renderBlockEntity`, and no longer passes in the position as an argument (access it by calling `BlockEntity.getBlockPos()`)
-  - `ClassFilterTrigger`: Removed `setPacketClass` and `setPacketClasses`. Use `setFilteredClass` and `setFilteredClasses` instead
-  - The full message for `chat` triggers is no longer accessed with `EventLib` (which no longer exists). Instead, use `event.message`, which will return a `TextComponent`. This has the `getFormattedText()` and `getUnformattedText()` methods, which replace the second parameter of the old `EventLib` method
+  - `ClassFilterTrigger.setPacketClass()` and `setPacketClasses()` remain available as legacy aliases.
+  - `EventLib` remains available for legacy chat-trigger code. New code can use `event.message` directly.
   - `serverConnect` and `serverDisconnect` no longer pass an event as the third parameter
   - `scrolled` now passes in the actual scroll amount, not just -1 or 1 to indicate a direction
   - `dropItem` takes different parameters:
@@ -93,10 +93,9 @@ Here is a list of targeted changes for various different APIs:
   - `spawnParticle` no longer passes in the particle type (which no longer exists in the MC codebase). Instead, the class can be access from the particle wrapper's underlying MC type
   - `renderOverlay` no longer passes in the event, as it was unused previously
   - `itemTooltip` now receives a list of `TextComponent` objects instead of a list of strings
-  - Removed all Trigger classes from the global namespace
-  - Removed `CancellableEvent` from the global scope
+  - Legacy `On*Trigger` constructors and `CancellableEvent` remain available in the global namespace.
 - `Message`/`TextComponent`
-  - `Message` has been removed, and its primary functionality (i.e. `chat()`/`actionBar()`) has been added to `TextComponent`
+  - `Message` remains available for legacy modules, including its mutable parts and chat-line APIs.
   - `TextComponent` has been heavily changed such that it can be easily introspected. It now implements `List<NativeObject>`, and each object is of the form `{ text: '...', bold: true, underline: true, ... }`. This form can also be used to construct and create new `TextComponent`s
   - `TextComponent` is now immutable. Methods such as `withText()` can be used to return a modified `TextComponent` based on the original
 - The `/ct` command
@@ -122,21 +121,20 @@ Here is a list of targeted changes for various different APIs:
   - Renamed `isDurationMax()` to `isInfinite()`
 - `Item`
   - This API has also been completely reworked, similarly to `PotionEffect` and `Block`. It has been split into an `Item` class which represents a single stack of items in an inventory, and an `ItemType` class which represents the type of the `Item`.
-  - Renamed `isDamagable()` to `isDamageable()`, fixing the typo
-  - Removed `getRawNBT()`, prefer using `getNBT()` which gives access to a wide range of powerful NBT-related APIs
+  - `isDamagable()` remains available as an alias for `isDamageable()`.
+  - `getRawNBT()` remains available alongside `getNBT()`.
   - You can no longer wrap empty ItemStacks. Creating an Item with an empty stack will throw an error. Use `Item.fromMC` instead.
 - `NBTTagList.removeTag()` now wraps the removed element in CT's NBT wrappers
 - `NBTTagCompound.getTag()` and `NBTTagCompound.getTagList()` now returns a wrapped version instead of the raw MC version
 - `Chunk`
-  - Renamed `getAllTileEntities()` to `getAllBlockEntities()`
-  - Renamed `getAllTilesEntitiesOfType()` to `getAllBlockEntitiesOfType()`
+  - Legacy tile-entity method names remain aliases for block-entity methods.
 - `Block`
-  - Removed `getMetadata()` as blocks no longer have this in newer MC versions
-  - Renamed `isPowered()` and `getRedstoneStrength()` to `isReceivingPower()` and `getReceivingPower()`, respectively, to differentiate them from the new methods `isEmittingPower(BlockFace)` and `getEmittingPower(BlockFace)`
+  - `getMetadata()` returns the modern block-state index, the closest stable equivalent to 1.8.9 metadata.
+  - `isPowered()` and `getRedstoneStrength()` remain legacy aliases.
 - `BlockFace`
   - Renamed `fromMCEnumFacing()` to `fromMC()`
   - Enum values are now UPPER_CASE
-- `BlockType`: Removed `getDefaultMetadata()` and `getHarvestLevel()`
+- `BlockType`: `getDefaultMetadata()` returns the default state's index. `getHarvestLevel()` remains unavailable because modern Minecraft removed the equivalent property.
 - `Scoreboard`
   - `Scoreboard.getScoreboardTitle()` remains available as an alias for `Scoreboard.getTitle()`.
   - `Scoreboard.getTitle()` and `Scoreboard.Score.getName()` retain their legacy string returns. Use `getTitleComponent()` and `getNameComponent()` when component metadata is needed.
@@ -145,7 +143,7 @@ Here is a list of targeted changes for various different APIs:
     - `getPoints`/`setPoints` are renamed to `getScore`/`setScore`
   - Added `addLine()`, `createTeam()`, `removeIndex()`, `removeScores()` methods
   - `getLines` now actually sorts by descending instead of ascending
-- `Book` now uses `TextComponent` instead of `Message`
+- `Book` accepts legacy `Message` pages as well as `TextComponent` pages.
 - `Settings`
   - Renamed all methods in the `skin` object to indicate they return whether the part is enabled, not the actual part themselves (i.e. `getCape()` -> `isCapeEnabled()`)
   - Renamed `video.getGraphics()` to `video.getGraphicsMode()`
@@ -154,16 +152,15 @@ Here is a list of targeted changes for various different APIs:
     - `video.getGraphicsMode()` now returns `Settings.GraphicsMode` instead of `number`
     - `video.getClouds()`, `video.getParticles()`, and `chat.getVisibility()` retain their legacy integer or string returns. Use `getCloudsMode()`, `getParticlesMode()`, and `getVisibilityMode()` for enum values.
 - `ChatLib`
-  - `clearChat()` no longer takes any chat line IDs, and instead will always clear the chat. To selectively-delete message using their ID, use `deleteChat(id: number)`
-  - Removed `getChatMessage()`. Instead, you can access the entire message as a `TextComponent` via `event.message`
+  - `clearChat(id)` and `getChatMessage()` remain available for legacy modules.
 - `Player`
-  - Removed `getRawYaw()` as it provided no extra value
+  - `getRawYaw()` remains available for legacy modules.
   - `getUUID()` retains the legacy string return. Use `getUUIDObj()` when a Java `UUID` object is required.
   - `lookingAt()` retains the legacy air-block fallback when looking at nothing.
   - `draw()` now takes an object to align with `Renderer.drawPlayer()`
 - `PlayerMP.draw()` now takes an object to align with `Renderer.drawPlayer()`
 - `World`
-  - Removed all `Sound`-related methods. Instead, use the `Sound` class
+  - Legacy sound helpers remain available: `playSound()`, `playRecord()`, and `stopAllSounds()`.
   - `getDifficulty()` retains the legacy difficulty string. Use `getDifficultyMode()` for `Settings.Difficulty`.
   - Renamed `getAllTileEntities()` to `getAllBlockEntities()`
   - Renamed `getAllTilesEntitiesOfType()` to `getAllBlockEntitiesOfType()`
