@@ -137,8 +137,8 @@ Here is a list of targeted changes for various different APIs:
   - Enum values are now UPPER_CASE
 - `BlockType`: Removed `getDefaultMetadata()` and `getHarvestLevel()`
 - `Scoreboard`
-  - Remove `Scoreboard.getScoreboardTitle()` in favor of the less verbose `Scoreboard.getTitle()`
-  - `Scoreboard.getTitle()` now returns `TextComponent` instead of `String`
+  - `Scoreboard.getScoreboardTitle()` remains available as an alias for `Scoreboard.getTitle()`.
+  - `Scoreboard.getTitle()` and `Scoreboard.Score.getName()` retain their legacy string returns. Use `getTitleComponent()` and `getNameComponent()` when component metadata is needed.
   - `Score`
     - is now mutable. You can now edit the score, name, number format, and team
     - `getPoints`/`setPoints` are renamed to `getScore`/`setScore`

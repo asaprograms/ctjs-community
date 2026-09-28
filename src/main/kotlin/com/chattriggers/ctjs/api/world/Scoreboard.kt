@@ -40,7 +40,7 @@ object Scoreboard {
      * @return the scoreboard title
      */
     @JvmStatic
-    fun getTitle(): TextComponent {
+    fun getTitleComponent(): TextComponent {
         if (needsUpdate) {
             updateNames()
             needsUpdate = false
@@ -49,9 +49,16 @@ object Scoreboard {
         return scoreboardTitle
     }
 
-    /** Legacy 1.8.9 name for [getTitle]. */
+    /**
+     * Gets the scoreboard title as a legacy formatted string.
+     * Use [getTitleComponent] when component metadata is needed.
+     */
     @JvmStatic
-    fun getScoreboardTitle() = getTitle()
+    fun getTitle(): String = getTitleComponent().formattedText
+
+    /** Legacy 1.8.9 alias for [getTitle]. */
+    @JvmStatic
+    fun getScoreboardTitle(): String = getTitle()
 
     /**
      * Sets the scoreboard title.
@@ -222,7 +229,7 @@ object Scoreboard {
         scoreboardNames = newScores.sortedWith(compareBy<Score> {
             it.getScore()
         }.reversed().thenBy {
-            it.getName().formattedText.lowercase()
+            it.getNameComponent().formattedText.lowercase()
         }).toMutableList()
     }
 
@@ -303,7 +310,7 @@ object Scoreboard {
          *
          * @return the display name
          */
-        fun getName(): TextComponent {
+        fun getNameComponent(): TextComponent {
             val name = mcValue.asMixin<`Scoreboard$1Accessor`>().holder.scoreboardName
 
             return TextComponent(
@@ -313,6 +320,12 @@ object Scoreboard {
                 )
             )
         }
+
+        /**
+         * Gets the display text as a legacy formatted string.
+         * Use [getNameComponent] when component metadata is needed.
+         */
+        fun getName(): String = getNameComponent().formattedText
 
         /**
          * Sets the name of this score
@@ -365,6 +378,6 @@ object Scoreboard {
             updateNames()
         }
 
-        override fun toString(): String = getName().formattedText
+        override fun toString(): String = getName()
     }
 }

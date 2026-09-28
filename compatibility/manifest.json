@@ -31,13 +31,15 @@
         "Inventory.getItemInSlot",
         "Item.isDamagable",
         "Scoreboard.getScoreboardTitle",
+        "Scoreboard.getTitle-string",
+        "Scoreboard.Score.getName-string",
         "TabList.getFooterMessage",
         "TabList.getHeaderMessage",
         "World.getAllTileEntities",
         "Chunk.getAllTileEntities"
       ],
       "status": "verified",
-      "test": "LegacyApiAliasesTest"
+      "test": "LegacyApiAliasesTest and ScoreboardCompatibilityTest"
     },
     {
       "id": "legacy-runtime-smoke",
