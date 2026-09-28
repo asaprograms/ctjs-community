@@ -82,6 +82,7 @@
     loadClass("com.chattriggers.ctjs.api.render.Display");
     loadClass("com.chattriggers.ctjs.api.render.DisplayHandler");
     loadClass("com.chattriggers.ctjs.api.render.Gui");
+    loadClass("com.chattriggers.ctjs.api.render.GuiHandler");
     loadClass("com.chattriggers.ctjs.api.render.Image");
     loadClass("com.chattriggers.ctjs.api.render.Rectangle");
     loadClass("com.chattriggers.ctjs.api.render.Renderer");

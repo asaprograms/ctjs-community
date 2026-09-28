@@ -98,6 +98,9 @@ World.playRecord(null, 0, 0, 0);
 World.stopAllSounds();
 
 const legacyGui = new Gui();
+if (typeof GuiHandler.openGui !== "function" || typeof GuiHandler.clearGuis !== "function") {
+    throw new Error("Legacy GuiHandler API is not exported");
+}
 for (const method of [
     "close", "isControlDown", "isShiftDown", "isAltDown", "getButton",
     "drawString", "drawCreativeTabHoveringString", "drawHoveringString",

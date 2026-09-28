@@ -340,7 +340,7 @@
     {
       "id": "legacy-gui-utilities",
       "source": "ChatTriggers 2.2.0 Gui API",
-      "coverage": ["close", "modifier-keys", "getButton", "drawString", "creative-tooltip", "hovering-text", "callback-trigger-return"],
+      "coverage": ["close", "modifier-keys", "getButton", "drawString", "creative-tooltip", "hovering-text", "callback-trigger-return", "GuiHandler-openGui", "GuiHandler-clearGuis"],
       "status": "verified",
       "test": "GuiCompatibilityTest, LegacyApiAliasesTest, and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
     },
