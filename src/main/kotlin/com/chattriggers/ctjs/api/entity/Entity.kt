@@ -83,6 +83,18 @@ open class Entity(override val mcValue: MCEntity) : CTWrapper<MCEntity> {
     fun getMotionZ(): Double = mcValue.deltaMovement.z
 
     /**
+     * Gets the entity's health. Legacy ChatTriggers exposed this on the base
+     * wrapper, returning zero for non-living entities.
+     */
+    open fun getHP(): Float = (mcValue as? MCLivingEntity)?.health ?: 0f
+
+    /**
+     * Gets the entity's maximum health. Legacy ChatTriggers exposed this on
+     * the base wrapper, returning zero for non-living entities.
+     */
+    open fun getMaxHP(): Float = (mcValue as? MCLivingEntity)?.maxHealth ?: 0f
+
+    /**
      * Returns the entity this entity is riding, if one exists
      *
      * @return an Entity or null

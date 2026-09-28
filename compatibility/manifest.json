@@ -291,9 +291,9 @@
     {
       "id": "legacy-entity-mutators",
       "source": "ChatTriggers 2.2.0 Entity wrapper API",
-      "coverage": ["air", "position", "view-angles", "fire", "motion", "silent-state", "sneaking", "sprinting", "visibility", "item-use-state"],
-      "status": "implemented",
-      "test": "LegacyApiAliasesTest reflection coverage"
+      "coverage": ["air", "position", "view-angles", "fire", "motion", "silent-state", "sneaking", "sprinting", "visibility", "item-use-state", "base-entity-health"],
+      "status": "verified",
+      "test": "LegacyApiAliasesTest and EntityCompatibilityTest"
     },
     {
       "id": "legacy-vector-arithmetic",
