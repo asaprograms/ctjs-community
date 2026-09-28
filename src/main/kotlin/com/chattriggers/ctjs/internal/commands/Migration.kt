@@ -33,7 +33,6 @@ internal object Migration {
         """TabList\.getFooterMessage\(\)""".toRegex() to "TabList.getFooterComponent()",
         """TabList\.getHeaderMessage\(\)""".toRegex() to "TabList.getHeaderComponent()",
         """Client\.getChatGUI\(\)""".toRegex() to "Client.getChatGui()",
-        """Config\.modulesFolder""".toRegex() to "ChatTriggers.MODULES_FOLDER",
     )
 
     private val guiMouseClickRegex = """register\(['"`]guiMouseClick['"`]""".toRegex(RegexOption.IGNORE_CASE)

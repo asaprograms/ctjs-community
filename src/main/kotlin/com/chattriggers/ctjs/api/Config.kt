@@ -11,6 +11,16 @@ import java.io.File
 import kotlin.reflect.KProperty
 
 object Config : Vigilant(File(CTJS.configLocation, "ChatTriggers.toml"), sortingBehavior = CategorySorting) {
+    /**
+     * Legacy module directory setting.
+     *
+     * The module location is fixed by the modern runtime, so this remains
+     * read-only rather than exposing a setter that cannot relocate loaded modules.
+     */
+    @JvmStatic
+    val modulesFolder: String
+        get() = CTJS.MODULES_FOLDER
+
     @JvmStatic
     @Property(
         PropertyType.SWITCH,
