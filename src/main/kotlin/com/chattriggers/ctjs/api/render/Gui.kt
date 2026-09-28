@@ -66,9 +66,7 @@ class Gui @JvmOverloads constructor(
      * @param method the method to run
      * @return the trigger
      */
-    fun registerDraw(method: Any) = apply {
-        onDraw = RegularTrigger(method, TriggerType.OTHER)
-    }
+    fun registerDraw(method: Any): RegularTrigger = RegularTrigger(method, TriggerType.OTHER).also { onDraw = it }
 
     /**
      * Registers a method to be run while gui is open.
@@ -81,9 +79,7 @@ class Gui @JvmOverloads constructor(
      * @param method the method to run
      * @return the trigger
      */
-    fun registerClicked(method: Any) = apply {
-        onClick = RegularTrigger(method, TriggerType.OTHER)
-    }
+    fun registerClicked(method: Any): RegularTrigger = RegularTrigger(method, TriggerType.OTHER).also { onClick = it }
 
     /**
      * Registers a method to be run while the gui is open.
@@ -93,9 +89,7 @@ class Gui @JvmOverloads constructor(
      * - int mouseY
      * - int scroll direction
      */
-    fun registerScrolled(method: Any) = apply {
-        onScroll = RegularTrigger(method, TriggerType.OTHER)
-    }
+    fun registerScrolled(method: Any): RegularTrigger = RegularTrigger(method, TriggerType.OTHER).also { onScroll = it }
 
     /**
      * Registers a method to be run while gui is open.
@@ -107,9 +101,7 @@ class Gui @JvmOverloads constructor(
      * @param method the method to run
      * @return the trigger
      */
-    fun registerKeyTyped(method: Any) = apply {
-        onKeyTyped = RegularTrigger(method, TriggerType.OTHER)
-    }
+    fun registerKeyTyped(method: Any): RegularTrigger = RegularTrigger(method, TriggerType.OTHER).also { onKeyTyped = it }
 
     /**
      * Registers a method to be run while gui is open.
@@ -123,9 +115,7 @@ class Gui @JvmOverloads constructor(
      * @param method the method to run
      * @return the trigger
      */
-    fun registerMouseDragged(method: Any) = apply {
-        onMouseDragged = RegularTrigger(method, TriggerType.OTHER)
-    }
+    fun registerMouseDragged(method: Any): RegularTrigger = RegularTrigger(method, TriggerType.OTHER).also { onMouseDragged = it }
 
     /**
      * Registers a method to be run while gui is open.
@@ -138,9 +128,7 @@ class Gui @JvmOverloads constructor(
      * @param method the method to run
      * @return the trigger
      */
-    fun registerMouseReleased(method: Any) = apply {
-        onMouseReleased = RegularTrigger(method, TriggerType.OTHER)
-    }
+    fun registerMouseReleased(method: Any): RegularTrigger = RegularTrigger(method, TriggerType.OTHER).also { onMouseReleased = it }
 
     /**
      * Registers a method to be run while gui is open.
@@ -151,9 +139,7 @@ class Gui @JvmOverloads constructor(
      * @param method the method to run
      * @return the trigger
      */
-    fun registerActionPerformed(method: Any) = apply {
-        onActionPerformed = RegularTrigger(method, TriggerType.OTHER)
-    }
+    fun registerActionPerformed(method: Any): RegularTrigger = RegularTrigger(method, TriggerType.OTHER).also { onActionPerformed = it }
 
     /**
      * Registers a method to be run when the gui is opened.

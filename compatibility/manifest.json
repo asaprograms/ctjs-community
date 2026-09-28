@@ -338,9 +338,9 @@
     {
       "id": "legacy-gui-utilities",
       "source": "ChatTriggers 2.2.0 Gui API",
-      "coverage": ["close", "modifier-keys", "getButton", "drawString", "creative-tooltip", "hovering-text"],
+      "coverage": ["close", "modifier-keys", "getButton", "drawString", "creative-tooltip", "hovering-text", "callback-trigger-return"],
       "status": "verified",
-      "test": "LegacyApiAliasesTest and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
+      "test": "GuiCompatibilityTest, LegacyApiAliasesTest, and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
     },
     {
       "id": "legacy-keybind-lifecycle",
