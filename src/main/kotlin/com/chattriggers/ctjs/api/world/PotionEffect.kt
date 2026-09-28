@@ -32,6 +32,9 @@ class PotionEffect(val effect: MobEffectInstance) {
 
     val id get() = BuiltInRegistries.MOB_EFFECT.getId(effect.effect.value())
 
+    /** Legacy capitalization retained for 1.8.9 modules. */
+    fun getID() = id
+
     val ambient get() = effect.isAmbient
 
     fun isAmbient() = ambient
@@ -42,6 +45,9 @@ class PotionEffect(val effect: MobEffectInstance) {
     fun isDurationMax() = isInfinite
 
     val showsParticles get() = effect.isVisible
+
+    /** Legacy predicate name. */
+    fun showsParticles() = showsParticles
 
     override fun toString(): String = effect.toString()
 }

@@ -196,8 +196,10 @@ class LegacyApiAliasesTest {
             )
         }
         assertMethod(Scoreboard.Score::class.java, "getPoints")
-        assertMethod(PotionEffect::class.java, "isAmbient")
-        assertMethod(PotionEffect::class.java, "isDurationMax")
+          assertMethod(PotionEffect::class.java, "isAmbient")
+          assertMethod(PotionEffect::class.java, "isDurationMax")
+          assertMethod(PotionEffect::class.java, "getID")
+          assertMethod(PotionEffect::class.java, "showsParticles")
         assertMethod(Scoreboard.Score::class.java, "setPoints")
         assertStaticMethod(BlockFace::class.java, "fromMCEnumFacing")
         assertMethod(BlockFace::class.java, "getName")
