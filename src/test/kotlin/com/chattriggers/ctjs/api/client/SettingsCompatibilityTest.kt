@@ -21,4 +21,11 @@ class SettingsCompatibilityTest {
         assertEquals(Settings.ChatVisibility.FULL, Settings.ChatVisibility.fromLegacy("full"))
         assertEquals(Settings.ChatVisibility.FULL, Settings.ChatVisibility.fromLegacy("anything-else"))
     }
+
+    @Test
+    fun `legacy settings getters retain primitive returns`() {
+        assertEquals(Int::class.javaPrimitiveType, Settings.VideoWrapper::class.java.getMethod("getClouds").returnType)
+        assertEquals(Int::class.javaPrimitiveType, Settings.VideoWrapper::class.java.getMethod("getParticles").returnType)
+        assertEquals(String::class.java, Settings.ChatWrapper::class.java.getMethod("getVisibility").returnType)
+    }
 }

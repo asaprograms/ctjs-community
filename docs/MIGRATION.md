@@ -152,9 +152,7 @@ Here is a list of targeted changes for various different APIs:
   - Removed `video.get3dAnaglyph()` (3D Anaglyph no longer exists in MC)
   - The following methods have had their return values changed to enums:
     - `video.getGraphicsMode()` now returns `Settings.GraphicsMode` instead of `number`
-    - `video.getClouds()` now returns `Settings.CloudRenderMode` instead of `number`
-    - `video.getParticles()` now returns `Settings.ParticlesMode` instead of `number`
-    - `chat.getVisibility()` now returns `Settings.ChatVisibility` instead of `string`
+    - `video.getClouds()`, `video.getParticles()`, and `chat.getVisibility()` retain their legacy integer or string returns. Use `getCloudsMode()`, `getParticlesMode()`, and `getVisibilityMode()` for enum values.
 - `ChatLib`
   - `clearChat()` no longer takes any chat line IDs, and instead will always clear the chat. To selectively-delete message using their ID, use `deleteChat(id: number)`
   - Removed `getChatMessage()`. Instead, you can access the entire message as a `TextComponent` via `event.message`
