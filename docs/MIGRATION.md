@@ -191,7 +191,7 @@ Here is a list of targeted changes for various different APIs:
   - Most of `Renderer3d`'s rendering should be in `postRenderWorld`
   - Removed `enableAlpha()` and `disableAlpha()` as they do nothing on modern versions
 - `Gui`/`GuiHandler`
-  - `GuiHandler` has been removed. It only had one relevant method (`openGui()`), which can be replaced by `Client.currentGui.set()`
+  - `GuiHandler.openGui()` and `clearGuis()` remain available as legacy bridges. New code can use `Client.currentGui.set()` directly.
   - Removed `isControlDown()`, `isAltDown()`, and `isShiftDown()`. Instead, use the method that already exist on `Screen`: `hasControlDown()`, `hasAltDown()`, and `hasShiftDown()`
   - The various `register...()` methods now return the `Gui` instance for method chaining. Use the `unregister...()` methods for unregistering the respective triggers.
   - The `mouseDragged` trigger no longer takes `timeSinceLastClick`. If you _really_ need this, you can track it yourself
