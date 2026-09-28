@@ -10,6 +10,7 @@ import com.chattriggers.ctjs.api.render.Renderer
 import com.chattriggers.ctjs.api.world.PotionEffect
 import com.chattriggers.ctjs.api.world.Scoreboard
 import com.chattriggers.ctjs.api.world.World
+import com.chattriggers.ctjs.api.world.block.Block
 import com.chattriggers.ctjs.api.world.block.BlockFace
 import com.chattriggers.ctjs.api.world.block.BlockPos
 import com.chattriggers.ctjs.api.world.block.Sign
@@ -248,17 +249,17 @@ object Player {
 
     /**
      * Gets the current object that the player is looking at,
-     * whether that be a block or an entity. Returns null when not looking
-     * at anything.
+     * whether that be a block or an entity. A miss is represented by the
+     * legacy air-block wrapper rather than null.
      *
-     * @return the [Block] or [Entity] being looked at, or null if air
+     * @return the [Block] or [Entity] being looked at
      */
     @JvmStatic
-    fun lookingAt(): Any? {
+    fun lookingAt(): Any {
         val target = Client.getMinecraft().hitResult
 
         return when (target?.type) {
-            HitResult.Type.MISS -> null
+            HitResult.Type.MISS -> Block(0)
             HitResult.Type.BLOCK -> {
                 val block = target as BlockHitResult
                 val wrapped = World.getBlockAt(BlockPos(block.blockPos)).withFace(BlockFace.fromMC(block.direction))
@@ -267,7 +268,7 @@ object Player {
             HitResult.Type.ENTITY -> {
                 Entity.fromMC((target as EntityHitResult).entity)
             }
-            null -> null
+            null -> Block(0)
         }
     }
 

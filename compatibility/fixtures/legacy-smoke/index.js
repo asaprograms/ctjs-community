@@ -60,6 +60,9 @@ ChatLib.clearChat(2147483647);
 if (typeof Player.asEntity !== "function" || Player.asEntity() !== null) {
     throw new Error("Legacy Player.asEntity unloaded-player contract failed");
 }
+if (Player.lookingAt() === null) {
+    throw new Error("Legacy Player.lookingAt miss fallback failed");
+}
 if (typeof Player.getUUID() !== "string" || String(Player.getUUIDObj()) !== Player.getUUID()) {
     throw new Error("Legacy Player.getUUID string contract failed");
 }
