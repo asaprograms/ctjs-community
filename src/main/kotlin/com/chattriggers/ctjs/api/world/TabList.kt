@@ -5,6 +5,7 @@ import com.chattriggers.ctjs.api.CTWrapper
 import com.chattriggers.ctjs.api.client.Client
 import com.chattriggers.ctjs.api.client.Player
 import com.chattriggers.ctjs.api.entity.Team
+import com.chattriggers.ctjs.api.message.Message
 import com.chattriggers.ctjs.api.message.TextComponent
 import com.chattriggers.ctjs.internal.mixins.ClientPacketListenerAccessor
 import com.chattriggers.ctjs.internal.mixins.PlayerInfoAccessor
@@ -56,9 +57,9 @@ object TabList {
         return tabListHeader
     }
 
-    /** Legacy 1.8.9 name for [getHeaderComponent]. */
+    /** Legacy 1.8.9 message wrapper for [getHeaderComponent]. */
     @JvmStatic
-    fun getHeaderMessage() = getHeaderComponent()
+    fun getHeaderMessage(): Message? = getHeaderComponent()?.let { Message(it) }
 
     /**
      * Gets the tab list header as a formatted string.
@@ -108,9 +109,9 @@ object TabList {
         return tabListFooter
     }
 
-    /** Legacy 1.8.9 name for [getFooterComponent]. */
+    /** Legacy 1.8.9 message wrapper for [getFooterComponent]. */
     @JvmStatic
-    fun getFooterMessage() = getFooterComponent()
+    fun getFooterMessage(): Message? = getFooterComponent()?.let { Message(it) }
 
     /**
      * Gets the tab list footer as a string.

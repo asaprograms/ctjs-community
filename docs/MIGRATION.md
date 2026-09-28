@@ -202,8 +202,7 @@ Here is a list of targeted changes for various different APIs:
   - `addButton` now returns the ID instead of returning the `Gui` instance. This ID is used in various button APIs, primarily to indicate which button is clicked. This is a change in the MC API that we propogated to our API.
   - Removed a bunch of random draw method that didn't really belong in the class. They delegated to existing methods on `Screen`, so if you really want to, you can still call them, albeit with slightly different names and parameters.
 - `TabList`
-  - Renamed `getHeaderMessage()` to `getHeaderComponent()`, and it now returns a `TextComponent` instead of a `Message`
-  - Renamed `getFooterMessage()` to `getFooterComponent()`, and it now returns a `TextComponent` instead of a `Message`
+  - `getHeaderMessage()` and `getFooterMessage()` retain their legacy `Message` return. Use `getHeaderComponent()` and `getFooterComponent()` for the modern component representation.
   - Added `addName()`, `getList()`, and `removeNames()`
   - `getNames()` now returns a list of `Name`
   - Added `Name`

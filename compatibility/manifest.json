@@ -39,7 +39,7 @@
         "Chunk.getAllTileEntities"
       ],
       "status": "verified",
-      "test": "LegacyApiAliasesTest and ScoreboardCompatibilityTest"
+      "test": "LegacyApiAliasesTest, ScoreboardCompatibilityTest, and TabListCompatibilityTest"
     },
     {
       "id": "legacy-runtime-smoke",
