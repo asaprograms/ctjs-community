@@ -82,7 +82,11 @@ object World {
     fun getTime(): Long = toMC()?.gameTime ?: -1L
 
     @JvmStatic
-    fun getDifficulty(): Settings.Difficulty? = toMC()?.difficulty?.let(Settings.Difficulty::fromMC)
+    fun getDifficultyMode(): Settings.Difficulty? = toMC()?.difficulty?.let(Settings.Difficulty::fromMC)
+
+    /** Legacy difficulty name, such as `peaceful`, `easy`, `normal`, or `hard`. */
+    @JvmStatic
+    fun getDifficulty(): String? = getDifficultyMode()?.name?.lowercase()
 
     /** Returns the current lunar phase, from 0 through 7. */
     @JvmStatic

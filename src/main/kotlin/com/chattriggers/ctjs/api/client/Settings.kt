@@ -23,7 +23,10 @@ object Settings {
     }
 
     @JvmStatic
-    fun getDifficulty() = World.getDifficulty()
+    /** Legacy numeric difficulty ID. */
+    fun getDifficulty(): Int = World.getDifficultyMode()?.ordinal ?: -1
+
+    fun getDifficultyMode() = World.getDifficultyMode()
 
     @JvmField
     val skin = SkinWrapper()
