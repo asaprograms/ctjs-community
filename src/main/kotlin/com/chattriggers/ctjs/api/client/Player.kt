@@ -259,7 +259,7 @@ object Player {
         val target = Client.getMinecraft().hitResult
 
         return when (target?.type) {
-            HitResult.Type.MISS -> Block(0)
+            HitResult.Type.MISS -> Block("minecraft:air")
             HitResult.Type.BLOCK -> {
                 val block = target as BlockHitResult
                 val wrapped = World.getBlockAt(BlockPos(block.blockPos)).withFace(BlockFace.fromMC(block.direction))
@@ -268,7 +268,7 @@ object Player {
             HitResult.Type.ENTITY -> {
                 Entity.fromMC((target as EntityHitResult).entity)
             }
-            null -> Block(0)
+            null -> Block("minecraft:air")
         }
     }
 
