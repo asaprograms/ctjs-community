@@ -31,9 +31,9 @@ open class LivingEntity(override val mcValue: MCLivingEntity) : Entity(mcValue) 
     /** Legacy 1.8.9 name for [getStackInSlot]. */
     fun getItemInSlot(slot: Int) = getStackInSlot(slot)
 
-    fun getHP() = mcValue.health
+    override fun getHP() = mcValue.health
 
-    fun getMaxHP() = mcValue.maxHealth
+    override fun getMaxHP() = mcValue.maxHealth
 
     fun getAbsorption() = mcValue.absorptionAmount
 
