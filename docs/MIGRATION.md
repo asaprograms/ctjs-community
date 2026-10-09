@@ -205,7 +205,7 @@ Here is a list of targeted changes for various different APIs:
     - acts similarly to `Scoreboard.Score`, with the following methods
     - `getLatency()`, `setLatency()`, `getName()`, `setName()`, `getTeam()`, `setTeam()`, and `remove()`
 - `Team`
-  - `Team.getNameTagVisibility()` and `Team.getDeathMessageVisibility()` now return a `Team.Visibility` instead of a string
+  - `getNameTagVisibility()` and `getDeathMessageVisibility()` retain legacy strings. Use the corresponding `...Mode()` accessor for `Team.Visibility`.
   - Added `setColor()`
 - `Client`
   - `getChatGUI` was renamed to `getChatGui` to match the naming of `getTabGui`
