@@ -120,18 +120,32 @@ class Team(override val mcValue: MCTeam) : CTWrapper<MCTeam> {
     /**
      * Gets the team's name tag visibility
      */
-    fun getNameTagVisibility() = Visibility.fromMC(mcValue.nameTagVisibility)
+    fun getNameTagVisibilityMode() = Visibility.fromMC(mcValue.nameTagVisibility)
+
+    /** Legacy visibility string. */
+    fun getNameTagVisibility(): String = getNameTagVisibilityMode().legacyName
 
     /**
      * Gets the team's death message visibility
      */
-    fun getDeathMessageVisibility() = Visibility.fromMC(mcValue.deathMessageVisibility)
+    fun getDeathMessageVisibilityMode() = Visibility.fromMC(mcValue.deathMessageVisibility)
+
+    /** Legacy visibility string. */
+    fun getDeathMessageVisibility(): String = getDeathMessageVisibilityMode().legacyName
 
     enum class Visibility(override val mcValue: Team.Visibility) : CTWrapper<Team.Visibility> {
         ALWAYS(Team.Visibility.ALWAYS),
         NEVER(Team.Visibility.NEVER),
         HIDE_FOR_OTHERS_TEAMS(Team.Visibility.HIDE_FOR_OTHER_TEAMS),
         HIDE_FOR_OWN_TEAM(Team.Visibility.HIDE_FOR_OWN_TEAM);
+
+        val legacyName: String
+            get() = when (this) {
+                ALWAYS -> "always"
+                NEVER -> "never"
+                HIDE_FOR_OTHERS_TEAMS -> "hideForOtherTeams"
+                HIDE_FOR_OWN_TEAM -> "hideForOwnTeam"
+            }
 
         companion object {
             @JvmStatic
