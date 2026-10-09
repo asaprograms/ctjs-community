@@ -192,7 +192,7 @@ Here is a list of targeted changes for various different APIs:
   - Removed `enableAlpha()` and `disableAlpha()` as they do nothing on modern versions
 - `Gui`/`GuiHandler`
   - `GuiHandler.openGui()` and `clearGuis()` remain available as legacy bridges. New code can use `Client.currentGui.set()` directly.
-  - Removed `isControlDown()`, `isAltDown()`, and `isShiftDown()`. Instead, use the method that already exist on `Screen`: `hasControlDown()`, `hasAltDown()`, and `hasShiftDown()`
+  - `isControlDown()`, `isAltDown()`, and `isShiftDown()` remain available as legacy aliases. New GUI code can also use the corresponding `Client` helpers.
   - The various `register...()` methods now return the `Gui` instance for method chaining. Use the `unregister...()` methods for unregistering the respective triggers.
   - The `mouseDragged` trigger no longer takes `timeSinceLastClick`. If you _really_ need this, you can track it yourself
   - `addButton` now returns the ID instead of returning the `Gui` instance. This ID is used in various button APIs, primarily to indicate which button is clicked. This is a change in the MC API that we propogated to our API.

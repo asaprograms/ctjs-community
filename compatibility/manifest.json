@@ -539,6 +539,13 @@
       "coverage": ["Player-positional-draw", "PlayerMP-positional-draw", "legacy-rotate-defaults", "tab-display-name-mutation", "Player-asEntity", "Player-lookingAt-air-fallback", "Player-getUUID-string", "Player-getUUIDObj"],
       "status": "verified",
       "test": "PlayerMPCompatibilityTest, LegacyApiAliasesTest, mixin application, and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
+    },
+    {
+      "id": "legacy-team-visibility",
+      "source": "ChatTriggers 1.3.2 Team API",
+      "coverage": ["name-tag-visibility-string", "death-message-visibility-string", "legacy-visibility-names", "enum-mode-accessors"],
+      "status": "verified",
+      "test": "TeamCompatibilityTest on Minecraft 26.2 and 26.1.2"
     }
   ]
 }
