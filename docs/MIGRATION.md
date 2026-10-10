@@ -74,7 +74,7 @@ These are API changes that typically involve consistency and affect multiple dif
 Here is a list of targeted changes for various different APIs:
 
 - Triggers
-  - `chatComponentClicked` and `chatComponentHovered` receive a styled component that preserves the click or hover metadata. Minecraft's current text hit-testing exposes the selected style but not the source component text, so the wrapper's text is empty.
+  - `chatComponentClicked` and `chatComponentHovered` receive a styled component that preserves click or hover metadata. The bridge recovers the matching source text from chat history when it is unambiguous. Modern hit-testing exposes only the selected style, so repeated identical styles across messages cannot always be attributed to one exact source component.
     - All of these triggers had less than 10 uses over all releases on our website. If you maintain one of the few releases who used one of these triggers, they can be replaced with a custom Mixin.
   - `attackEntity`, `hitBlock`, `blockBreak`, and `guiMouseRelease` remain available as legacy trigger names.
   - `playerInteract` now passes the interacted-with object as the second argument instead of the object's position (which can be retrieved via a method on the object wrapper, which is either an `Entity`, `Block`, or `Item`). The list of events has also changed.
