@@ -420,12 +420,14 @@ register("guiRender", () => {
 
     if (rendererSmokeDrawn) return;
 
+    Renderer.enableBlend().disableCull().disableDepth();
     Renderer.begin(Renderer.DrawMode.QUADS, Renderer.VertexFormat.POSITION_COLOR);
     Renderer.pos(2, 2).color(255, 255, 255, 255);
     Renderer.pos(2, 4).color(255, 255, 255, 255);
     Renderer.pos(4, 4).color(255, 255, 255, 255);
     Renderer.pos(4, 2).color(255, 255, 255, 255);
     Renderer.draw();
+    Renderer.enableDepth().enableCull().disableBlend();
 
     Renderer.setDrawMode(7);
     if (Renderer.getDrawMode() !== 7) {
