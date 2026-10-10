@@ -64,12 +64,36 @@ object JSLoader {
         moduleProvider = StrongCachingModuleScriptProvider(sourceProvider)
         moduleScope = ImporterTopLevel(cx)
         evalScope = ImporterTopLevel(cx)
+        installJavaCompatibility(moduleScope)
+        installJavaCompatibility(evalScope)
         require = CTRequire(moduleProvider)
         require.install(moduleScope)
         require.install(evalScope)
         Context.exit()
 
         mixinLibsLoaded = false
+    }
+
+    private fun installJavaCompatibility(scope: Scriptable) {
+        if (ScriptableObject.hasProperty(scope, "Java")) return
+
+        val java = NativeObject()
+        val type = object : BaseFunction() {
+            override fun call(
+                context: Context,
+                scope: Scriptable,
+                thisObj: Scriptable,
+                args: Array<out Any?>,
+            ): Any {
+                require(args.size == 1) { "Java.type expects exactly one class name" }
+                val className = Context.toString(args[0])
+                val javaClass = Class.forName(className, true, context.applicationClassLoader)
+                return NativeJavaClass(scope, javaClass)
+            }
+        }
+
+        java.put("type", java, type)
+        ScriptableObject.putProperty(scope, "Java", java)
     }
 
     internal fun mixinSetup(modules: List<Module>): Map<Mixin, MixinDetails> {
