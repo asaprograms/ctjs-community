@@ -201,7 +201,7 @@ Here is a list of targeted changes for various different APIs:
 - `TabList`
   - `getHeaderMessage()` and `getFooterMessage()` retain their legacy `Message` return. Use `getHeaderComponent()` and `getFooterComponent()` for the modern component representation.
   - Added `addName()`, `getList()`, and `removeNames()`
-  - `getNames()` now returns a list of `Name`
+  - `getNames()` retains the legacy formatted string list. Use `getList()` for mutable `Name` wrappers.
   - Added `Name`
     - acts similarly to `Scoreboard.Score`, with the following methods
     - `getLatency()`, `setLatency()`, `getName()`, `setName()`, `getTeam()`, `setTeam()`, and `remove()`

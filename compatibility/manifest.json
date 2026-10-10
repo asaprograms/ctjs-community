@@ -35,11 +35,13 @@
         "Scoreboard.Score.getName-string",
         "TabList.getFooterMessage",
         "TabList.getHeaderMessage",
+        "TabList.getNames-string-list",
+        "TabList.getList-name-wrappers",
         "World.getAllTileEntities",
         "Chunk.getAllTileEntities"
       ],
       "status": "verified",
-      "test": "LegacyApiAliasesTest, ScoreboardCompatibilityTest, and TabListCompatibilityTest"
+      "test": "LegacyApiAliasesTest, ScoreboardCompatibilityTest, TabListCompatibilityTest, and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
     },
     {
       "id": "legacy-runtime-smoke",

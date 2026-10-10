@@ -168,10 +168,16 @@ object TabList {
     /**
      * Get all names on the tab list
      *
-     * @return the list of names
+     * @return the formatted names, as returned by the historical API
      */
     @JvmStatic
-    fun getNames(): List<Name> {
+    fun getNames(): List<String> = getList().map { it.getName().formattedText }
+
+    /**
+     * Gets the mutable modern entries that back the tab list.
+     */
+    @JvmStatic
+    fun getList(): List<Name> {
         if (needsUpdate) {
             updateNames()
             needsUpdate = false

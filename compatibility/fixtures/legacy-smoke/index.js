@@ -72,6 +72,9 @@ if (typeof Player.getUUID() !== "string" || String(Player.getUUIDObj()) !== Play
 if (typeof Scoreboard.getTitle() !== "string" || typeof Scoreboard.getScoreboardTitle() !== "string") {
     throw new Error("Legacy Scoreboard title string contract failed");
 }
+if (typeof TabList.getNames().size !== "function" || typeof TabList.getList().size !== "function") {
+    throw new Error("Legacy TabList name list contract failed");
+}
 for (const method of ["playSound", "playRecord", "stopAllSounds"]) {
     if (typeof World[method] !== "function") {
         throw new Error(`Legacy World.${method} is not exported`);
