@@ -101,6 +101,9 @@ const legacyGui = new Gui();
 if (typeof GuiHandler.openGui !== "function" || typeof GuiHandler.clearGuis !== "function") {
     throw new Error("Legacy GuiHandler API is not exported");
 }
+if (legacyGui.addButton(91, 1, 2, 20, 20, "Legacy button") !== legacyGui || legacyGui.getButton(91) === null) {
+    throw new Error("Legacy Gui.addButton(id, x, y, width, height, text) contract failed");
+}
 for (const method of [
     "close", "isControlDown", "isShiftDown", "isAltDown", "getButton",
     "drawString", "drawCreativeTabHoveringString", "drawHoveringString",
@@ -363,7 +366,7 @@ const legacyDisplay = new Display()
     .setRenderLoc(6, 6)
     .setRegisterType("post gui render");
 const legacyDisplayLine = new DisplayLine("initial").setText("legacy line").setTextColor(0xffffffff);
-if (legacyDisplayLine.getText().getString() !== "legacy line" || legacyDisplayLine.getTextWidth() <= 0) {
+if (legacyDisplayLine.getText().getString() !== "legacy line") {
     throw new Error("Legacy DisplayLine text contract failed");
 }
 if (legacyDisplayLine.setWidth(24) !== legacyDisplayLine || legacyDisplayLine.getMaxWidth() !== 24) {
@@ -387,6 +390,9 @@ legacyDisplay.addLine(0, legacyDisplayLine);
 register("guiRender", () => {
     displayFrameCount++;
     if (displayFrameCount === 1) {
+        if (legacyDisplayLine.getTextWidth() <= 0) {
+            throw new Error("Legacy DisplayLine text width contract failed");
+        }
         Player.draw(0, 0, false);
         Renderer.drawPlayer(null, 0, 0, false);
         Renderer.drawString("legacy renderer text", 0, 0);
