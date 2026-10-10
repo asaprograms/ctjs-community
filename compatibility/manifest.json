@@ -29,6 +29,7 @@
         "Client.getChatGUI",
         "LivingEntity.getItemInSlot",
         "Inventory.getItemInSlot",
+        "Inventory.getSize",
         "Item.isDamagable",
         "Scoreboard.getScoreboardTitle",
         "Scoreboard.getTitle-string",

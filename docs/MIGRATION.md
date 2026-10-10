@@ -117,6 +117,7 @@ Here is a list of targeted changes for various different APIs:
   - Name changed from `EntityLivingBase`
   - Renamed `getItemInSlot()` to `getStackInSlot()`, which matches the method of the same name in `Inventory`
 - `TileEntity` remains available as a legacy wrapper. New code can use `BlockEntity`; legacy tile-entity lists and the `getMetadata()` accessor retain their original shape.
+- `Inventory.getSize()` remains available as the legacy method form of the modern `size` property.
 - `PotionEffect`
   - This API has been completely reworked, and is now similar to the `Block` API. The `PotionEffect` object represents a specific instance of an effect, and will have a `PotionEffectType`, which represents the kind of effect it is. Check out the docs for more info on how to use this new API
   - Renamed `isDurationMax()` to `isInfinite()`
