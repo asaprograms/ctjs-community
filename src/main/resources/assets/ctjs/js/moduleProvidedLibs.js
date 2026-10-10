@@ -29,7 +29,7 @@
     const getClassName = path => path.substring(path.lastIndexOf('.') + 1)
 
     function loadClass(path, className = getClassName(path)) {
-        global[className] = Java.class(path);
+        global[className] = Java.type(path);
     }
 
     // API
@@ -130,7 +130,7 @@
 
     loadClass("com.chattriggers.ctjs.engine.Register", "TriggerRegister");
     loadClass("com.chattriggers.ctjs.engine.WrappedThread", "Thread");
-    global.Priority = Java.class("com.chattriggers.ctjs.api.triggers.Trigger").Priority;
+    global.Priority = Java.type("com.chattriggers.ctjs.api.triggers.Trigger").Priority;
     loadClass("com.chattriggers.ctjs.CTJS", "ChatTriggers");
     global.Console = Java.type("com.chattriggers.ctjs.engine.Console").INSTANCE;
 
