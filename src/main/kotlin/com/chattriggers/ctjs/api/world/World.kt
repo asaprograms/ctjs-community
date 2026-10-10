@@ -5,6 +5,7 @@ import com.chattriggers.ctjs.MCParticle
 import com.chattriggers.ctjs.api.client.Client
 import com.chattriggers.ctjs.api.client.Settings
 import com.chattriggers.ctjs.api.entity.BlockEntity
+import com.chattriggers.ctjs.api.entity.TileEntity
 import com.chattriggers.ctjs.api.entity.Entity
 import com.chattriggers.ctjs.api.entity.Particle
 import com.chattriggers.ctjs.api.entity.PlayerMP
@@ -288,7 +289,7 @@ object World {
 
     /** Legacy 1.8.9 name for [getAllBlockEntities]. */
     @JvmStatic
-    fun getAllTileEntities() = getAllBlockEntities()
+    fun getAllTileEntities(): List<TileEntity> = getAllBlockEntities().map { TileEntity(it.toMC()) }
 
     @JvmStatic
     fun getAllBlockEntitiesOfType(clazz: Class<*>): List<BlockEntity> {
@@ -299,7 +300,8 @@ object World {
 
     /** Legacy 1.8.9 name for [getAllBlockEntitiesOfType]. */
     @JvmStatic
-    fun getAllTileEntitiesOfType(clazz: Class<*>) = getAllBlockEntitiesOfType(clazz)
+    fun getAllTileEntitiesOfType(clazz: Class<*>): List<TileEntity> =
+        getAllBlockEntitiesOfType(clazz).map { TileEntity(it.toMC()) }
 
     /**
      * Returns the TPS of the current world.

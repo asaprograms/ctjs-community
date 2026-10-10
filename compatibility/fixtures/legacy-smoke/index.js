@@ -35,6 +35,9 @@ if (Config.modulesFolder !== ChatTriggers.MODULES_FOLDER) {
 if (typeof Client.getChatGUI !== "function") {
     throw new Error("Client.getChatGUI legacy alias is not exported");
 }
+if (typeof TileEntity !== "function" || TileEntity.class.getMethod("getMetadata") === null) {
+    throw new Error("Legacy TileEntity wrapper is not exported");
+}
 for (const method of ["cancel", "getMessage", "getType"]) {
     if (typeof EventLib[method] !== "function") {
         throw new Error(`Legacy EventLib.${method} is not exported`);

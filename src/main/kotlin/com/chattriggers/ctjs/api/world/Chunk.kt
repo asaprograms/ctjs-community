@@ -2,6 +2,7 @@ package com.chattriggers.ctjs.api.world
 
 import com.chattriggers.ctjs.api.CTWrapper
 import com.chattriggers.ctjs.api.entity.BlockEntity
+import com.chattriggers.ctjs.api.entity.TileEntity
 import com.chattriggers.ctjs.api.entity.Entity
 import com.chattriggers.ctjs.internal.mixins.ChunkAccessAccessor
 import com.chattriggers.ctjs.MCBlockPos
@@ -78,7 +79,7 @@ class Chunk(override val mcValue: MCChunk) : CTWrapper<MCChunk> {
     }
 
     /** Legacy 1.8.9 name for [getAllBlockEntities]. */
-    fun getAllTileEntities() = getAllBlockEntities()
+    fun getAllTileEntities(): List<TileEntity> = getAllBlockEntities().map { TileEntity(it.toMC()) }
 
     /**
      * Gets every block entity in this chunk of a certain class
@@ -93,5 +94,6 @@ class Chunk(override val mcValue: MCChunk) : CTWrapper<MCChunk> {
     }
 
     /** Legacy 1.8.9 name for [getAllBlockEntitiesOfType]. */
-    fun getAllTileEntitiesOfType(clazz: Class<*>) = getAllBlockEntitiesOfType(clazz)
+    fun getAllTileEntitiesOfType(clazz: Class<*>): List<TileEntity> =
+        getAllBlockEntitiesOfType(clazz).map { TileEntity(it.toMC()) }
 }
