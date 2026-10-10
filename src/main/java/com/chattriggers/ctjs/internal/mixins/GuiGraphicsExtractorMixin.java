@@ -3,9 +3,9 @@ package com.chattriggers.ctjs.internal.mixins;
 import com.chattriggers.ctjs.api.inventory.Item;
 import com.chattriggers.ctjs.api.message.TextComponent;
 import com.chattriggers.ctjs.api.triggers.TriggerType;
+import com.chattriggers.ctjs.internal.chat.ChatComponentSourceResolver;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -20,7 +20,7 @@ public class GuiGraphicsExtractorMixin {
     @Inject(method = "componentHoverEffect", at = @At("HEAD"), cancellable = true)
     private void ctjs$chatComponentHovered(Font font, Style style, int x, int y, CallbackInfo ci) {
         TriggerType.CHAT_COMPONENT_HOVERED.triggerAll(
-            new TextComponent(Component.empty().withStyle(style)), x, y, ci
+            new TextComponent(ChatComponentSourceResolver.resolve(style)), x, y, ci
         );
     }
 

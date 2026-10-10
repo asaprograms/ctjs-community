@@ -3,8 +3,8 @@ package com.chattriggers.ctjs.internal.mixins;
 import com.chattriggers.ctjs.api.message.TextComponent;
 import com.chattriggers.ctjs.api.triggers.CancellableEvent;
 import com.chattriggers.ctjs.api.triggers.TriggerType;
+import com.chattriggers.ctjs.internal.chat.ChatComponentSourceResolver;
 import net.minecraft.client.gui.screens.ChatScreen;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -21,7 +21,7 @@ public class ChatScreenMixin {
     ) {
         CancellableEvent event = new CancellableEvent();
         TriggerType.CHAT_COMPONENT_CLICKED.triggerAll(
-            new TextComponent(Component.empty().withStyle(style)), event
+            new TextComponent(ChatComponentSourceResolver.resolve(style)), event
         );
         if (event.isCancelled()) {
             cir.setReturnValue(false);

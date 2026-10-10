@@ -37,6 +37,12 @@ class CTJS : ClientModInitializer {
 
         Config.loadData()
 
+        // Module discovery runs during mixin bootstrap. Execute module entries on
+        // the first client tick, once the Minecraft client and its options are ready.
+        Client.scheduleTask {
+            load(asCommand = false)
+        }
+
         Runtime.getRuntime().addShutdownHook(Thread {
             TriggerType.GAME_UNLOAD.triggerAll()
             Console.close()

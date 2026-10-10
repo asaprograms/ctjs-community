@@ -152,10 +152,10 @@
     {
       "id": "legacy-chat-component-triggers",
       "source": "ChatTriggers 2.2.0 chatComponentClicked and chatComponentHovered contracts",
-      "coverage": ["click-style-metadata", "hover-style-metadata", "mouse-position", "cancellation"],
+      "coverage": ["click-style-metadata", "hover-style-metadata", "source-component-recovery", "mouse-position", "cancellation"],
       "status": "partial",
-      "limitation": "Modern hit-testing exposes the selected Style but not its source Component text; the wrapped component therefore has empty text.",
-      "test": "Chat screen and GUI hover mixin validation plus legacy registration smoke"
+      "limitation": "Modern hit-testing identifies only the selected Style. The bridge recovers matching source text from chat history, but identical styles in multiple messages remain ambiguous.",
+      "test": "ChatComponentSourceResolverTest plus chat screen and GUI hover mixin validation"
     },
     {
       "id": "legacy-pickup-item-trigger",
