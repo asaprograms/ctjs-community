@@ -4,6 +4,7 @@ import com.chattriggers.ctjs.api.triggers.RegularTrigger
 import net.minecraft.client.gui.screens.Screen
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class GuiCompatibilityTest {
     @Test
@@ -21,5 +22,21 @@ class GuiCompatibilityTest {
     fun `legacy gui handler surface remains available`() {
         GuiHandler::class.java.getMethod("openGui", Screen::class.java)
         GuiHandler::class.java.getMethod("clearGuis")
+    }
+
+    @Test
+    fun `legacy explicit button ID overload remains available`() {
+        val expectedParameters = arrayOf(
+            Int::class.javaPrimitiveType!!,
+            Int::class.javaPrimitiveType!!,
+            Int::class.javaPrimitiveType!!,
+            Int::class.javaPrimitiveType!!,
+            Int::class.javaPrimitiveType!!,
+            String::class.java,
+        )
+        val method = Gui::class.java.getMethod("addButton", *expectedParameters)
+
+        assertEquals(Gui::class.java, method.returnType)
+        assertTrue(method.parameterTypes.contentEquals(expectedParameters))
     }
 }

@@ -351,6 +351,31 @@ class Gui @JvmOverloads constructor(
         addButton(x, y, width, height, TextComponent(buttonText))
 
     /**
+     * Adds a button with the caller-selected legacy ID.
+     *
+     * This overload preserves the 1.8.9 ChatTriggers shape. The modern overload
+     * without [buttonId] allocates an ID automatically and returns it instead.
+     */
+    @JvmOverloads
+    fun addButton(
+        buttonId: Int,
+        x: Int,
+        y: Int,
+        width: Int = 200,
+        height: Int = 20,
+        buttonText: String,
+    ) = apply {
+        buttons.remove(buttonId)?.let(::removeWidget)
+        buttons[buttonId] = Button.builder(TextComponent(buttonText)) {
+            onActionPerformed?.trigger(arrayOf(buttonId))
+        }.bounds(x, y, width, height).build()
+        addRenderableWidget(buttons.getValue(buttonId))
+        if (buttonId >= nextButtonId) {
+            nextButtonId = buttonId + 1
+        }
+    }
+
+    /**
      * Removes a button from the gui with the given id
      *
      * @param buttonId the id of the button to remove

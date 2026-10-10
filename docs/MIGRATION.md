@@ -195,7 +195,7 @@ Here is a list of targeted changes for various different APIs:
   - `isControlDown()`, `isAltDown()`, and `isShiftDown()` remain available as legacy aliases. New GUI code can also use the corresponding `Client` helpers.
   - The various `register...()` methods now return the `Gui` instance for method chaining. Use the `unregister...()` methods for unregistering the respective triggers.
   - The `mouseDragged` trigger no longer takes `timeSinceLastClick`. If you _really_ need this, you can track it yourself
-  - `addButton` now returns the ID instead of returning the `Gui` instance. This ID is used in various button APIs, primarily to indicate which button is clicked. This is a change in the MC API that we propogated to our API.
+  - The modern `addButton(x, y, ...)` overload returns an allocated ID. The legacy `addButton(id, x, y, ...)` overload remains available and returns the `Gui` for chaining.
   - Removed a bunch of random draw method that didn't really belong in the class. They delegated to existing methods on `Screen`, so if you really want to, you can still call them, albeit with slightly different names and parameters.
 - `TabList`
   - `getHeaderMessage()` and `getFooterMessage()` retain their legacy `Message` return. Use `getHeaderComponent()` and `getFooterComponent()` for the modern component representation.
