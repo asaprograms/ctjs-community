@@ -657,8 +657,14 @@ class TextComponent private constructor(
                 ClickEvent.Action.SUGGEST_COMMAND -> ClickEvent.SuggestCommand(clickValue)
                 ClickEvent.Action.CHANGE_PAGE -> clickValue.toIntOrNull()?. let { ClickEvent.ChangePage(it) }
                 ClickEvent.Action.COPY_TO_CLIPBOARD -> ClickEvent.CopyToClipboard(clickValue)
-                ClickEvent.Action.SHOW_DIALOG -> TODO()
-                ClickEvent.Action.CUSTOM -> TODO()
+                ClickEvent.Action.SHOW_DIALOG -> error(
+                    "SHOW_DIALOG click events require a server-registered dialog and cannot be created from a string value"
+                )
+                ClickEvent.Action.CUSTOM -> {
+                    val id = Identifier.tryParse(clickValue)
+                        ?: error("CUSTOM click event values must be valid resource identifiers")
+                    ClickEvent.Custom(id, Optional.empty())
+                }
             }
         }
 
@@ -712,6 +718,10 @@ class TextComponent private constructor(
                 is ClickEvent.SuggestCommand -> event.command
                 is ClickEvent.ChangePage -> event.page
                 is ClickEvent.CopyToClipboard -> event.value
+                is ClickEvent.ShowDialog -> event.dialog().unwrapKey()
+                    .map { it.identifier().toString() }
+                    .orElseGet { event.dialog().toString() }
+                is ClickEvent.Custom -> event.id().toString()
                 else -> error("${event::class} is not of a supported type")
             }
         }
