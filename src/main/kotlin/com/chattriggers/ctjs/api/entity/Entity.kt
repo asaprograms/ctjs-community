@@ -295,7 +295,13 @@ open class Entity(override val mcValue: MCEntity) : CTWrapper<MCEntity> {
         if (eating) living.startUsingItem(InteractionHand.MAIN_HAND) else living.stopUsingItem()
     }
 
-    fun isOutsideBorder() = World.toMC()?.worldBorder?.isWithinBounds(mcValue.blockPosition()) ?: false
+    /**
+     * Returns whether this entity is beyond the current world's border.
+     *
+     * The old wrapper delegated to Minecraft's entity border flag. Modern
+     * clients derive that value from the world's authoritative border bounds.
+     */
+    fun isOutsideBorder() = World.toMC()?.worldBorder?.isWithinBounds(mcValue.blockPosition())?.not() ?: false
 
     fun isBurning(): Boolean = mcValue.isOnFire
 

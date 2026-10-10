@@ -110,6 +110,7 @@ Here is a list of targeted changes for various different APIs:
 - `Entity`
   - `getRider()` is retained as a compatibility alias and returns the first rider. Use `getRiders()` when a module needs every passenger.
   - `getHP()` and `getMaxHP()` remain available on the base wrapper, returning `0` for non-living entities as they did on 1.8.9.
+  - `isOutsideBorder()` remains available and is derived from the current world's border bounds.
   - Removed `isAirborne()`, which no longer exists in the MC API
   - `getDimension()` now returns an `Entity.DimensionType` enum value instead of an int
 - `LivingEntity`
