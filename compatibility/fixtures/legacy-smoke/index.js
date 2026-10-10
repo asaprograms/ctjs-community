@@ -111,6 +111,9 @@ World.playRecord(null, 0, 0, 0);
 World.stopAllSounds();
 
 const legacyGui = new Gui();
+if (legacyGui.setTooltip("Legacy tooltip") !== legacyGui) {
+    throw new Error("Legacy Gui.setTooltip must remain chainable");
+}
 if (typeof GuiHandler.openGui !== "function" || typeof GuiHandler.clearGuis !== "function") {
     throw new Error("Legacy GuiHandler API is not exported");
 }

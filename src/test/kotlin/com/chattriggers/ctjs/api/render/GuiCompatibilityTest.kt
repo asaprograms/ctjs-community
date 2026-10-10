@@ -39,4 +39,9 @@ class GuiCompatibilityTest {
         assertEquals(Gui::class.java, method.returnType)
         assertTrue(method.parameterTypes.contentEquals(expectedParameters))
     }
+
+    @Test
+    fun `legacy tooltip setter remains chainable`() {
+        assertEquals(Gui::class.java, Gui::class.java.getMethod("setTooltip", String::class.java).returnType)
+    }
 }
