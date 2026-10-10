@@ -169,6 +169,7 @@ class LegacyApiAliasesTest {
         }
         assertMethod(LivingEntity::class.java, "getItemInSlot")
         assertMethod(Inventory::class.java, "getItemInSlot")
+        assertMethod(Inventory::class.java, "getSize")
         assertMethod(Inventory::class.java, "isContainer")
         assertMethod(Inventory::class.java, "doAction")
         assertMethod(Item::class.java, "isDamagable")
