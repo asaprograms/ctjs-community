@@ -16,4 +16,9 @@ class EntityCompatibilityTest {
         val method = Entity::class.java.getMethod("getEyePosition", Float::class.javaPrimitiveType)
         assertEquals(Vec3::class.java, method.returnType)
     }
+
+    @Test
+    fun `legacy outside border query remains exported`() {
+        assertEquals(Boolean::class.javaPrimitiveType, Entity::class.java.getMethod("isOutsideBorder").returnType)
+    }
 }
