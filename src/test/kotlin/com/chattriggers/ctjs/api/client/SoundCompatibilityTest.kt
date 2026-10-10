@@ -29,6 +29,13 @@ class SoundCompatibilityTest {
     }
 
     @Test
+    fun `legacy attenuation names resolve case insensitively`() {
+        assertEquals(Sound.AttenuationType.NONE, Sound.AttenuationType.from("none"))
+        assertEquals(Sound.AttenuationType.LINEAR, Sound.AttenuationType.from("LINEAR"))
+        assertFailsWith<IllegalArgumentException> { Sound.AttenuationType.from("invalid") }
+    }
+
+    @Test
     fun `generated sound resource pack supports lifecycle calls`() {
         val pack = Sound.CTResourcePack
 

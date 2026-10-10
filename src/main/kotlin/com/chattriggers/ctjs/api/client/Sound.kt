@@ -2,7 +2,6 @@ package com.chattriggers.ctjs.api.client
 
 import com.chattriggers.ctjs.CTJS
 import com.chattriggers.ctjs.api.CTWrapper
-import com.chattriggers.ctjs.api.world.World
 import com.chattriggers.ctjs.internal.mixins.AbstractSoundInstanceAccessor
 import com.chattriggers.ctjs.internal.mixins.sound.SoundAccessor
 import com.chattriggers.ctjs.internal.mixins.sound.SoundManagerAccessor
@@ -262,13 +261,10 @@ class Sound(private val config: NativeObject) {
     }
 
     /**
-     * Plays/resumes the sound. This requires the world to be loaded
+     * Plays/resumes the sound.
      */
     @JvmOverloads
     fun play(delay: Int = 0) {
-        // TODO: Figure out how to work without a world
-        require (World.isLoaded()) { "Can not play a custom sound outside the world" }
-
         bootstrap()
 
         // soundSystem.play() does a lot of setup and, most importantly, creates a new
@@ -287,12 +283,9 @@ class Sound(private val config: NativeObject) {
     }
 
     /**
-     * Pauses the sound, to be resumed later. This requires the world to be loaded
+     * Pauses the sound, to be resumed later.
      */
     fun pause() {
-        // TODO: Figure out how to work without a world
-        require (World.isLoaded()) { "Can not pause a custom sound outside the world" }
-
         bootstrap()
 
         Client.scheduleTask {
@@ -304,12 +297,9 @@ class Sound(private val config: NativeObject) {
     }
 
     /**
-     * Completely stops the sound. This requires the world to be loaded
+     * Completely stops the sound.
      */
     fun stop() {
-        // TODO: Figure out how to work without a world
-        require (World.isLoaded()) { "Can not stop a custom sound outside the world" }
-
         bootstrap()
         soundSystem.stop(soundImpl)
         isPaused = false
@@ -432,10 +422,7 @@ class Sound(private val config: NativeObject) {
             this.attenuation = attenuationType
         }
 
-        override fun tick() {
-            if (!World.isLoaded())
-                stop()
-        }
+        override fun tick() = Unit
 
         override fun getSource(): SoundSource {
             return categoryOverride
@@ -508,10 +495,10 @@ class Sound(private val config: NativeObject) {
 
             @JvmStatic
             fun from(value: Any) = when (value) {
-                is CharSequence -> valueOf(value.toString())
+                is CharSequence -> valueOf(value.toString().trim().uppercase())
                 is MCAttenuationType -> fromMC(value)
                 is AttenuationType -> value
-                else -> throw IllegalArgumentException("Cannot create Sound.Category from $value")
+                else -> throw IllegalArgumentException("Cannot create Sound.AttenuationType from $value")
             }
         }
     }

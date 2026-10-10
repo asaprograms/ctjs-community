@@ -32,6 +32,17 @@ if (Config.modulesFolder !== ChatTriggers.MODULES_FOLDER) {
     throw new Error("Legacy Config.modulesFolder does not match the runtime module directory");
 }
 
+const legacyMenuSound = new Sound({
+    source: "minecraft:ui.button.click",
+    x: 0,
+    y: 0,
+    z: 0,
+    attenuationType: "none"
+});
+legacyMenuSound.play();
+legacyMenuSound.pause();
+legacyMenuSound.stop();
+
 if (typeof Client.getChatGUI !== "function") {
     throw new Error("Client.getChatGUI legacy alias is not exported");
 }

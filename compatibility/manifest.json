@@ -280,7 +280,7 @@
     {
       "id": "legacy-custom-sound-category",
       "source": "ChatTriggers 2.2.0 Sound API",
-      "coverage": ["lowercase-category-names", "singular-category-aliases", "string-category-setter", "generated-resource-lifecycle"],
+      "coverage": ["lowercase-category-names", "singular-category-aliases", "case-insensitive-attenuation-names", "string-category-setter", "generated-resource-lifecycle", "title-screen-playback-lifecycle"],
       "status": "verified",
       "test": "SoundCompatibilityTest and LegacyApiAliasesTest"
     },
