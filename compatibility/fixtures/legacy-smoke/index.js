@@ -72,6 +72,13 @@ if (typeof Player.getUUID() !== "string" || String(Player.getUUIDObj()) !== Play
 if (typeof Scoreboard.getTitle() !== "string" || typeof Scoreboard.getScoreboardTitle() !== "string") {
     throw new Error("Legacy Scoreboard title string contract failed");
 }
+const customClick = new TextComponent({
+    text: "Custom click",
+    clickEvent: { action: "custom", value: "ctjs:open_module" }
+});
+if (customClick.getClickAction() !== "custom" || customClick.getClickValue() !== "ctjs:open_module") {
+    throw new Error("Custom click event contract failed");
+}
 if (typeof TabList.getNames().size !== "function" || typeof TabList.getList().size !== "function") {
     throw new Error("Legacy TabList name list contract failed");
 }
