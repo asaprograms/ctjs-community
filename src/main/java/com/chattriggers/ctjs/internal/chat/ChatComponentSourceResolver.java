@@ -20,7 +20,7 @@ public final class ChatComponentSourceResolver {
             return Component.empty().withStyle(style);
         }
 
-        for (GuiMessage message : ((ChatComponentAccessor) minecraft.gui.hud.getChat()).getAllMessages()) {
+        for (GuiMessage message : ((ChatComponentAccessor) minecraft.gui.getChat()).getAllMessages()) {
             Component match = findMatchingComponent(message.content(), style);
             if (match != null) {
                 return match.copy().withStyle(style);
