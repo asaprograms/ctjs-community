@@ -7,7 +7,7 @@ import com.chattriggers.ctjs.api.world.block.BlockType
 import com.chattriggers.ctjs.MCBlockEntity
 import net.minecraft.core.registries.BuiltInRegistries
 
-class BlockEntity(override val mcValue: MCBlockEntity) : CTWrapper<MCBlockEntity> {
+open class BlockEntity(override val mcValue: MCBlockEntity) : CTWrapper<MCBlockEntity> {
 
     fun getX(): Int = getBlockPos().x
 

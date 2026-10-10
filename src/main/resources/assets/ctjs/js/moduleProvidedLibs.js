@@ -52,6 +52,7 @@
     loadClass("com.chattriggers.ctjs.api.commands.DynamicCommands", "Commands");
 
     loadClass("com.chattriggers.ctjs.api.entity.BlockEntity");
+    loadClass("com.chattriggers.ctjs.api.entity.TileEntity");
     loadClass("com.chattriggers.ctjs.api.entity.Entity");
     loadClass("com.chattriggers.ctjs.api.entity.LivingEntity");
     loadClass("com.chattriggers.ctjs.api.entity.Particle");

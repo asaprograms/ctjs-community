@@ -546,6 +546,13 @@
       "coverage": ["name-tag-visibility-string", "death-message-visibility-string", "legacy-visibility-names", "enum-mode-accessors"],
       "status": "verified",
       "test": "TeamCompatibilityTest on Minecraft 26.2 and 26.1.2"
+    },
+    {
+      "id": "legacy-tile-entity-wrapper",
+      "source": "ChatTriggers 1.3.2 TileEntity API",
+      "coverage": ["TileEntity-global", "block-entity-wrapper-bridge", "getMetadata", "world-tile-entity-list", "chunk-tile-entity-list"],
+      "status": "implemented",
+      "test": "TileEntityCompatibilityTest and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
     }
   ]
 }
