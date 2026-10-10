@@ -18,4 +18,10 @@ class WorldCompatibilityTest {
         assertEquals(0, World.moonPhaseAt(8 * 24_000L))
         assertEquals(7, World.moonPhaseAt(-1))
     }
+
+    @Test
+    fun `legacy border size retains its integer return`() {
+        assertEquals(Int::class.javaPrimitiveType, World.BorderWrapper::class.java.getMethod("getSize").returnType)
+        assertEquals(Double::class.javaPrimitiveType, World.BorderWrapper::class.java.getMethod("getSizeExact").returnType)
+    }
 }

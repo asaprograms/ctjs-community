@@ -338,7 +338,11 @@ object World {
          *
          * @return the border size
          */
-        fun getSize(): Double = toMC()!!.worldBorder.size
+        /** Historical whole-block border size. */
+        fun getSize(): Int = toMC()!!.worldBorder.size.toInt()
+
+        /** Exact modern border size, including an in-progress interpolation fraction. */
+        fun getSizeExact(): Double = toMC()!!.worldBorder.size
 
         /**
          * Gets the border target size.

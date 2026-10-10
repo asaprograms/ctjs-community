@@ -160,6 +160,7 @@ Here is a list of targeted changes for various different APIs:
   - `draw()` now takes an object to align with `Renderer.drawPlayer()`
 - `PlayerMP.draw()` now takes an object to align with `Renderer.drawPlayer()`
 - `World`
+  - `border.getSize()` retains the legacy whole-block integer return. Use `border.getSizeExact()` when modern fractional interpolation is needed.
   - Legacy sound helpers remain available: `playSound()`, `playRecord()`, and `stopAllSounds()`.
   - `getDifficulty()` retains the legacy difficulty string. Use `getDifficultyMode()` for `Settings.Difficulty`.
   - Renamed `getAllTileEntities()` to `getAllBlockEntities()`
