@@ -551,7 +551,7 @@
       "id": "legacy-tile-entity-wrapper",
       "source": "ChatTriggers 1.3.2 TileEntity API",
       "coverage": ["TileEntity-global", "block-entity-wrapper-bridge", "getMetadata", "world-tile-entity-list", "chunk-tile-entity-list"],
-      "status": "implemented",
+      "status": "verified",
       "test": "TileEntityCompatibilityTest and client legacy smoke fixture on Minecraft 26.2 and 26.1.2"
     }
   ]
