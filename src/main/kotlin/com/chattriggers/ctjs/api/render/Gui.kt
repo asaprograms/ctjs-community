@@ -33,6 +33,7 @@ class Gui @JvmOverloads constructor(
     private val buttons = mutableMapOf<Int, Button>()
     private var nextButtonId = 0
     private var doesPauseGame = false
+    private var tooltip: TextComponent? = null
 
     fun open() {
         Client.currentGui.set(this)
@@ -282,6 +283,8 @@ class Gui @JvmOverloads constructor(
         this.mouseY = mouseY
         onDraw?.trigger(arrayOf(drawContexts.last(), mouseX, mouseY, partialTicks))
 
+        tooltip?.let { drawContexts.last().setTooltipForNextFrame(it, mouseX, mouseY) }
+
         Renderer.popMatrix()
     }
 
@@ -528,9 +531,7 @@ class Gui @JvmOverloads constructor(
      * @param text the contents of the tooltip
      */
     fun setTooltip(text: TextComponent) = apply {
-        // TODO: find a way to implement this properly since
-        //  mc removed the Screen#setTooltip
-        // setTooltip(Tooltip.wrapLines(Client.getMinecraft(), text))
+        tooltip = text
     }
 
     /**
