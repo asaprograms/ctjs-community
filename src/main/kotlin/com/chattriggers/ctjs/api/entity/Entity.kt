@@ -264,7 +264,7 @@ open class Entity(override val mcValue: MCEntity) : CTWrapper<MCEntity> {
     fun getLookVector(partialTicks: Float = Renderer.partialTicks) = mcValue.getViewVector(partialTicks)
 
     @JvmOverloads
-    fun getEyePosition(partialTicks: Float = Renderer.partialTicks) = mcValue.eyePosition
+    fun getEyePosition(partialTicks: Float = Renderer.partialTicks) = mcValue.getEyePosition(partialTicks)
 
     fun canBeCollidedWith() = mcValue.canBeCollidedWith(null)
 
